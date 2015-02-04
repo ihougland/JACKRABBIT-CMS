@@ -11,9 +11,22 @@
 	var win = nw.Window.get();
 	win.isMaximized = false;
 	</script>
+
+<link rel=stylesheet href="lib/codemirror.css">
+<script src="js/codemirror-compressed.js"></script>
+<script src="mode/htmlmixed/htmlmixed.js"></script>
+<script src="mode/javascript/javascript.js"></script>
+<script src="mode/css/css.js"></script>
+<script src="mode/xml/xml.js"></script>
+<script src="mode/htmlmixed/htmlmixed.js"></script>
+<script src="addon/edit/matchbrackets.js"></script>
+
+
+
 </head>
 
 <body>
+
 <div class="frame">
 <!--
 
@@ -180,33 +193,39 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
 	<div class="main">
 		<textarea name="" id="stripformat" cols="30" rows="10"></textarea>
 		<div class="main-scroll">
-		<div class="editor">
-		<div class="editor-title"><h1>Home</h1> (Last Edited 1.21.15 9:50AM)</div>
-		<div class="editor-text" contenteditable="true">
-			<h1>This is a Title</h1>
-			
-			<a href="#"><img src="images/img.jpg" class="float-right"/></a>
-			This <a href="#">area</a> will conasdftain text that can be added by you later! For now, we are adding this sample text so that we can see how it will look without needing your finished content yet. This area will have the ability to be formatted with typical options such as <b>bold</b>, <i>italics</i>, underline, and more. Also available is the ability to add photographs which can be placed anywhere, and set to the left or right. Your text will automatically wrap around the images. Other features include adding links to other locations on the web, and linking to .pdf documents. Such <strong>documents</strong> must be added to your library first, and then you may add links to them. HTML code snippets can also be added, although that is a more advanced feature. This sample text will now repeat.
-			
-			<h2>Header Level 2</h2>
-					   
-			<ol>
-			   <li>Here's an example of a numbered list.</li>
-			   <li>Here's an example of a numbered list.</li>
-			</ol>
-			
-			<blockquote><p>This is an example of a blockquote. Usually, you'll use this to emphasize a portion of your text.</p></blockquote>
-			
-			<h3>Header Level 3</h3>
-			
-			<ul>
-			   <li>Here's an example of a bulleted list.</li>
-			   <li>Here's an example of a bulleted list.</li>
-			</ul>
-		</div><!-- end .editor-text -->
-		</div><!-- end .editor -->
 
+		<div class="editor">
+			<div class="editor-title"><h1>Home</h1> (Last Edited 1.21.15 9:50AM)</div>
+
+				<div class="editor-text" contenteditable="true">
+					<h1>This is a Title</h1>
+					
+					<a href="#"><img src="images/img.jpg" class="float-right"/></a>
+					This <a href="#">area</a> will conasdftain text that can be added by you later! For now, we are adding this sample text so that we can see how it will look without needing your finished content yet. This area will have the ability to be formatted with typical options such as <b>bold</b>, <i>italics</i>, underline, and more. Also available is the ability to add photographs which can be placed anywhere, and set to the left or right. Your text will automatically wrap around the images. Other features include adding links to other locations on the web, and linking to .pdf documents. Such <strong>documents</strong> must be added to your library first, and then you may add links to them. HTML code snippets can also be added, although that is a more advanced feature. This sample text will now repeat.
+					
+					<h2>Header Level 2</h2>
+							   
+					<ol>
+					   <li>Here's an example of a numbered list.</li>
+					   <li>Here's an example of a numbered list.</li>
+					</ol>
+					
+					<blockquote><p>This is an example of a blockquote. Usually, you'll use this to emphasize a portion of your text.</p></blockquote>
+					
+					<h3>Header Level 3</h3>
+					
+					<ul>
+					   <li>Here's an example of a bulleted list.</li>
+					   <li>Here's an example of a bulleted list.</li>
+					</ul>
+				</div><!-- end .editor-text -->
+			</div><!-- end .editor -->
+			<div class="html-mode">
+				<textarea name="htmlTextarea" id="htmlTextarea"></textarea>
+			</div>
 		</div><!-- end .main-scroll-->
+
+
 		
 	</div><!-- end .main -->
 
@@ -286,6 +305,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
 	<script type="text/javascript" src="js/gui.js"></script>
 	<script type="text/javascript" src="js/editor.js"></script>
 
+	
 </body>
 
 </html>

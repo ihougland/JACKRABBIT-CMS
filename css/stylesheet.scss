@@ -14,9 +14,9 @@ html, body {
 	width:100%;
 	background:rgb(27, 31, 33);
 	border-radius:10px;
+	font-size:0;
 	font-family: 'Montserrat', sans-serif;
 	-webkit-font-smoothing:antialiased;
-	font-size:0;
 }
 body{
 	padding: 3px;
@@ -677,6 +677,13 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	left:-9999px;
 	top:-9999px;
 }
+.html-mode {
+	display:none;
+	position: relative;
+	line-height: 1.4em;
+	color: #525252;
+	border-radius: 0 0 2px 2px;
+}
 .editor-text {    
 	padding: 30px;    
 	position: relative;
@@ -684,6 +691,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	color: #525252;
 	background: #F7F9FB;
 	border-radius: 0 0 2px 2px;
+	transition:all .2s ease-out;
 	h1 {
 		font-size:2em;
 		display:block;
