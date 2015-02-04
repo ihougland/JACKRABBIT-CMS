@@ -1,0 +1,12 @@
+{
+	"main": "index.html",
+	"name":"Test",
+	"window":
+	{
+		"toolbar":false,
+		"frame":false,
+		"transparent": true,
+		"width":1400,
+		"height":800
+	}
+}

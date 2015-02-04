@@ -1,0 +1,41 @@
+html, body {
+	padding:0;
+	margin:0;
+	height:100%;
+	width:100%;
+	background:#fff;
+	border-radius:4px;
+	box-shadow:0 0 20px #000;
+}
+header {
+background: linear-gradient(to bottom, rgba(238, 238, 238, 0.86) 0%, rgba(236, 236, 236, 0.92) 100%);
+padding: 4px;
+-webkit-app-region:drag;
+-webkit-user-select:none;
+border-radius:4px 4px 0 0;
+}
+
+.head-btn {
+width: 12px;
+height: 12px;
+border-radius: 7px;
+margin: 0 1px;
+display: inline-block;
+border: 1px solid #FFF;
+-webkit-app-region:no-drag;
+}
+
+.minimize {
+	background:#E2C814;
+}
+
+.maximize {
+	background:#40C72B;
+}
+.maximize:hover {
+	background:#48E030;
+}
+
+.close {
+	background:#CB2E2E;
+}
