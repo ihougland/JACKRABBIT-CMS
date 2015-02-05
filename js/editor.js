@@ -356,9 +356,8 @@
 
         // If already in html mode
         if ($(this).hasClass('on')) {
-            $(this).removeClass('on');
-            var test = editor.getValue();
-            alert(test);
+            
+alert(myCodeMirror.getValue());
 
         } else {
             $(this).addClass('on');
@@ -378,7 +377,8 @@
                     value: htmlTextarea.value,
                     lineNumbers: true,
                     lineWrapping: true,
-                    viewportMargin: Infinity
+                    viewportMargin: Infinity,
+                    theme: "syntax"
                 });
                 $('.html-mode').fadeIn();
                 $('.CodeMirror').each(function(i, el) {

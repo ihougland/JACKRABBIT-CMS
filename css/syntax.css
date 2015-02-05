@@ -1,0 +1,51 @@
+/*
+Copyright (C) 2011 by MarkLogic Corporation
+Author: Mike Brevoort <mike@brevoort.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+.cm-s-syntax.CodeMirror { background: #2A2E32; color: #f8f8f8; }
+.cm-s-syntax .CodeMirror-selected { background: #27007A !important; }
+.cm-s-syntax .CodeMirror-gutters { background: #44474d; border-right: 1px solid #555; }
+.cm-s-syntax .CodeMirror-guttermarker { color: #8CAB28; }
+.cm-s-syntax .CodeMirror-guttermarker-subtle { color: #f8f8f8; }
+.cm-s-syntax .CodeMirror-linenumber { color: #f8f8f8; }
+.cm-s-syntax .CodeMirror-cursor { border-left: 1px solid white !important; }
+
+.cm-s-syntax span.cm-keyword {color: #8CAB28;}
+.cm-s-syntax span.cm-atom {color: #6C8CD5;}
+.cm-s-syntax span.cm-number {color: #164;}
+.cm-s-syntax span.cm-def {color: #FFF; text-decoration:underline;}
+.cm-s-syntax span.cm-variable {color: #FFF;}
+.cm-s-syntax span.cm-variable-2 {color: #EEE;}
+.cm-s-syntax span.cm-variable-3 {color: #DDD;}
+.cm-s-syntax span.cm-property {}
+.cm-s-syntax span.cm-operator {}
+.cm-s-syntax span.cm-comment {color: gray;}
+.cm-s-syntax span.cm-string {color: #9FEE00;}
+.cm-s-syntax span.cm-meta {color: yellow;}
+.cm-s-syntax span.cm-qualifier {color: #A1DBEC;}
+.cm-s-syntax span.cm-builtin {color: #30a;}
+.cm-s-syntax span.cm-bracket {color: #cc7;}
+.cm-s-syntax span.cm-tag {color: #8CAB28;}
+.cm-s-syntax span.cm-attribute {color: #A1DBEC;}
+.cm-s-syntax span.cm-error {color: #f00;}
+
+.cm-s-syntax .CodeMirror-activeline-background {background: #27282E !important;}
+.cm-s-syntax .CodeMirror-matchingbracket {outline:1px solid grey; color:white !important;}
