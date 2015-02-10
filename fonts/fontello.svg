@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2015 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="float-right" unicode="&#xe800;" d="m1000 750h-1000v100h1000v-100z m0-800h-1000v-100h1000v100z m-700 224h-300v-100h300v100z m0 450h-300v-100h300v100z m0-224h-300v-100h300v100z m700 224v-550h-624v550h624z m-102-100h-420v-350h420v350z" horiz-adv-x="1000" />
+<glyph glyph-name="inline-image" unicode="&#xe801;" d="m0-150h1000v100h-1000v-100z m0 220h1000v100h-1000v-100z m700 230h300v100h-300v-100z m-76 550v-550h-624v550h624z m-522-450h420v350h-420v-350z" horiz-adv-x="1000" />
+<glyph glyph-name="add-row-above" unicode="&#xe802;" d="m1000-80h-1000v400h1000v-400z m0 870h-446l87-200-87-200h446v400z m-538-138h-138v138h-128v-138h-134v-128h134v-134h128v134h138v128z" horiz-adv-x="1000" />
+<glyph glyph-name="center" unicode="&#xe803;" d="m0 850h1000v-100h-1000v100z m0-1000h1000v100h-1000v-100z m1000 774v-550h-1000v550h1000z m-898-450h786v350h-786v-350z" horiz-adv-x="1000" />
+<glyph glyph-name="add-column-after" unicode="&#xe804;" d="m64-146v1000h400v-1000h-400z m870 0v447l-200-87-200 87v-447h400z m-138 538v138h138v128h-138v134h-128v-134h-134v-128h134v-138h128z" horiz-adv-x="1000" />
+<glyph glyph-name="delete-row" unicode="&#xe805;" d="m1000 550h-446l87-200-87-200h446v400z m-553-298l-97 98 97 98-90 90-98-97-95 94-90-90 95-95-95-95 90-90 95 95 98-98 90 90z" horiz-adv-x="1000" />
+<glyph glyph-name="float-left" unicode="&#xe806;" d="m0 850h1000v-100h-1000v100z m0-1000h1000v100h-1000v-100z m700 224h300v100h-300v-100z m0 450h300v100h-300v-100z m0-224h300v100h-300v-100z m-76 324v-550h-624v550h624z m-522-450h420v350h-420v-350z" horiz-adv-x="1000" />
+<glyph glyph-name="add-row-below" unicode="&#xe807;" d="m1000 390h-1000v400h1000v-400z m0-70h-446l87-200-87-200h446v400z m-538-134h-138v134h-128v-134h-134v-128h134v-138h128v138h138v128z" horiz-adv-x="1000" />
+<glyph glyph-name="add-column-before" unicode="&#xe808;" d="m534-146v1000h400v-1000h-400z m-70 0v447l-200-87-200 87v-447h400z m-134 538v138h134v128h-134v134h-128v-134h-138v-128h138v-138h128z" horiz-adv-x="1000" />
+<glyph glyph-name="delete-column" unicode="&#xe809;" d="m300 850l0-446 200 87 200-87v446l-400 0z m298-553l-98-97-98 97-90-90 98-98-95-95 90-90 95 95 95-95 90 90-94 95 97 98-90 90z" horiz-adv-x="1000" />
+<glyph glyph-name="add-heading" unicode="&#xe80a;" d="m912 62v-124h-824v124h824m88 88h-1000v-300h1000v300l0 0z m-88 262v-124h-824v124h824m88 88h-1000v-300h1000v300l0 0z m-1000 350v-300h1000v300h-1000z m455-291v99h-99v90l99 0 0 98h90l0-98h99l0-90-99 0 0-99h-90z" horiz-adv-x="1000" />
+<glyph glyph-name="remove-heading" unicode="&#xe80b;" d="m912 62v-124h-824v124h824m88 88h-1000v-300h1000v300l0 0z m-88 262v-124h-824v124h824m88 88h-1000v-300h1000v300l0 0z m-1000 350v-300h1000v300h-1000z m570-281l-70 70-70-70-63 64 69 70-69 69 63 64 70-70 70 70 63-64-69-69 69-70-63-64z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

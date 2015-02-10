@@ -129,6 +129,7 @@
         } else {
             event.preventDefault();
             $(this).addClass('selectedImg');
+            /*
             $('.editor-text').attr('contenteditable', false).css('color', '#ccc');
             $(".editor-toolbar a").css({
                 'pointer-events': 'none',
@@ -140,6 +141,7 @@
                     top: event.pageY + "px",
                     left: event.pageX + "px"
                 }).fadeIn(300, "easeOutExpo");
+*/
         }
     });
 
@@ -257,30 +259,18 @@
             pasteHtmlAtCaret(table);
         }
     });
+
     // Right Click
     $(function() {
-        $(document).on('contextmenu', 'td, th', function(event) {
-            $(this).attr('id', 'selected');
+        $(document).on('click', 'td, th', function(event) {
+            $('#selectedCell').removeAttr('id');
+            $(this).attr('id', 'selectedCell');
         });
     });
-    // Make the menu
-    $(document).on('contextmenu', 'td, th', function(event) {
-        event.preventDefault();
-        $('.custom-menu').remove();
-        $('<div class="custom-menu"><a href="#" class="addhead"><i class="fa fa-header"></i> Add Table Header</a><a href="#" class="addrow"><i class="fa fa-plus"></i> Add Row After</a><a href="#" class="delrow"><i class="fa fa-trash-o"></i> Delete Row</a><a href="#" class="addcol"><i class="fa fa-plus"></i> Add Column After</a><a href="#" class="delcol"><i class="fa fa-trash-o"></i> Delete Column</a><a href="#" class="deltable"><i class="fa fa-trash-o"></i> Delete Entire Table</a></div>')
-            .appendTo("body")
-            .css({
-                top: event.pageY + "px",
-                left: event.pageX + "px"
-            }).fadeIn();
-        /* Fix menu position if needed */
-        menuPosition();
-    });
-
 
     // Add Header
     $(document.body).on("click", ".addhead", function(event) {
-        $('#selected').parents('table').attr('id', 'selectedTable');
+        $('#selectedCell').parents('table').attr('id', 'selectedTable');
         var cols = $('#selectedTable tr:first-of-type td').length;
 
         $('#selectedTable').prepend('<thead><tr id="selectedRow"></tr></thead>')
@@ -292,10 +282,10 @@
         event.preventDefault();
     });
 
-    // Add Row
-    $(document.body).on("click", ".addrow", function(event) {
-        $('#selected').parents('table').attr('id', 'selectedTable');
-        var whichOne = $('#selected').parent().index(),
+    // Add Row After
+    $(document.body).on("click", ".addrowafter", function(event) {
+        $('#selectedCell').parents('table').attr('id', 'selectedTable');
+        var whichOne = $('#selectedCell').parent().index(),
             cols = $('#selectedTable tr:first-of-type td').length;
 
         $('<tr id="selectedRow"></tr>').insertAfter("#selectedTable tr:eq(" + whichOne + ")");
@@ -308,16 +298,16 @@
 
     // Delete Row
     $(document.body).on("click", ".delrow", function(event) {
-        $('#selected').parents('tr').fadeOut(500, function() {
+        $('#selectedCell').parents('tr').fadeOut(500, function() {
             $(this).remove();
         });
         event.preventDefault();
     });
 
     // Add Column
-    $(document.body).on("click", ".addcol", function(event) {
-        $('#selected').parents('table').attr('id', 'selectedTable');
-        var whichOne = $('#selected').index(),
+    $(document.body).on("click", ".addcolafter", function(event) {
+        $('#selectedCell').parents('table').attr('id', 'selectedTable');
+        var whichOne = $('#selectedCell').index(),
             rows = $('#selectedTable tr').length;
 
         $('#selectedTable tr').each(function() {
@@ -330,8 +320,8 @@
 
     // Delete Col
     $(document.body).on("click", ".delcol", function(event) {
-        $('#selected').parents('table').attr('id', 'selectedTable');
-        var whichOne = $('#selected').index();
+        $('#selectedCell').parents('table').attr('id', 'selectedTable');
+        var whichOne = $('#selectedCell').index();
         $('#selectedTable tr').find("td:eq(" + whichOne + ")").fadeOut(500, function() {
             $(this).remove();
         });
@@ -343,7 +333,7 @@
     $(document.body).on("click", ".deltable", function(event) {
         var r = confirm("Are you sure you want to delete the whole table");
         if (r == true) {
-            $('#selected').parents('table').fadeOut(500, function() {
+            $('#selectedCell').parents('table').fadeOut(500, function() {
                 $(this).remove();
             });
         }

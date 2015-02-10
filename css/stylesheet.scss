@@ -382,7 +382,7 @@ db   8D   .88.   88  .8D 88.
 .page-add-confirm {color:$primary!important;}
 
 .flipped {
-	transform:rotate(180deg);
+	transform:rotate(180deg)!important;
 }
 .sidebar-option {
 	padding-left:25px;
@@ -501,41 +501,55 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	border-right: 0;
 	background: $light-gray;
 }
+.panel-toggle {
+	color: #5C5C5C;
+	text-decoration: none;
+	float: right;
+	font-size: 14px;
+	padding: 3px 5px;
+	transition:all .2s ease-out;
+}
+.panel-toggle:hover {
+	color:$primary;
+}
 .panel-title {
-	a:link, a:visited {
-		color: #5C5C5C;
-		text-decoration: none;
-		float: right;
-		font-size: 14px;
-		padding: 3px 5px;
-		i{
-			transition:all .2s ease-out;
-		}
-	}
-	a:hover, a:active {
-		color:$primary;
-	}
-	div {
-		background:$medium-gray;
-		font-size:11px;
-		color:#fff;
-		display:inline-block;
-		padding:5px 10px;
-		font-weight:bold;
-		position:relative;
-	}
-	div:after {
-		content:'';
-		display:block;
-		height:100%;
-		width:10px;
-		background:$medium-gray;
-		position:absolute;
-		right:-5px;
-		top:0;
-		border-radius:0 3px 0 0;
-		-webkit-transform:skew(15deg);
-	}
+	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1);
+}
+.panel-title-tab {
+	background:#36393F;
+	font-size:11px;
+	color: #BAC2C6;
+	display:inline-block;
+	padding: 5px 6px 5px 14px;
+	font-weight:bold;
+	position:relative;
+	text-decoration:none;
+	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1);
+}
+.panel-title-tab:after {
+	content:'';
+	display:block;
+	height:100%;
+	width:10px;
+	background:#36393F;
+	position:absolute;
+	right:-5px;
+	top:0;
+	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1);
+	border-radius:0 3px 0 0;
+	-webkit-transform:skew(15deg);
+	border-right:1px solid $dark-gray;
+	z-index: 1;
+}
+.panel-title-active {
+	background:$medium-gray!important;
+	color:#fff!important;
+	padding:5px 10px;
+	z-index:2;
+	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1), -1px 0 0 $dark-gray;
+}
+.panel-title-active:after {
+	background:$medium-gray!important;
 }
 .panel-contents {
 	background:$medium-gray;
@@ -577,14 +591,18 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		color:#BAC2C6
 	}
 }
+.panel-group {
+	display:none;
+}
+.panel-group:nth-child(1) {
+	display:block;
+}
 /* top-level buttons */
 .editor-toolbar>ul>li> a:link,
 .editor-toolbar>ul>li> a:visited {
 	outline: none;
 	border: 0;
 	font-size: 14px;
-	min-width: 15px;
-	height: 15px;
 	padding: 5px;
 	text-align: center;
 	display: inline-block;
@@ -596,6 +614,11 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	margin: 3px 2px;
 	border-radius: 2px;
 	transition:all .15s ease-out;
+	i {
+		display:inline-block;
+		width:16px;
+		height: 16px;
+	}
 }
 .editor-toolbar>ul>li> a:hover {
 	color: $primary;
@@ -719,14 +742,11 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	table {
 		border-collapse: collapse;
 	}
-	table tr {
-		background:#383E41;
-	}
 	table tr:nth-child(2n) {
-		background:#30363b;
+		background:#E6E6E6;
 	}
 	table td {
-		border:1px solid #232627;
+		border:1px solid #c7cacf;
 		padding:4px;
 		position: relative;
 
@@ -802,6 +822,10 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	background: url("../images/lines.gif");
 	padding: 3px;
 	border: 0!important;
+}
+#selectedCell {
+	border:1px solid $primary;
+	color:$primary;
 }
 .custom-menu a:link:last-child {
 	border-bottom:0;
