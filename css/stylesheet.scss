@@ -514,42 +514,51 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 }
 .panel-title {
 	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1);
+	border-bottom:1px solid $dark-gray;
 }
 .panel-title-tab {
-	background:#36393F;
 	font-size:11px;
 	color: #BAC2C6;
 	display:inline-block;
-	padding: 5px 6px 5px 14px;
+	padding: 5px 10px;
 	font-weight:bold;
 	position:relative;
 	text-decoration:none;
 	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1);
 }
-.panel-title-tab:after {
-	content:'';
-	display:block;
-	height:100%;
-	width:10px;
-	background:#36393F;
-	position:absolute;
-	right:-5px;
-	top:0;
-	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1);
-	border-radius:0 3px 0 0;
-	-webkit-transform:skew(15deg);
-	border-right:1px solid $dark-gray;
-	z-index: 1;
-}
 .panel-title-active {
 	background:$medium-gray!important;
 	color:#fff!important;
-	padding:5px 10px;
 	z-index:2;
-	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1), -1px 0 0 $dark-gray;
+	border-right:1px solid $dark-gray;
+	border-left:1px solid $dark-gray;
+	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 0 $medium-gray;
 }
 .panel-title-active:after {
-	background:$medium-gray!important;
+	content: '';
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	border-radius: 0 0 0 7px;
+	border: 1px solid $dark-gray;
+	bottom: -1px;
+	right: -13px;
+	border-right: 0;
+	border-top: 0;
+	box-shadow: -2px 2px 0 -1px $medium-gray;
+}
+.panel-title-active:before {
+	content: '';
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	border-radius: 0 0 7px 0;
+	border: 1px solid $dark-gray;
+	bottom: -1px;
+	left: -13px;
+	border-left: 0;
+	border-top: 0;
+	box-shadow: 2px 2px 0 -1px $medium-gray;
 }
 .panel-contents {
 	background:$medium-gray;
@@ -557,6 +566,11 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	color:#BAC2C6;
 	padding:15px;
 	line-height:1.4em;
+	hr {
+		border:0;
+		border-bottom:1px solid $light-gray;
+		border-top:1px solid $dark-gray;
+	}
 	input[type="text"]{
 		font-size: 11px;
 		color: #FFF;
@@ -588,7 +602,8 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	}
 	input[type="text"]::-webkit-input-placeholder,
 	textarea::-webkit-input-placeholder {
-		color:#BAC2C6
+		color:#7D7D7D;
+		font-style:italic;
 	}
 }
 .panel-group {
