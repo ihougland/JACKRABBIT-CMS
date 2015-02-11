@@ -260,16 +260,21 @@
         }
     });
 
-    // Right Click
-    $(function() {
-        $(document).on('click', 'td, th', function(event) {
-            $('#selectedCell').removeAttr('id');
-            $(this).attr('id', 'selectedCell');
-        });
+    // Click Cell
+    $(document).on('click', 'td, th', function (event) {
+        $('#selectedCell').removeAttr('id');
+        $(this).attr('id', 'selectedCell');
+        event.stopPropagation();
     });
 
+    $(document).on('click', function (event) {
+        $('#selectedCell').removeAttr('id');
+    });
+
+
+
     // Add Header
-    $(document.body).on("click", ".addhead", function(event) {
+    $(document.body).on("click", ".add-header", function(event) {
         $('#selectedCell').parents('table').attr('id', 'selectedTable');
         var cols = $('#selectedTable tr:first-of-type td').length;
 
@@ -282,8 +287,8 @@
         event.preventDefault();
     });
 
-    // Add Row After
-    $(document.body).on("click", ".addrowafter", function(event) {
+    // Add Row Below
+    $(document.body).on("click", ".add-row-below", function(event) {
         $('#selectedCell').parents('table').attr('id', 'selectedTable');
         var whichOne = $('#selectedCell').parent().index(),
             cols = $('#selectedTable tr:first-of-type td').length;
@@ -296,16 +301,30 @@
         event.preventDefault();
     });
 
+    // Add Row Above
+    $(document.body).on("click", ".add-row-above", function(event) {
+        $('#selectedCell').parents('table').attr('id', 'selectedTable');
+        var whichOne = $('#selectedCell').parent().index(),
+            cols = $('#selectedTable tr:first-of-type td').length;
+
+        $('<tr id="selectedRow"></tr>').insertBefore("#selectedTable tr:eq(" + whichOne + ")");
+        for (var i = 0; i < cols; i++) {
+            $('#selectedRow').append('<td>&nbsp;</td>');
+        }
+        $('#selectedRow, #selected, #selectedTable').removeAttr('id');
+        event.preventDefault();
+    });
+
     // Delete Row
-    $(document.body).on("click", ".delrow", function(event) {
+    $(document.body).on("click", ".delete-row", function(event) {
         $('#selectedCell').parents('tr').fadeOut(500, function() {
             $(this).remove();
         });
         event.preventDefault();
     });
 
-    // Add Column
-    $(document.body).on("click", ".addcolafter", function(event) {
+    // Add Column After
+    $(document.body).on("click", ".add-column-after", function(event) {
         $('#selectedCell').parents('table').attr('id', 'selectedTable');
         var whichOne = $('#selectedCell').index(),
             rows = $('#selectedTable tr').length;
@@ -318,8 +337,22 @@
         event.preventDefault();
     });
 
+    // Add Column Before
+    $(document.body).on("click", ".add-column-before", function(event) {
+        $('#selectedCell').parents('table').attr('id', 'selectedTable');
+        var whichOne = $('#selectedCell').index(),
+            rows = $('#selectedTable tr').length;
+
+        $('#selectedTable tr').each(function() {
+            $('<td>&nbsp;</td>').insertBefore($(this).find('td:eq(' + whichOne + ')'));
+        });
+
+        $('#selected, #selectedTable').removeAttr('id');
+        event.preventDefault();
+    });
+
     // Delete Col
-    $(document.body).on("click", ".delcol", function(event) {
+    $(document.body).on("click", ".delete-column", function(event) {
         $('#selectedCell').parents('table').attr('id', 'selectedTable');
         var whichOne = $('#selectedCell').index();
         $('#selectedTable tr').find("td:eq(" + whichOne + ")").fadeOut(500, function() {
@@ -330,7 +363,7 @@
     });
 
     // Delete Entire Table
-    $(document.body).on("click", ".deltable", function(event) {
+    $(document.body).on("click", ".delete-table", function(event) {
         var r = confirm("Are you sure you want to delete the whole table");
         if (r == true) {
             $('#selectedCell').parents('table').fadeOut(500, function() {
