@@ -281,6 +281,50 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                 <textarea name="" id="stripformat" cols="30" rows="10"></textarea>
                 <div class="main-scroll">
 
+                    <div class="editor">
+                        <div class="editor-title">
+                            <h1>Home</h1> (Last Edited 1.21.15 9:50AM)</div>
+
+                        <div class="editor-text" contenteditable="true">
+                            <h1>This is a Title</h1>
+                            <a href="#"><img src="images/img.jpg" class="float-right" />
+                            </a>
+                            This <a href="#">area</a> will conasdftain text that can be added by you later! For now, we are adding this sample text so that we can see how it will look without needing your finished content yet. This area will have the ability to be formatted with typical options such as <b>bold</b>, <i>italics</i>, underline, and more. Also available is the ability to add photographs which can be placed anywhere, and set to the left or right. Your text will automatically wrap around the images. Other features include adding links to other locations on the web, and linking to .pdf documents. Such <strong>documents</strong> must be added to your library first, and then you may add links to them. HTML code snippets can also be added, although that is a more advanced feature. This sample text will now repeat.
+
+                            <h2>Header Level 2</h2>
+
+                            <ol>
+                                <li>Here's an example of a numbered list.</li>
+                                <li>Here's an example of a numbered list.</li>
+                            </ol>
+
+                            <table class="rwd-table" width="100%">
+                            	<tr>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            	</tr>
+                            	<tr>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            	</tr>
+                            	<tr>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            		<td>&nbsp;</td>
+                            	</tr>
+                            </table>
+                        </div>
+                        <!-- end .editor-text -->
+                    </div>
+                    <!-- end .editor -->
+                    <div class="html-mode">
+                        <textarea name="htmlTextarea" id="htmlTextarea"></textarea>
+                    </div>
                 </div>
                 <!-- end .main-scroll-->
 
@@ -303,7 +347,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                         <li class="pages"><a href="#"><i class="fa fa-chevron-down"></i> Pages</a>
                             <ul class="draggable-parent">
                                 <li class="draggable" data-id="1">
-                                    <div><a href="editor.html"><i class="fa fa-reorder sort-drag"></i><i class="fa fa-file"></i> Home</a>
+                                    <div><a href="editor.html" id="current-page"><i class="fa fa-reorder sort-drag"></i><i class="fa fa-file"></i> Home</a>
                                     </div>
                                 </li>
                                 <li class="draggable" data-id="2">

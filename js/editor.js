@@ -122,29 +122,26 @@
         }
 */
 
-    // Make the menu
+    // Click Image
     $(document).on('click', '.editor-text img', function(event) {
         if ($(this).hasClass("selectedImg")) {
             doneWithImage();
         } else {
             event.preventDefault();
             $(this).addClass('selectedImg');
-            /*
-            $('.editor-text').attr('contenteditable', false).css('color', '#ccc');
-            $(".editor-toolbar a").css({
-                'pointer-events': 'none',
-                'opacity': '.1'
-            });
-            $('<div id="image-toolbar"><h1>Image:</h1> <a href="#" class="fl">Wrap Left</a><a href="#" class="fr">Wrap Right</a><a href="#" class="fc">Centered</a><a href="#" class="fn">Inline</a><a href="#" class="fd">Delete</a></div>')
-                .appendTo(".menu-bar")
-                .css({
-                    top: event.pageY + "px",
-                    left: event.pageX + "px"
-                }).fadeIn(300, "easeOutExpo");
-*/
-        }
-    });
+            $('.panel:nth-child(2)').find('.panel-title-active').removeClass('panel-title-active');
+            $('.panel:nth-child(2)').find('.panel-group').hide();
 
+            $('.panel:nth-child(2)').find('.panel-title-tab:nth-child(3)').addClass('panel-title-active');
+            $('.panel:nth-child(2)').find('.panel-group:nth-child(2)').show();
+            $('.panel:nth-child(2)').find('.panel-group:nth-child(2)').css({
+                'pointerEvents':'auto',
+                'opacity':'1'
+            });
+        }
+        event.stopPropagation();
+    });
+    doneWithImage();
     function doneWithImage() {
         $("#image-toolbar").remove();
         $('.selectedImg').removeClass('selectedImg');
@@ -152,6 +149,10 @@
         $(".editor-toolbar a").css({
             'pointer-events': 'auto',
             'opacity': '1'
+        });
+        $('.panel:nth-child(2)').find('.panel-group:nth-child(2)').css({
+            'pointerEvents':'none',
+            'opacity':'.2'
         });
     }
 
@@ -264,11 +265,20 @@
     $(document).on('click', 'td, th', function (event) {
         $('#selectedCell').removeAttr('id');
         $(this).attr('id', 'selectedCell');
+        $('.panel:nth-child(2)').find('.panel-group:nth-child(3)').css({
+            'pointerEvents':'auto',
+            'opacity':'1'
+        });
         event.stopPropagation();
     });
 
     $(document).on('click', function (event) {
         $('#selectedCell').removeAttr('id');
+        $('.panel:nth-child(2)').find('.panel-group:nth-child(3)').css({
+            'pointerEvents':'none',
+            'opacity':'.2'
+        });
+        doneWithImage();
     });
 
 
@@ -379,9 +389,10 @@
 
         // If already in html mode
         if ($(this).hasClass('on')) {
-            
-alert(myCodeMirror.getValue());
-
+            $('.CodeMirror').each(function(i, el) {
+                    el.CodeMirror.refresh();
+                });
+            alert(htmlEditor.getValue());
         } else {
             $(this).addClass('on');
             var saveText = $('.editor-text').html();
@@ -394,7 +405,7 @@ alert(myCodeMirror.getValue());
                 $('.editor-text').hide();
                 $('.html-mode textarea').html(saveText);
 
-                var myCodeMirror = CodeMirror(function(elt) {
+                var htmlEditor = CodeMirror(function(elt) {
                     htmlTextarea.parentNode.replaceChild(elt, htmlTextarea);
                 }, {
                     value: htmlTextarea.value,

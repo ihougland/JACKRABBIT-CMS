@@ -513,8 +513,8 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	color:$primary;
 }
 .panel-title {
-	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1);
-	border-bottom:1px solid $dark-gray;
+	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1), inset 0 -1px $dark-gray;
+	overflow:hidden;
 }
 .panel-title-tab {
 	font-size:11px;
@@ -524,6 +524,9 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	font-weight:bold;
 	position:relative;
 	text-decoration:none;
+	transition:background .2s ease-out;
+	position:relative;
+	left:-1px;
 }
 .panel-title-active {
 	background:$medium-gray!important;
@@ -715,11 +718,13 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	top:-9999px;
 }
 .html-mode {
-	display:none;
+	display: none;
 	position: relative;
 	line-height: 1.4em;
 	color: #525252;
 	border-radius: 0 0 2px 2px;
+	max-width: 960px;
+	margin: 0 auto;
 }
 .editor-text {    
 	padding: 30px;    
