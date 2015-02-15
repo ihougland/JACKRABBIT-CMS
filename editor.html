@@ -7,14 +7,8 @@
     <link rel="stylesheet" href="css/stylesheet.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/fontello.css">
-    <script>
-    var nw = require('nw.gui');
-    var win = nw.Window.get();
-    win.isMaximized = false;
-    </script>
-
-    <link rel=stylesheet href="lib/codemirror.css">
-    <link rel=stylesheet href="css/syntax.css">
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <link rel="stylesheet" href="css/syntax.css">
     <script src="js/codemirror-compressed.js"></script>
     <script src="mode/htmlmixed/htmlmixed.js"></script>
     <script src="mode/javascript/javascript.js"></script>
@@ -28,39 +22,11 @@
 
 <body>
 
-    <div class="frame">
         <!--
 
 http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-er-handshake-error-bad-handshake
 
 -->
-        <header>
-            <div class="head-btn-wrap">
-                <a href="#" class="head-btn close" onclick="win.close();"></a>
-
-                <a href="#" class="head-btn minimize" onclick="win.minimize();"></a>
-
-                <a href="#" class="head-btn maximize" onclick="maxCheck();"></a>
-            </div>
-            <div class="head-title">JACKRABBIT<span>v3.0</span>
-            </div>
-            <div class="head-connection">
-                <i class="fa fa-globe"></i>
-                <a href="#" class="con-result">www.scaredrabbit.com</a>
-                <div class="con-panel">
-                    <ul>
-                        <li><a href="#">www.scaredrabbit.com</a>
-                        </li>
-                        <li><a href="#">www.bobstacos.com</a>
-                        </li>
-                        <li><a href="#">www.llamasforsale.com</a>
-                        </li>
-                    </ul>
-                    <hr>
-                    <a href="#"><i class="fa fa-sitemap"></i> Manage Connections</a>
-
-                </div>
-            </div>
             <div class="menu-bar">
                 <ul>
                     <li><a href="#">Save</a></li>
@@ -102,7 +68,6 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     <li></li>
                 </ul>
             </div>
-        </header>
         <div class="table">
             <div class="sidebar-left">
                 <div class="panel">
@@ -407,22 +372,6 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     <!-- end .sidebar-right -->
                 </div>
                 <!-- end .table -->
-            </div>
-            <!-- end .frame-->
-            <script>
-            /*
-            	onload = function() {
-            		win.show();
-            		win.maximize();
-            	}
-            	*/
-            function maxCheck() {
-                if (win.isMaximized)
-                    win.unmazimize();
-                else
-                    win.maximize();
-            }
-            </script>
             <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
             <script type="text/javascript" src="js/jquery-ui.min.js"></script>
             <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>

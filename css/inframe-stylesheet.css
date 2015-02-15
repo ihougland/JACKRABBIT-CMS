@@ -97,14 +97,14 @@ html, body {
   -webkit-font-smoothing: antialiased; }
 
 body {
+  padding: 3px;
   box-sizing: border-box; }
 
 .main-iframe {
   width: 100%;
   border: 0;
   outline: 0;
-  height: calc(100vh - 76px);
-  overflow: hidden; }
+  height: calc(100vh - 76px); }
 
 .frame {
   box-shadow: 0 0 0 1px black, 0 0 0 2px #2a2e32, 0 0 0 3px black;
@@ -114,7 +114,7 @@ body {
 .table {
   display: table;
   width: 100%;
-  height: calc(100% - 30px); }
+  height: calc(100% - 90px); }
 
 /*
 db   db d88888b  .d8b.  d8888b. 
@@ -245,143 +245,13 @@ header {
   left: 50%;
   margin-left: -5px; }
 
-.v-center {
-  height: calc(100% - 30px);
-  display: table-cell;
-  vertical-align: middle; }
-
-.connection-tabs {
-  margin: 0 -15px -15px -15px;
-  padding: 15px 0 0 0; }
-
-.connections {
-  background: #44474d;
-  width: 300px;
-  margin: 0 auto;
-  padding: 15px;
-  box-sizing: border-box;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-  border-radius: 2px; }
-  .connections hr {
-    margin: 15px -15px;
-    border: 0;
-    border-bottom: 1px solid #1b1f21; }
-  .connections h1 {
-    color: #8cab28;
-    font-size: 18px;
-    text-align: center;
-    display: inline-block;
-    width: 100%;
-    box-sizing: border-box; }
-  .connections h2 {
-    color: #8cab28;
-    font-size: 14px;
-    text-align: center;
-    margin: 0 0 10px 0;
-    display: inline-block;
-    width: 100%;
-    box-sizing: border-box; }
-  .connections label {
-    display: block;
-    text-transform: uppercase;
-    font-size: 11px;
-    padding-top: 10px;
-    color: #222; }
-  .connections input[type="text"] {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    background: #BAC2C6;
-    outline: 0;
-    border: 0;
-    border-radius: 3px; }
-  .connections input[type="text"]:focus {
-    background: #fff; }
-  .connections .button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    background: #7a9521;
-    color: #222;
-    outline: 0;
-    border: 0;
-    border-radius: 3px;
-    margin-top: 10px;
-    font-family: 'Montserrat', sans-serif; }
-  .connections .button:hover {
-    background: #1b1f21;
-    color: #fff;
-    cursor: pointer; }
-  .connections .tab {
-    width: 50%;
-    font-size: 11px;
-    background: #2a2e32;
-    border-radius: 6px 6px 0 0;
-    display: inline-block;
-    color: #FFF;
-    text-decoration: none;
-    text-align: center;
-    padding: 10px 0; }
-  .connections .tab-current {
-    background: #8cab28; }
-  .connections .tab:last-of-type {
-    box-shadow: -1px 0 0 #44474d; }
-  .connections .tab-content {
-    background: #8cab28;
-    padding: 15px;
-    display: none; }
-
-#connection-list {
-  background: #1b1f21;
-  max-height: 100px;
-  overflow: auto;
-  font-size: 12px;
-  color: #fff;
-  margin-top: 15px; }
-  #connection-list a:link,
-  #connection-list a:visited {
-    color: #fff;
-    text-decoration: none;
-    display: block;
-    padding: 10px 15px;
-    font-size: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-  #connection-list a:hover {
-    background: #8cab28;
-    color: #222; }
-  #connection-list a:before {
-    content: '\f0da';
-    float: right;
-    font-family: fontawesome; }
-
-.connection-list::-webkit-scrollbar {
-  width: 8px; }
-
-/* Track */
-.connection-list::-webkit-scrollbar-track {
-  background: #1b1f21; }
-
-/* Handle */
-.connection-list::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  background: #2a2e32;
-  -webkit-box-shadow: inset 0 0 0 2px #1b1f21; }
-
-.connection-list::-webkit-scrollbar-thumb:hover,
-.connection-list::-webkit-scrollbar-thumb:active {
-  background: #44474d; }
-
 .menu-bar {
-  background: #44474D;
-  border-bottom: 1px solid #222;
+  background: #44474d;
+  border-top: 1px solid #222;
   display: block;
-  font-size: 11px;
+  font-size: 14px;
   text-align: left;
-  color: #BAC2C6;
-  height: 29px; }
+  color: #BAC2C6; }
   .menu-bar #image-toolbar {
     display: inline-block; }
   .menu-bar .vr {
@@ -404,6 +274,7 @@ header {
     .menu-bar > ul > li > a:link, .menu-bar > ul > li > a:visited {
       text-decoration: none;
       color: #FFF;
+      font-size: 12px;
       padding: 3px 4px;
       border-radius: 2px;
       display: inline-block; }
@@ -597,7 +468,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
   box-sizing: border-box; }
 
 .main-scroll {
-  height: calc(100vh - 30px);
+  height: 100%;
   overflow: auto; }
 
 .main-scroll::-webkit-scrollbar {

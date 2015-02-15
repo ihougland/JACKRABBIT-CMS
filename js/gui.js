@@ -1,5 +1,15 @@
 $(document).ready(function() {
 
+	// Connection Tabs 
+	$('.connection-tabs .tab-content:first').show();
+	$(document.body).on('click', '.connection-tabs .tab', function (event) {
+		var getIndex = $(this).index();
+		$('.connection-tabs .tab-content').hide();
+		$('.tab-current').removeClass('tab-current');
+		$(this).addClass('tab-current');
+		$('.connection-tabs .tab-content:eq('+getIndex+')').show();
+		event.preventDefault();
+	});
 	// Toggle Panels In Left Sidebar
 	$(document.body).on('click', '.panel-toggle', function (event) {
 		$(this).parents('.panel').find('.panel-contents').slideToggle(600, 'easeOutExpo');
