@@ -127,6 +127,7 @@
         if ($(this).hasClass("selectedImg")) {
             doneWithImage();
         } else {
+            $('.selectedImg').removeClass('selectedImg');
             event.preventDefault();
             $(this).addClass('selectedImg');
             $('.panel:nth-child(2)').find('.panel-title-active').removeClass('panel-title-active');
@@ -138,10 +139,52 @@
                 'pointerEvents':'auto',
                 'opacity':'1'
             });
+            // Update Alt if applicable
+            if(this.alt) {
+                var saveAlt = $(this).attr('alt');
+                $('#photo-desc').val(saveAlt);
+            } else {
+                $('#photo-desc').val('');
+            }
+
+            // Update URL if applicable
+            var elementType = $(this).parent().prop('tagName');
+            if(elementType == 'A') {
+                var saveUrl = $(this).parent().attr('href');
+                $('#photo-url').val(saveUrl);
+            } else {
+                $('#photo-url').val('');
+            }
         }
         event.stopPropagation();
     });
-    doneWithImage();
+
+    // So clicking these fields doesn't close the image edit session
+    $(document).on('click', '#photo-desc, #photo-url', function(event) {
+       event.stopPropagation();
+    });
+
+    // Set New Image Alt
+    $('#photo-desc').on('input', function() {
+        newDesc = $('#photo-desc').attr('value');
+        $('.selectedImg').attr('alt', newDesc);
+    });
+
+    // Set New Image URL
+    $('#photo-url').on('input', function() {
+        var newUrl = $('#photo-url').attr('value');
+        var emptyCheck = $.trim($("#photo-url").val());
+        var elementType = $('.selectedImg').parent().prop('tagName');
+        if(emptyCheck.length<=0 && elementType == 'A') {
+            $('.selectedImg').unwrap();
+        } else if(elementType == 'A') {
+            $('.selectedImg').parent().attr('href', newUrl);
+        } else {
+            $('.selectedImg').wrap('<a href="'+newUrl+'"></a>')
+        }
+
+    });
+
     function doneWithImage() {
         $("#image-toolbar").remove();
         $('.selectedImg').removeClass('selectedImg');
@@ -154,7 +197,9 @@
             'pointerEvents':'none',
             'opacity':'.2'
         });
+        $('#photo-desc, #photo-url').val('');
     }
+    doneWithImage();
 
 
     // Apply right

@@ -6,6 +6,12 @@ $primary-alt:#7a9521;
 $dark-gray:#1b1f21;
 $medium-gray:#2A2E32;
 $light-gray:#44474d;
+@-webkit-keyframes shake {
+    0%, 100% {-webkit-transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);}
+    20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);}
+}
+.shake {-webkit-animation-name: shake;}
 
 html, body {
 	padding:0;
@@ -204,6 +210,8 @@ header {
 	box-sizing:border-box;
 	box-shadow:0 5px 25px rgba(0,0,0,.3);
 	border-radius:2px;
+	-webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
 	hr {
 		margin:15px -15px;
 		border:0;
