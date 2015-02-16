@@ -34,20 +34,21 @@
 <div class="v-center">
     <div class="connections">
         <h1><i class="fa fa-globe"></i> Connections</h1>
-        <div id="connection-list">
+        <div class="connection-list">
         </div>
         <div class="connection-tabs">
-        <a href="#" class="tab tab-current">Add Connection</a><a href="#" class="tab">Remove Connection</a><!--
+        <a href="#" class="tab tab-current">Add/Edit Connection</a><a href="#" class="tab">Remove Connection</a><!--
         --><div class="tab-content">
         <label for="name">Connection Name</label>
         <input name="name" type="text" id="con-name" placeholder="My Website">
         <label for="url">URL</label>
         <input name="url" type="text" id="con-url" placeholder="http://www.example.com">
-        <input type="button" value="Add Connection" onclick="doSetItem()" class="button">
+        <input type="button" value="Add Connection" onclick="setConnection()" class="button">
         </div>
         <div class="tab-content">
-            <div id="connection-list">
+            <div class="remove-list">
             </div>
+            <input type="button" value="Remove All" onclick="clearAll()">
         </div>
         </div><!-- end .connection-tabs -->
     </div><!-- end .connections -->
@@ -60,42 +61,7 @@
     <script type="text/javascript" src="js/editor.js"></script>
     <script>
 //http://people.w3.org/mike/localstorage.html
-    function doSetItem() {
-       var name = $('#con-name').val();
-       var data = $('#con-url').val();
-       localStorage.setItem(name, data);
-       doShowAll();
-     }
 
-     function doGetItem() {
-       var name = document.forms.editor.name.value;
-       document.forms.editor.data.value = localStorage.getItem(name);
-       doShowAll();
-     }
-
-     function doRemoveItem() {
-       var name = document.forms.editor.name.value;
-       document.forms.editor.data.value = localStorage.removeItem(name);
-       doShowAll();
-     }
-
-     function doClear() {
-       localStorage.clear();
-       doShowAll();
-     }
-
-     function doShowAll() {
-       var key = "";
-       var pairs = "";
-       var i=0;
-       for (i=0; i<=localStorage.length-1; i++) {
-         key = localStorage.key(i);
-         pairs += "<a href='"+localStorage.getItem(key)+"'>"+key+"</a>";
-       }
-       document.getElementById('connection-list').innerHTML = pairs;
-     }
-
-     doShowAll();
 
    </script>
 </body>

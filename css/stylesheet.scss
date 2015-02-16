@@ -288,7 +288,7 @@ header {
 		display:none;
 	}
 }
-#connection-list {
+.connection-list {
 	background:$dark-gray;
 	max-height:100px;
 	overflow:auto;
@@ -310,6 +310,32 @@ header {
 	}
 	a:before {
 		content:'\f0da';
+		float:right;
+		font-family:fontawesome;
+	}
+}
+.remove-list {
+	background:$dark-gray;
+	max-height:100px;
+	overflow:auto;
+	font-size:12px;
+	color:#fff;
+	margin-top:15px;
+	a:link,
+	a:visited {
+		color:#fff;
+		text-decoration: none;
+		display:block;
+		padding:10px 15px;
+		font-size:12px;
+		border-bottom:1px solid rgba(255,255,255,.05);
+	}
+	a:hover {
+		background:#4F0002;
+		color:#E61313;
+	}
+	a:before {
+		content:'\f00d';
 		float:right;
 		font-family:fontawesome;
 	}
