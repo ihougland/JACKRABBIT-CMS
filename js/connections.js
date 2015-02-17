@@ -1,5 +1,3 @@
-
-
 	// Function to check if external image exists
 	function checkExists(imageUrl, callback) {
 		var img = new Image();
@@ -54,7 +52,7 @@
 		var i = 0;
 		for (i = 0; i <= localStorage.length - 1; i++) {
 			key = localStorage.key(i);
-			pairs += "<a href='editor.html'>" + key + "</a>";
+			pairs += "<a href='initial-state.html'>" + key + "</a>";
 			// USE THE LINE BELOW FOR ACTUAL LINK
 			//pairs += "<a href='" + localStorage.getItem(key) + "/admin'>" + key + "</a>";
 		}

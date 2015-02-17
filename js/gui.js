@@ -30,6 +30,12 @@ $(document).ready(function() {
 		$(this).parents('.panel').find('.panel-group:eq('+itemNumber+')').show();
 	});
 
+	// Toggle Entire Right Sidebar
+	$(document.body).on('click', '.panel-toggler', function (event) {
+		$('.sidebar-right-scroll, .sidebar-right').toggleClass('sidebar-right-closed');
+		$(this).toggleClass('flipped');
+	});
+
 	// Toggle Titles In Right Sidebar
 	$(document.body).on('click', '.sidebar-right-scroll>ul>li>a', function (event) {
 		$(this).parent().find('>ul').slideToggle(600, 'easeOutExpo');

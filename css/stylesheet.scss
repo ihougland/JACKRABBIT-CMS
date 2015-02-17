@@ -27,7 +27,7 @@ html, body {
 body{
 	box-sizing: border-box;
 }
-.main-iframe {
+#main-iframe {
 	width:100%;
 	border:0;
 	outline:0;
@@ -43,6 +43,7 @@ body{
 	display:table;
 	width:100%;
 	height:calc(100% - 30px);
+	table-layout:fixed;
 }
 /*
 db   db d88888b  .d8b.  d8888b. 
@@ -70,15 +71,22 @@ header {
 	top: 23px;
 }
 .head-btn {
-	width: 8px;
-	height: 8px;
-	border-radius: 8px;
+	width: 10px;
+	height: 10px;
+	border-radius: 10px;
 	margin: 0;
 	display: inline-block;
 	-webkit-app-region: no-drag;
 	background: #FFF;
 	border: 3px solid $medium-gray;
+	transition:all .15s ease-out;
 }
+.close {background:#E26757;}
+.minimize {background:#E0AC40;}
+.maximize {background:#7BC240;}
+.close:hover {background:#f33226;}
+.minimize:hover {background:#f6d000;}
+.maximize:hover {background:#65da55;}
 
 .head-title {
 	font-size:13px;
@@ -412,25 +420,24 @@ header {
 	}
 	>ul>li>ul {
 		transition:all .2s ease-out;
-		height:0;
-		width:0;
-		overflow:hidden;
 		position:absolute;
-	}
-	>ul>li:hover ul {
-		display:block;
+		display:none;
 		top:100%;
 		left:0;
 		z-index:100;
 		background:$primary;
-		min-width:150px;
-		height:auto;
 		box-shadow:0 6px 15px rgba(0,0,0,.3);
 		border-radius:0 0 2px 2px;
+	}
+	>ul>li:hover > ul {
+		display:block;
+		min-width:200px;
+		height:auto;
 	}
 	>ul>li>ul>li {
 		display:block;
 		white-space:nowrap;
+		position:relative;
 		i{
 			font-size: 16px;
 			color:#000;
@@ -458,6 +465,14 @@ header {
 			left:4px;
 		}
 	}
+
+	>ul>li>ul>li>ul {
+		display:none;
+		position:absolute;
+		left:100%;
+		top:0;
+		background:$primary-alt;
+	}
 }
 /*
 .d8888. d888888b d8888b. d88888b 
@@ -473,12 +488,33 @@ db   8D   .88.   88  .8D 88.
 	background:#DEE2E8;
 	vertical-align:top;
 	width:250px;
+	transition:width .25s ease-out;
+}
+.panel-toggler {
+	display: block;
+	background: #B7BBC3;
+	color: #DEE2E8;
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 10px;
+	height: 40px;
+	margin-top: -20px;
+	font-size: 10px;
+	text-align: center;
+	padding-top: 15px;
+	box-sizing: border-box;
+}
+.panel-toggler:hover {
+	background:$dark-gray;
 }
 
 .sidebar-right-scroll {
 	height:100%;
 	overflow-y:auto;
-
+	position:relative;
+	width: 250px;
+	transition:width .2s ease-out;
 	>ul{
 		padding:15px;
 	}
@@ -543,6 +579,10 @@ db   8D   .88.   88  .8D 88.
 	input[type="text"]::-webkit-input-placeholder {
 		color: $primary;
 	}
+}
+.sidebar-right-closed {
+	width:10px;
+	overflow:hidden;
 }
 .sidebar-right-scroll::-webkit-scrollbar {
 	width: 8px;
@@ -623,6 +663,10 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	padding:10px;
 	font-size:14px;
 	box-sizing:border-box;
+	background-image: url('../images/jr-10-white.svg');
+	background-size:100px 100px;
+	background-repeat:no-repeat;
+	background-position:center;
 }
 .main-scroll {
 	height: calc(100vh - 30px);
@@ -653,7 +697,8 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	display:table-cell;
 	vertical-align: top;
 	width: 200px;
-	background: $light-gray;
+	min-width: 200px;
+	background-color: $light-gray;
 }
 .sidebar-left-scroll {
 	height:100%;
@@ -711,7 +756,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	font-size:11px;
 	color: #BAC2C6;
 	display:inline-block;
-	padding: 5px 10px;
+	padding: 5px 8px;
 	font-weight:bold;
 	position:relative;
 	text-decoration:none;
@@ -764,6 +809,11 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		border-bottom:1px solid $light-gray;
 		border-top:1px solid $dark-gray;
 	}
+	label {
+		display:inline-block;
+		font-size:10px;
+		padding:4px 0 0 0;
+	}
 	input[type="text"]{
 		font-size: 11px;
 		color: #FFF;
@@ -798,9 +848,35 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		color:#7D7D7D;
 		font-style:italic;
 	}
+	.tool-highlight {
+		color:$primary!important;
+	}
 }
 .panel-group {
 	display:none;
+	.scroll {
+		overflow:auto;
+		max-height:200px;
+		background:$dark-gray;
+		a:link, a:visited {
+			text-decoration:none;
+			color:#fff;
+			display:block;
+			padding:5px;
+		}
+		a:hover {
+			background:$primary;
+		}
+	}
+	a:link, a:visited {
+		color:$primary;
+		text-decoration:none;
+		display:inline-block;
+		padding:2px;
+	}
+	a:hover {
+		color:$primary-alt;
+	}
 }
 .panel-group:nth-child(1) {
 	display:block;
@@ -900,6 +976,14 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		font-weight:bold;
 		display:inline-block;
 	}
+	a:link,
+	a:visited {
+		float:left;
+		color:inherit;
+	}
+	a:hover {
+		color:#222;
+	}
 }
 #stripformat {
 	width:0;
@@ -925,6 +1009,10 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	background: #F7F9FB;
 	border-radius: 0 0 2px 2px;
 	transition:all .2s ease-out;
+	a:link,
+	a:visited {
+		color:$primary;
+	}
 	h1 {
 		font-size:2em;
 		display:block;
@@ -951,21 +1039,44 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	}
 	table {
 		border-collapse: collapse;
+		margin:15px 0;
 	}
 	table tr:nth-child(2n) {
 		background:#E6E6E6;
 	}
 	table td {
 		border:1px solid #c7cacf;
-		padding:4px;
+		padding:6px;
 		position: relative;
-
 	}
-
+	blockquote {
+		float: right;
+		background: #222;
+		color: #fff;
+		display: block;
+		padding: 15px 15px 15px 70px;
+		max-width: 300px;
+		position: relative;
+		border-radius:3px;
+		margin:0 0 15px 15px;
+	}
+	blockquote:after {
+		content: '\201C';
+		font-family: georgia;
+		font-size: 150px;
+		line-height: 138px;
+		position: absolute;
+		top: 50%;
+		margin-top: -30px;
+		left: 2px;
+		opacity: .2;
+		width: 60px;
+		height: 60px;
+	}
 	th {
 		background:$primary;
 		color:#222;
-		border:1px solid #212629;
+		border:1px solid $primary-alt;
 		text-align:left;
 		font-weight:normal;
 		padding:4px;
@@ -977,25 +1088,44 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	}
 	.float-right {
 		float:right;
-		margin:5px 0 30px 30px;
+		margin:0 0 30px 30px;
 		border-radius:3px;
-		max-width:400px;
+		max-width:100%;
 		height:auto;
 	}
 	.float-left {
 		float:left;
-		max-width:400px;
-		margin:5px 30px 30px 0;
+		max-width:100%;
+		height:auto;
+		margin:0 30px 30px 0;
 		border-radius:3px;
 	}
 	.float-normal {
-		margin:10px;
 		border-radius:3px;
+		max-width:100%;
+		height:auto;
 	}
 	.float-center {
 		display:block;
+		max-width:100%;
+		height:auto;
 		margin:10px auto;
 		border-radius:3px;
+	}
+	.responsive-iframe-container {
+		position: relative;
+		padding-bottom: 56.25%; // This is the aspect ratio
+		height: 0;
+		overflow: hidden;
+		iframe,   
+		object,  
+		embed {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100% !important;
+			height: 100% !important;
+		}
 	}
 }
 
@@ -1007,27 +1137,6 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	display:block;
 	clear:both;
 }
-.custom-menu {
-	display:none;
-	background: #393D41;    
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.18); 
-	z-index: 100;
-	position: absolute;
-	width: 200px;
-	border-radius: 2px;
-}
-.custom-menu a:link, .custom-menu a:visited {
-	display: block;
-	color: #fff;
-	text-decoration: none;
-	font-size: 12px;
-	padding: 7px 10px;
-	i{
-		width:15px;
-		padding-right:5px;
-		text-align:center;
-	}
-}
 .selectedImg {
 	background: url("../images/lines.gif");
 	padding: 3px;
@@ -1037,13 +1146,8 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	background: #E9F5C5;
 	color: $primary;
 }
-.custom-menu a:link:last-child {
-	border-bottom:0;
-}
-.custom-menu a:hover {
-	background:$primary;
-	color:#fff;
-}
+
+
 
 .table-dimension {
 	padding:10px;
@@ -1054,12 +1158,21 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		line-height: 1em;
 	}
 }
+.editor-drop:after {
+	content:'\f054';
+	color:#222;
+	font-family:fontawesome;
+	position:absolute;
+	right:5px;
+	top:13px;
+}
 .table-dimension-result {
 	margin-top:10px;
 	font-size:13px;
-	color:#BAC2C6;
+	color:#fff;
+	font-weight:bold;
 	text-align:center;
-	border-top:1px solid #333;
+	border-top:1px solid rgba(255,255,255,.3);
 	line-height:1.4em;
 }
 .row-add {
@@ -1070,13 +1183,13 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	width:10px!important;
 	min-width:0!important;
 	height:10px!important;
-	border:3px solid #4F5357!important;
+	border:2px solid $primary-alt!important;
 	padding:0!important;
-	background:#656c73;
+	background:rgba(0,0,0,.2);
 }
 .cell-add:hover, .cell-highlight {
-	border:3px solid #4F5357!important;
-	background:$primary!important;
+	border:2px solid $primary!important;
+	background:rgba(0,0,0,.8)!important;
 	cursor:pointer;
 }
 

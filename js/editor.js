@@ -1,5 +1,32 @@
-﻿$(document).ready(function() {
+﻿// Create Hyperlinks
+function createLink(){
+    var url = prompt("Enter URL:", "http://");
+    if (url)
+    document.execCommand("createlink",false, url);
+}
 
+// Create New Hyperlinks
+function createnewLink(){
+    var url = prompt("What link would you like?", "http://");
+    var text = prompt("What text should be displayed to the user?", "");
+    var combined = "<a href="+url+">"+text+"</a>";
+    if (url && text) {
+        document.execCommand("insertHTML",false, combined);
+    }
+}
+
+// Add embedded stuff
+function createEmbed(){
+    var code = prompt("Paste Embed Code", "");
+    if (code) {
+        var finalCode = "<div class='responsive-iframe-container'>"+code+"</div>";
+        document.execCommand('insertHTML', false, finalCode);
+    }
+}
+
+$(document).ready(function() {
+
+    // Paste At Caret Funciton
     function pasteHtmlAtCaret(html) {
         var sel, range;
         if (window.getSelection) {
@@ -35,7 +62,7 @@
         }
     }
 
-    /**** Editor Nav Dropdowns ****/
+    //Editor Nav Dropdowns
     $('.editor-drop').hover(
         function() {
             $(this).find('ul').slideDown(100);
@@ -44,83 +71,39 @@
             $(this).find('ul').slideUp(100);
         }
     );
-    /**** Disable firefox helpers ****/
 
-    /* currently applying to everything, not just editor
-    document.designMode = "on";
-    document.execCommand('enableObjectResizing', false, 'false');
-    document.execCommand('enableInlineTableEditing', false, 'false');
-    */
-
-    /**** Fix Copy & Paste formatting ****/
+    // Fix Copy & Paste formatting
     $('[contenteditable]').on('paste', function(e) {
         e.preventDefault();
         var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something..');
         document.execCommand('insertText', false, text);
     });
-    /**** Function to keep right-click menues on the screen ****/
-    function menuPosition() {
-            var menuHeight = $('.custom-menu').height(),
-                menuWidth = $('.custom-menu').width(),
-                menuLeft = $('.custom-menu').offset().left,
-                menuTop = $('.custom-menu').offset().top,
-                windowWidth = $(window).width(),
-                windowHeight = $(window).height();
-            /* if out of bounds on left AND bottom */
-            if (((menuLeft + menuWidth) > windowWidth) && ((menuTop + menuHeight) > windowHeight)) {
-                $('.custom-menu').css({
-                    "left": (menuLeft - menuWidth),
-                    "top": (menuTop - menuHeight)
-                });
-                /* if out of bounds on left only */
-            } else if ((menuLeft + menuWidth) > windowWidth) {
-                $('.custom-menu').css("left", (menuLeft - menuWidth));
-                /* if out of bounds on bottom only */
-            } else if ((menuTop + menuHeight) > windowHeight) {
-                $('.custom-menu').css("top", (menuTop - menuHeight));
-            }
 
-
-        }
-        /*
-        d888888b .88b  d88.  .d8b.   d888b  d88888b .d8888. 
-          `88'   88'YbdP`88 d8' `8b 88' Y8b 88'     88'  YP 
-           88    88  88  88 88ooo88 88      88ooooo `8bo.   
-           88    88  88  88 88~~~88 88  ooo 88~~~~~   `Y8b. 
-          .88.   88  88  88 88   88 88. ~8~ 88.     db   8D 
-        Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y' 
-        */
-
-    /* Prevent dragging */
-    $('div').bind('dragover drop', function(event) {
+    // Add Token
+    $(document).on('click', '.token', function(event) {
         event.preventDefault();
-        return false;
+        var token = $(this).html();
+        document.execCommand('insertText', false, token);
     });
-    // Add Image
-    //Upload Picture
-    /*
-        $('.uploadpic').click(function (){
-            image = $('#image1').val();
-            alt = $('#alt_text').val();
-            alert(image+" "+alt);
-            
-            $.post(  
-                "uploader.php", //The update file
-                {'image': image, 'alt': alt},  // create an object will all values
-                //function that is called when server returns a value.
-                function(data){
-                    alert(data.file_name);
-                }, 
-                //How you want the data formated when it is returned from the server.
-                "json"
-            );
-        });
 
-        function addImage(){
-            //open modal
-            $('.modal').fadeIn();
-        }
+    
+
+    
+/*
+d888888b .88b  d88.  .d8b.   d888b  d88888b .d8888. 
+  `88'   88'YbdP`88 d8' `8b 88' Y8b 88'     88'  YP 
+   88    88  88  88 88ooo88 88      88ooooo `8bo.   
+   88    88  88  88 88~~~88 88  ooo 88~~~~~   `Y8b. 
+  .88.   88  88  88 88   88 88. ~8~ 88.     db   8D 
+Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y' 
 */
+
+    /* Prevent dragging 
+        $('div').bind('dragover drop', function(event) {
+            event.preventDefault();
+            return false;
+        });
+    */
 
     // Click Image
     $(document).on('click', '.editor-text img', function(event) {
@@ -128,6 +111,7 @@
             doneWithImage();
         } else {
             $('.selectedImg').removeClass('selectedImg');
+            $('.tool-highlight').removeClass('tool-highlight');
             event.preventDefault();
             $(this).addClass('selectedImg');
             $('.panel:nth-child(2)').find('.panel-title-active').removeClass('panel-title-active');
@@ -155,12 +139,30 @@
             } else {
                 $('#photo-url').val('');
             }
+
+            // Update Size if applicable
+            if(this.width) {
+                var saveWidth = $('.selectedImg').attr('width');
+                $('#photo-width').val(saveWidth);
+            } else {
+                $('#photo-width').val('');
+            }
+
+            if($(this).hasClass('float-left')){
+                $('.fl').addClass('tool-highlight');
+            } else if ($(this).hasClass('float-right')){
+                $('.fr').addClass('tool-highlight');
+            } else if ($(this).hasClass('float-center')){
+                $('.fc').addClass('tool-highlight');
+            } else if ($(this).hasClass('float-normal')){
+                $('.fn').addClass('tool-highlight');
+            }
         }
         event.stopPropagation();
     });
 
     // So clicking these fields doesn't close the image edit session
-    $(document).on('click', '#photo-desc, #photo-url', function(event) {
+    $(document).on('click', '#photo-desc, #photo-url, #photo-width', function(event) {
        event.stopPropagation();
     });
 
@@ -182,7 +184,12 @@
         } else {
             $('.selectedImg').wrap('<a href="'+newUrl+'"></a>')
         }
+    });
 
+    // Set New Image Width
+    $('#photo-width').on('input', function() {
+        newWidth = $('#photo-width').attr('value');
+        $('.selectedImg').attr('width', newWidth);
     });
 
     function doneWithImage() {
@@ -197,7 +204,7 @@
             'pointerEvents':'none',
             'opacity':'.2'
         });
-        $('#photo-desc, #photo-url').val('');
+        $('#photo-desc, #photo-url, #photo-width').val('');
     }
     doneWithImage();
 
@@ -232,10 +239,12 @@
 
     // Apply delete
     $(document.body).on("click", ".fd", function(event) {
-        $('.selectedImg').fadeOut(500, function() {
-            $(this).remove();
-        });
-        doneWithImage();
+        event.stopPropagation();
+        $('.selectedImg').css('opacity','0');
+        setTimeout(function(){
+            $('.selectedImg').remove();
+            doneWithImage();
+        }, 300);
         event.preventDefault();
     });
 
@@ -558,7 +567,7 @@
     }
 
     document.getElementById("removeHeadings").onclick = function() {
-        removeSelectedElements("h1,h2,h3,h4,h5,h6");
+        removeSelectedElements("h1,h2,h3,h4,h5,h6,blockquote");
         document.execCommand('removeFormat', false, 'null');
         return false;
     };
