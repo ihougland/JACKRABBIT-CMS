@@ -27,40 +27,47 @@ function createEmbed(){
 $(document).ready(function() {
 
     // Paste At Caret Funciton
-    function pasteHtmlAtCaret(html) {
-        var sel, range;
-        if (window.getSelection) {
-            // IE9 and non-IE
-            sel = window.getSelection();
-            if (sel.getRangeAt && sel.rangeCount) {
-                range = sel.getRangeAt(0);
-                range.deleteContents();
-
-                // Range.createContextualFragment() would be useful here but is
-                // non-standard and not supported in all browsers (IE9, for one)
-                var el = document.createElement("div");
-                el.innerHTML = html;
-                var frag = document.createDocumentFragment(),
-                    node, lastNode;
-                while ((node = el.firstChild)) {
-                    lastNode = frag.appendChild(node);
-                }
-                range.insertNode(frag);
-
-                // Preserve the selection
-                if (lastNode) {
-                    range = range.cloneRange();
-                    range.setStartAfter(lastNode);
-                    range.collapse(true);
-                    sel.removeAllRanges();
-                    sel.addRange(range);
-                }
-            }
-        } else if (document.selection && document.selection.type != "Control") {
-            // IE < 9
-            document.selection.createRange().pasteHTML(html);
-        }
+function pasteHtmlAtCaret(html, selector) {
+    var sel, range, parent, node = null;
+    
+    if (document.selection) {
+        node = document.selection.createRange().parentElement();
+    } else {
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0)
+            node = selection.getRangeAt(0).startContainer.parentNode;
     }
+    
+    if ( node && $(node).is(selector) && window.getSelection) {
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+            var el = document.createElement("div");
+            el.innerHTML = html;
+            var frag = document.createDocumentFragment(),
+                node, lastNode;
+            while ((node = el.firstChild)) {
+                lastNode = frag.appendChild(node);
+            }
+            range.insertNode(frag);
+
+            if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+    } else if (document.selection && document.selection.type != "Control") {
+        document.selection.createRange().pasteHTML(html);
+    }
+}
+
+function getSelectedNode() {
+    }
+
 
     //Editor Nav Dropdowns
     $('.editor-drop').hover(
@@ -148,6 +155,17 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
                 $('#photo-width').val('');
             }
 
+            // Add warning if size is too big
+            var naturalWidth = $('.selectedImg')[0].naturalWidth;
+            var newWidth = $('#photo-width').attr('value');
+
+            if(newWidth > naturalWidth) {
+                $('#img-size-label').append(' <i class="fa fa-warning"></i>');
+            } else {
+                $('#img-size-label .fa-warning').remove();
+            }
+
+            // Update selected float
             if($(this).hasClass('float-left')){
                 $('.fl').addClass('tool-highlight');
             } else if ($(this).hasClass('float-right')){
@@ -188,8 +206,15 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 
     // Set New Image Width
     $('#photo-width').on('input', function() {
-        newWidth = $('#photo-width').attr('value');
+        var naturalWidth = $('.selectedImg')[0].naturalWidth;
+        var newWidth = $('#photo-width').attr('value');
         $('.selectedImg').attr('width', newWidth);
+
+        if(newWidth > naturalWidth) {
+            $('#img-size-label').append(' <i class="fa fa-warning"></i>');
+        } else {
+            $('#img-size-label .fa-warning').remove();
+        }
     });
 
     function doneWithImage() {
@@ -205,6 +230,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
             'opacity':'.2'
         });
         $('#photo-desc, #photo-url, #photo-width').val('');
+        $('#img-size-label .fa-warning').remove();
     }
     doneWithImage();
 
@@ -311,12 +337,12 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
             }
             table += '</table>';
 
-            pasteHtmlAtCaret(table);
+            pasteHtmlAtCaret(table,'.editor-text');
         }
     });
 
     // Click Cell
-    $(document).on('click', 'td, th', function (event) {
+    $(document).on('click', '.editor-text td, .editor-text th', function (event) {
         $('#selectedCell').removeAttr('id');
         $(this).attr('id', 'selectedCell');
         $('.panel:nth-child(2)').find('.panel-group:nth-child(3)').css({

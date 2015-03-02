@@ -204,7 +204,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                         		<li><a href="#" title="Delete Image" class="fd"><i class="fa fa-trash"></i></a></li>
                         	</ul>
                             <hr>
-                            <label><i class="fa fa-arrows-h"></i> Max Size (% or px)</label> <br><input type="text" placeholder="example: 300px" id="photo-width"><br>
+                            <label id="img-size-label"><i class="fa fa-arrows-h"></i> Max Size (% or px)</label> <br><input type="text" placeholder="example: 300px" id="photo-width"><br>
                             <label><i class="fa fa-info-circle"></i> Photo Description</label> <br><input type="text" placeholder="Photo Description" id="photo-desc"><br>
                             <label><i class="fa fa-link"></i> Optional Link</label> <br><input type="text" placeholder="http://www.example.com" id="photo-url">
 
@@ -263,8 +263,66 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
 
                     <div class="editor">
                         <div class="editor-title">
-                            <a href="initial-state.html"><i class="fa fa-times"></i></a>
+                            <a href="#" class="special-btn"><i class="fa fa-user"></i> Manage Staff</a>
+                            <a href="index.html"><i class="fa fa-times"></i></a>
                             <h1>Home</h1> <span id="save-warning">*Unsaved Changes*</span>
+                        </div>
+
+                        <div class="special-content">
+                            <h1>Manage Staff Members</h1>
+                            The staff members listed here will appear below your page text.
+                            <br><br>
+                            <a href="#" class="button"><i class="fa fa-plus"></i> Add Staff Member</a>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>Photo</td>
+                                        <td>Name</td>
+                                        <td>Bio</td>
+                                        <td>Actions</td>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td><img src="images/img1.jpg" width="75"></td>
+                                    <td>Todd Smith</td>
+                                    <td>Todd Smith is a cool guy who likes long walks on the beach and programming in a dark basement.</td>
+                                    <td><a href="#"><i class="fa fa-pencil"></i></a> <a href="#"><i class="fa fa-remove"></i></a></td>
+                                </tr>
+                               <tr>
+                                    <td><img src="images/img1.jpg" width="75"></td>
+                                    <td>Todd Smith</td>
+                                    <td>Todd Smith is a cool guy who likes long walks on the beach and programming in a dark basement.</td>
+                                    <td><a href="#"><i class="fa fa-pencil"></i></a> <a href="#"><i class="fa fa-remove"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/img1.jpg" width="75"></td>
+                                    <td>Todd Smith</td>
+                                    <td>Todd Smith is a cool guy who likes long walks on the beach and programming in a dark basement.</td>
+                                    <td><a href="#"><i class="fa fa-pencil"></i></a> <a href="#"><i class="fa fa-remove"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/img1.jpg" width="75"></td>
+                                    <td>Todd Smith</td>
+                                    <td>Todd Smith is a cool guy who likes long walks on the beach and programming in a dark basement.</td>
+                                    <td><a href="#"><i class="fa fa-pencil"></i></a> <a href="#"><i class="fa fa-remove"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/img1.jpg" width="75"></td>
+                                    <td>Todd Smith</td>
+                                    <td>Todd Smith is a cool guy who likes long walks on the beach and programming in a dark basement.</td>
+                                    <td><a href="#"><i class="fa fa-pencil"></i></a> <a href="#"><i class="fa fa-remove"></i></a></td>
+                                </tr>
+                            </table>
+                                <a href="#" class="button"><i class="fa fa-caret-left"></i> Previous</a>
+
+                                <a href="#" class="button">Next <i class="fa fa-caret-right"></i></a>
+                                Jump To:
+                                <select>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                </select>
                         </div>
 
                         <div class="editor-text" contenteditable="true">

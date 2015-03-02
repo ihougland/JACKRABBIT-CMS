@@ -79,6 +79,13 @@ $(document).ready(function() {
 		$(this).toggleClass('con-result-active');
 	});
 
+	// Special Content
+	$(document.body).on('click', '.special-btn', function (event) {
+		$(this).toggleClass('special-open');
+		$('.special-content').slideToggle();
+		event.preventDefault();
+	});
+
 	// Toggle Spell Check Function
 	$(document.body).on('click', '#spellcheckToggle', function (event) {
 		if($(this).hasClass('on')){
