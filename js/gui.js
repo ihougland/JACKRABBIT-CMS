@@ -2,6 +2,20 @@
 
 $(document).ready(function() {
 
+// Add Header?
+var urlParam = function(name, w){
+    w = w || window;
+    var rx = new RegExp('[\&|\?]'+name+'=([^\&\#]+)'),
+        val = w.location.search.match(rx);
+    return !val ? '':val[1];
+}
+var app = urlParam('app');
+if (app) {
+	//$('body').append('result:no menu bar');
+} else {
+	$('body').prepend('result:add menu bar');
+}
+
 	// Connection Tabs 
 	$('.connection-tabs .tab-content:first').show();
 	$(document.body).on('click', '.connection-tabs .tab', function (event) {
