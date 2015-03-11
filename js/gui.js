@@ -142,6 +142,28 @@ if (app) {
 	};
 	counter();
 
+	// SEO Length Warning on page load
+	$(document).on('input', '.seo-input', function (event) {
+		seolength( $(this) );
+	});
+	// SEO Length Warning on change
+	$('.seo-input').each(function() {
+		seolength( $(this) );
+	});
+	// SEO Length Warning function
+	function seolength(thisObj) {
+		var max = thisObj.attr('maxLength'),
+			current = thisObj.val(),
+			current = current.length;
+		if (current > 0) {
+			thisObj.parent().find('.seo-length').html("("+current+"/"+max+")");
+		} else {
+			thisObj.parent().find('.seo-length').html("<i class='fa fa-warning'></i>");
+		}
+	}
+
+	
+
 	$('body').on('focus', '[contenteditable]', function() {
 	    var $this = $(this);
 	    $this.data('before', $this.html());

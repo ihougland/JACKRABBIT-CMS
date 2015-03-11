@@ -94,14 +94,12 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     </li>
                     <li><a href="#">View</a>
                         <ul>
-                            <li>
-                                <li><a href="#" id="htmlMode" class="off">HTML Mode</a>
-                                </li>
+                            <li><a href="#" id="htmlMode" class="off">HTML Mode</a>
                             </li>
-                            <li>
-                                <li><a href="#" id="spellcheckToggle" class="on">Spellcheck</a>
-                                </li>
-                            </li>
+                            <!-- no worky in node-webkit :(
+                            <li><a href="#" id="spellcheckToggle" class="on">Spellcheck</a></li>
+                            -->
+                            <li><a href="#">Preview</a>
                         </ul>
                     </li>
                     <li><a href="#">Settings</a>
@@ -204,7 +202,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                         		<li><a href="#" title="Delete Image" class="fd"><i class="fa fa-trash"></i></a></li>
                         	</ul>
                             <hr>
-                            <label id="img-size-label"><i class="fa fa-arrows-h"></i> Max Size (% or px)</label> <br><input type="text" placeholder="example: 300px" id="photo-width"><br>
+                            <label id="img-size-label"><i class="fa fa-arrows-h"></i> Max Size (% or px) <span></span></label> <br><input type="text" placeholder="example: 300px" id="photo-width"><br>
                             <label><i class="fa fa-info-circle"></i> Photo Description</label> <br><input type="text" placeholder="Photo Description" id="photo-desc"><br>
                             <label><i class="fa fa-link"></i> Optional Link</label> <br><input type="text" placeholder="http://www.example.com" id="photo-url">
 
@@ -238,16 +236,22 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     </div>
                     <div class="panel-contents">
                         <div class="panel-group">
-                            <label>Page Name</label>
-                            <br>
-                            <input type="text" placeholder="Home"> 
-                            <label>Browser Title</label>
-                            <br>
-                            <input type="text" placeholder="Browser Title">
-                            <br> 
-                            <label>Page Description</label>
-                            <br>
-                            <textarea placeholder="A quick description of this page."></textarea>
+                            <div>
+                                <label>Page Name <span class="seo-length"></span></label>
+                                <br>
+                                <input class="seo-input" type="text" placeholder="Home" maxlength="55" value="Home"> 
+                            </div>
+                            <div>
+                                <label>Browser Title <span class="seo-length"></span></label>
+                                <br>
+                                <input class="seo-input" type="text" placeholder="Browser Title" maxlength="55">
+                                <br> 
+                            </div>
+                            <div>
+                                <label>Page Description <span class="seo-length"></span></label>
+                                <br>
+                                <textarea class="seo-input" placeholder="A quick description of this page." maxlength="160"></textarea>
+                            </div>
                         </div>
                     </div>
                     <!-- end .panel-contents-->
@@ -313,9 +317,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                                     <td><a href="#"><i class="fa fa-pencil"></i></a> <a href="#"><i class="fa fa-remove"></i></a></td>
                                 </tr>
                             </table>
-                                <a href="#" class="button"><i class="fa fa-caret-left"></i> Previous</a>
-
-                                <a href="#" class="button">Next <i class="fa fa-caret-right"></i></a>
+                            <div class="pagination">                            
                                 Jump To:
                                 <select>
                                   <option value="1">1</option>
@@ -323,6 +325,10 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                                   <option value="3">3</option>
                                   <option value="4">4</option>
                                 </select>
+                                <a href="#" class="button"><i class="fa fa-caret-left"></i> Previous</a>
+
+                                <a href="#" class="button">Next <i class="fa fa-caret-right"></i></a>
+                            </div>
                         </div>
 
                         <div class="editor-text" contenteditable="true">

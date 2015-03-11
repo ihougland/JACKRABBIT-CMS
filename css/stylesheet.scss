@@ -813,8 +813,10 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		display:inline-block;
 		font-size:10px;
 		padding:4px 0 0 0;
-		.fa-warning {
-			color:rgb(239, 216, 79);
+		span {
+			i{
+			color:$primary;
+			}
 		}
 	}
 	input[type="text"]{
@@ -991,7 +993,6 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 .special-btn {
 	display: inline-block;
 	text-decoration: none;
-	background: rgba(0, 0, 0, 0.08);
 	border: 1px solid #CACACA;
 	padding: 5px 8px 4px 8px;
 	position: absolute;
@@ -1000,33 +1001,49 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	margin-left: 5px;
 	border-radius: 4px;
 	font-size: 11px;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.57);
-	color: #7C7C7C;
+	box-shadow: inset 0 1px 0 #fff;
+	color: #5D5D5D!important;
 }
 .special-open {
 	padding: 6px 8px 3px 8px;
-	background: #EFEFEF;
-	color: #3B3B3B!important;
-	box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.34);
+	background: #dee2e8;
+	color: #3b3b3b !important;
+	box-shadow: inset 0 1px 0px rgba(0,0,0,0.3);
 }
 .special-content {
-	display:none;
-	background: #DEE2E8;
+	display: none;
+	background: #FFFFFF;
 	color: #5F5F5F;
-	padding: 10px;
-	font-size:12px;
-	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.19);
+	padding: 30px;
+	font-size: 12px;	
+	h1 {
+		font-weight:bold;
+		font-size:16px;
+		margin:15px 0;
+	}
+	h1:first-of-type {
+		margin-top:0;
+	}
 	.button {
-		display:inline-block;
-		background:$primary;
-		color:#fff;
-		text-decoration:none;
-		padding:5px;
-		font-size:12px;
-		border-radius:3px;
+		display: inline-block;
+		border: 2px solid #C8C8C8;
+		color: #8A8A8A;
+		text-decoration: none;
+		padding: 6px;
+		font-size: 13px;
+		border-radius: 4px;
+		box-shadow:0 0 0 $primary;
+		transition:.2s;
 	}
 	.button:hover {
+		border:2px solid $primary;
+		color:$primary;
+	}
+	.button:active {
+		transition:none;
 		background:$primary-alt;
+		border:2px solid $primary-alt;
+		color:#fff;
 	}
 	table {
 		margin:15px 0;
@@ -1043,28 +1060,48 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		}
 	}
 	thead tr{
-		background:#FAFAFB;
+		background:#DEE2E8;
 		text-transform:uppercase;
 		font-size:12px;
 	}
 	tr {
-		background:#fff;
+		background:#F3F5F7;
 	}
 	tr:nth-child(2n) {
-		background:#FAFAFB;
-	}
-	h1 {
-		font-weight:bold;
-		font-size:16px;
-		margin:15px 0;
+		background:none;
 	}
 	td {
 		padding:5px;
-		border: 1px solid #DEE2E8;
+		border: 1px solid #fff;
+	}
+	.pagination {
+		float:right;
+		select {
+			display: inline-block;
+			border: 2px solid #C8C8C8;
+			color: #8A8A8A;
+			text-decoration: none;
+			background: none;
+			padding: 10px;
+			height: 29px;
+			font-size: 13px;
+			border-radius: 4px;
+			box-shadow: inset 0 0 0 $primary;
+			transition: .2s;
+			outline:none;
+		}
+		select:hover {
+			color: $primary;
+			border:2px solid $primary;
+		}
 	}
 }
 
-
+.special-content:after {
+	content:'';
+	display:block;
+	clear:both;
+}
 #stripformat {
 	width:0;
 	height:0;
