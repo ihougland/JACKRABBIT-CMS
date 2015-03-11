@@ -158,10 +158,17 @@ if (app) {
 		if (current > 0) {
 			thisObj.parent().find('.seo-length').html("("+current+"/"+max+")");
 		} else {
-			thisObj.parent().find('.seo-length').html("<i class='fa fa-warning'></i>");
+			thisObj.parent().find('.seo-length').html("<i class='fa fa-warning' rel='Please enter text.'></i>");
 		}
 	}
 
+	$(document.body).on('mouseover', '.panel .fa-warning', function (event) {
+		var getText = $(this).attr('rel');
+		$(this).parent().append('<div class="tooltip">'+getText+'</div>');
+	});
+	$(document.body).on('mouseout', '.panel .fa-warning', function (event) {
+		$('.tooltip').remove();
+	});
 	
 
 	$('body').on('focus', '[contenteditable]', function() {

@@ -814,8 +814,10 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		font-size:10px;
 		padding:4px 0 0 0;
 		span {
+			position:relative;
 			i{
 			color:$primary;
+			cursor:help;
 			}
 		}
 	}
@@ -856,6 +858,28 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	.tool-highlight {
 		color:$primary!important;
 	}
+}
+.tooltip {
+	background:$primary;
+	color: #fff;
+	padding: 10px;
+	font-size: 10px;
+	position: absolute;
+	left: calc(100% + 15px);
+	top: 5px;
+	width: 150px;
+	z-index: 50;
+	border-radius: 0 3px 3px 3px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.38);
+}
+.tooltip:after {
+	content: '';
+	border: 6px solid transparent;
+	border-right: 6px solid $primary;
+	border-top: 6px solid $primary;
+	position: absolute;
+	top: 0px;
+	left: -12px;
 }
 .panel-group {
 	display:none;

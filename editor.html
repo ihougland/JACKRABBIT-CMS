@@ -202,7 +202,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                         		<li><a href="#" title="Delete Image" class="fd"><i class="fa fa-trash"></i></a></li>
                         	</ul>
                             <hr>
-                            <label id="img-size-label"><i class="fa fa-arrows-h"></i> Max Size (% or px) <span></span></label> <br><input type="text" placeholder="example: 300px" id="photo-width"><br>
+                            <label id="img-size-label"><i class="fa fa-arrows-h"></i> Max Size (number or %) <span></span></label> <br><input type="text" placeholder="ex: 300 or 50%" id="photo-width"><br>
                             <label><i class="fa fa-info-circle"></i> Photo Description</label> <br><input type="text" placeholder="Photo Description" id="photo-desc"><br>
                             <label><i class="fa fa-link"></i> Optional Link</label> <br><input type="text" placeholder="http://www.example.com" id="photo-url">
 
@@ -239,12 +239,12 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                             <div>
                                 <label>Page Name <span class="seo-length"></span></label>
                                 <br>
-                                <input class="seo-input" type="text" placeholder="Home" maxlength="55" value="Home"> 
+                                <input class="seo-input" type="text" placeholder="Page name on website" maxlength="55" value="Home"> 
                             </div>
                             <div>
                                 <label>Browser Title <span class="seo-length"></span></label>
                                 <br>
-                                <input class="seo-input" type="text" placeholder="Browser Title" maxlength="55">
+                                <input class="seo-input" type="text" placeholder="Text for browser's title" maxlength="55">
                                 <br> 
                             </div>
                             <div>
@@ -317,16 +317,15 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                                     <td><a href="#"><i class="fa fa-pencil"></i></a> <a href="#"><i class="fa fa-remove"></i></a></td>
                                 </tr>
                             </table>
-                            <div class="pagination">                            
-                                Jump To:
+                            <div class="pagination">
+                                
+                                <a href="#" class="button"><i class="fa fa-caret-left"></i> Previous</a>
                                 <select>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                   <option value="3">3</option>
                                   <option value="4">4</option>
                                 </select>
-                                <a href="#" class="button"><i class="fa fa-caret-left"></i> Previous</a>
-
                                 <a href="#" class="button">Next <i class="fa fa-caret-right"></i></a>
                             </div>
                         </div>

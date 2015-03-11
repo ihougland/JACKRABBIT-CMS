@@ -65,9 +65,6 @@ $(document).ready(function() {
 		}
 	}
 
-	function getSelectedNode() {
-	}
-
 
 	//Editor Nav Dropdowns
 	$('.editor-drop').hover(
@@ -155,16 +152,6 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 				$('#photo-width').val('');
 			}
 
-			// Add warning if size is too big
-			var naturalWidth = $('.selectedImg')[0].naturalWidth;
-			var newWidth = $('#photo-width').attr('value');
-
-			if(newWidth > naturalWidth) {
-				$('#img-size-label span').html(' <i class="fa fa-warning"></i>');
-			} else {
-				$('#img-size-label span .fa-warning').remove();
-			}
-
 			// Update selected float
 			if($(this).hasClass('float-left')){
 				$('.fl').addClass('tool-highlight');
@@ -209,17 +196,24 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		var naturalWidth = $('.selectedImg')[0].naturalWidth,
 			newWidth = $('#photo-width').attr('value'),
 			reg = /^\d+(\%$|\d*$)/,
-			charTest = reg.test(newWidth);
+			reg2 = /(\d\%$)/,
+			charTest = reg.test(newWidth),
+			percentTest = reg2.test(newWidth);
+
 		// passes char test
-		if (charTest == true) {
+		if (!newWidth){
+		} else if(charTest == true) {
 			$('.selectedImg').attr('width', newWidth);
-			$('#img-size-label .fa-warning').remove();
-			console.log('all ok');
 		// fails chartest
 		} else {
-			$('#img-size-label span').html(' <i class="fa fa-warning"></i>');
-			alert('Whups. Please enter only plain numbers, or a valid percent.');
-			console.log('fail charTest');
+			alert('Please enter only numbers such as 300, or percents such as 50%');
+		}
+
+		// Is it a px value that's larger than the original?
+		if (percentTest == false && newWidth > naturalWidth) {
+			$('#img-size-label span').html(' <i class="fa fa-warning" rel="New image size is larger than original. This may reduce image quality."></i>');
+		} else {
+			$('#img-size-label span').empty();
 		}
 	});
 
