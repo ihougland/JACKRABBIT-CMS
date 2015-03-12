@@ -114,6 +114,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
             </div>
         <div class="table">
             <div class="sidebar-left">
+            <div class="sidebar-left-scroll">
                 <div class="panel">
                     <div class="panel-title">
                         <a href="#" class="panel-toggle"><i class="fa fa-chevron-circle-down"></i></a>
@@ -202,7 +203,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                         		<li><a href="#" title="Delete Image" class="fd"><i class="fa fa-trash"></i></a></li>
                         	</ul>
                             <hr>
-                            <label id="img-size-label"><i class="fa fa-arrows-h"></i> Max Size (number or %) <span></span></label> <br><input type="text" placeholder="ex: 300 or 50%" id="photo-width"><br>
+                            <label id="img-size-label"><span></span> <i class="fa fa-arrows-h"></i> Max Size (number or %)</label> <br><input type="text" placeholder="ex: 300 or 50%" id="photo-width"><br>
                             <label><i class="fa fa-info-circle"></i> Photo Description</label> <br><input type="text" placeholder="Photo Description" id="photo-desc"><br>
                             <label><i class="fa fa-link"></i> Optional Link</label> <br><input type="text" placeholder="http://www.example.com" id="photo-url">
 
@@ -237,18 +238,18 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     <div class="panel-contents">
                         <div class="panel-group">
                             <div>
-                                <label>Page Name <span class="seo-length"></span></label>
+                                <label><span class="warn"></span>Page Name <span class="seo-length"></span></label>
                                 <br>
                                 <input class="seo-input" type="text" placeholder="Page name on website" maxlength="55" value="Home"> 
                             </div>
                             <div>
-                                <label>Browser Title <span class="seo-length"></span></label>
+                                <label><span class="warn"></span>Browser Title <span class="seo-length"></span></label>
                                 <br>
                                 <input class="seo-input" type="text" placeholder="Text for browser's title" maxlength="55">
                                 <br> 
                             </div>
                             <div>
-                                <label>Page Description <span class="seo-length"></span></label>
+                                <label><span class="warn"></span>Page Description <span class="seo-length"></span></label>
                                 <br>
                                 <textarea class="seo-input" placeholder="A quick description of this page." maxlength="160"></textarea>
                             </div>
@@ -257,7 +258,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     <!-- end .panel-contents-->
                 </div>
                 <!-- end .panel -->
-
+                    </div><!-- end .sidebar-left-scroll-->
             </div>
             <!-- end .sidebar-left -->
 

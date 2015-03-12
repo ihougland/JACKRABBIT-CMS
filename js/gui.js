@@ -157,8 +157,9 @@ if (app) {
 			current = current.length;
 		if (current > 0) {
 			thisObj.parent().find('.seo-length').html("("+current+"/"+max+")");
+			thisObj.parent().find('.warn').empty();
 		} else {
-			thisObj.parent().find('.seo-length').html("<i class='fa fa-warning' rel='Please enter text.'></i>");
+			thisObj.parent().find('.warn').html("<i class='fa fa-warning' rel='Please enter text.'></i> ");
 		}
 	}
 

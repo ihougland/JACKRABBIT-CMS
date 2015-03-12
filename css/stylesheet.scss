@@ -660,7 +660,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 .main {
 	display:table-cell;
 	vertical-align:top;
-	padding:10px;
+	padding:10px 10px 0 10px;
 	font-size:14px;
 	box-sizing:border-box;
 	background-image: url('../images/jr-10-white.svg');
@@ -669,7 +669,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	background-position:center;
 }
 .main-scroll {
-	height: calc(100vh - 30px);
+	height: 100%;
 	overflow:auto;
 }
 .main-scroll::-webkit-scrollbar {
@@ -702,13 +702,12 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 }
 .sidebar-left-scroll {
 	height:100%;
-	overflow-y:auto;
-	overflow-x:visible;
+	overflow:auto;
 }
 .sidebar-left-scroll::-webkit-scrollbar {
 	width: 8px;
 }
- 
+
 /* Track */
 .sidebar-left-scroll::-webkit-scrollbar-track {
 	background:$dark-gray;
@@ -860,26 +859,26 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	}
 }
 .tooltip {
-	background:$primary;
-	color: #fff;
-	padding: 10px;
-	font-size: 10px;
-	position: absolute;
-	left: calc(100% + 15px);
-	top: 5px;
-	width: 150px;
-	z-index: 50;
-	border-radius: 0 3px 3px 3px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.38);
+  background: $primary;
+  color: #FFF;
+  padding: 10px;
+  font-size: 10px;
+  position: absolute;
+  left: -5px;
+  top: 24px;
+  width: 150px;
+  z-index: 50;
+  border-radius: 0 3px 3px 3px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.38);
 }
 .tooltip:after {
-	content: '';
-	border: 6px solid transparent;
-	border-right: 6px solid $primary;
-	border-top: 6px solid $primary;
-	position: absolute;
-	top: 0px;
-	left: -12px;
+  content: '';
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-right: 5px solid $primary-alt;
+  border-bottom: 5px solid $primary-alt;
+  position: absolute;
+  top: -10px;
+  left: 0px;
 }
 .panel-group {
 	display:none;
@@ -1106,7 +1105,6 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 			color: #8A8A8A;
 			text-decoration: none;
 			background: none;
-			padding: 10px;
 			height: 29px;
 			font-size: 13px;
 			border-radius: 4px;
