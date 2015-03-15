@@ -421,6 +421,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 
 		$('#selectedTable tr').each(function() {
 			$('<td>&nbsp;</td>').insertAfter($(this).find('td:eq(' + whichOne + ')'));
+			$('<th>&nbsp;</th>').insertAfter($(this).find('th:eq(' + whichOne + ')'));
 		});
 
 		$('#selected, #selectedTable').removeAttr('id');
@@ -435,6 +436,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 
 		$('#selectedTable tr').each(function() {
 			$('<td>&nbsp;</td>').insertBefore($(this).find('td:eq(' + whichOne + ')'));
+			$('<th>&nbsp;</th>').insertBefore($(this).find('th:eq(' + whichOne + ')'));
 		});
 
 		$('#selected, #selectedTable').removeAttr('id');
@@ -446,6 +448,9 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		$('#selectedCell').parents('table').attr('id', 'selectedTable');
 		var whichOne = $('#selectedCell').index();
 		$('#selectedTable tr').find("td:eq(" + whichOne + ")").fadeOut(500, function() {
+			$(this).remove();
+		});
+		$('#selectedTable thead tr').find("th:eq(" + whichOne + ")").fadeOut(500, function() {
 			$(this).remove();
 		});
 		$('#selected, #selectedTable').removeAttr('id');
@@ -469,10 +474,25 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 
 		// If already in html mode
 		if ($(this).hasClass('on')) {
+			$(this).removeClass('on');
 			$('.CodeMirror').each(function(i, el) {
-					el.CodeMirror.refresh();
+				el.CodeMirror.refresh();
+				var text = el.CodeMirror.getValue();
+				//alert(text);
+				$('.CodeMirror').css({
+					'transform': 'scale(.8)',
+					'opacity': '0'
 				});
-			alert(htmlEditor.getValue());
+				setTimeout(function() {
+					$('.editor-text').css({
+						'transform': 'scale(1)',
+						'opacity': '1'
+					}).html(text).fadeIn();
+					$('.html-mode').empty().html('<textarea name="htmlTextarea" id="htmlTextarea"></textarea>').hide();
+				}, 250);
+			});
+			
+			
 		} else {
 			$(this).addClass('on');
 			var saveText = $('.editor-text').html();

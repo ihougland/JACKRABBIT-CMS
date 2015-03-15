@@ -141,6 +141,8 @@ if (app) {
 		$('#words').html(wordCount);		
 		$('#characters').html(charCountNoSpace);
 	};
+	counter();
+
 
 	// SEO Length Warning on page load
 	$(document).on('input', '.seo-input', function (event) {
