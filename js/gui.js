@@ -13,7 +13,8 @@ var app = urlParam('app');
 if (app) {
 	//$('body').append('result:no menu bar');
 } else {
-	$('body').prepend('result:add menu bar');
+	$('body').prepend('<header><div class="head-title">JACKRABBIT<span>CMS</span></header>');
+	$('.table').css('height','calc(100% - 100px)');
 }
 
 	// Connection Tabs 
@@ -140,7 +141,6 @@ if (app) {
 		$('#words').html(wordCount);		
 		$('#characters').html(charCountNoSpace);
 	};
-	counter();
 
 	// SEO Length Warning on page load
 	$(document).on('input', '.seo-input', function (event) {
@@ -163,14 +163,23 @@ if (app) {
 		}
 	}
 
-	$(document.body).on('mouseover', '.panel .fa-warning', function (event) {
+	// Tool Tips
+	$(document.body).on('mouseover', '.fa-warning, .fa-question-circle', function (event) {
 		var getText = $(this).attr('rel');
 		$(this).parent().append('<div class="tooltip">'+getText+'</div>');
 	});
-	$(document.body).on('mouseout', '.panel .fa-warning', function (event) {
+	// Remove Tool Tips
+	$(document.body).on('mouseout', '.fa-warning, .fa-question-circle', function (event) {
 		$('.tooltip').remove();
 	});
 	
+	// Input Label Styles
+	$(document.body).on('focus', '.form-field-text, .form-field-textarea', function (event) {
+		$(this).next('label').css('color','#8CAB28');
+	});
+	$(document.body).on('blur', '.form-field-text, .form-field-textarea', function (event) {
+		$(this).next('label').css('color','');
+	});
 
 	$('body').on('focus', '[contenteditable]', function() {
 	    var $this = $(this);

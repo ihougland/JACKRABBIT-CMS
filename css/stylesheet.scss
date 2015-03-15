@@ -27,6 +27,24 @@ html, body {
 body{
 	box-sizing: border-box;
 }
+.greeter {
+	position: absolute;
+	right: 10px;
+	top: 20px;
+	padding: 15px;
+	background: $primary;
+	color: #fff;
+	border-radius: 2px 0 2px 2px;
+}
+.greeter:after {
+	content:'';
+	border:5px solid transparent;
+	border-top:5px solid $primary;
+	border-left:5px solid $primary;
+	position:absolute;
+	right:-10px;
+	top:0;
+}
 #main-iframe {
 	width:100%;
 	border:0;
@@ -647,8 +665,90 @@ db   8D   .88.   88  .8D 88.
 	color:#222;
 }
 
-
-
+/*
+d8888b.  .d8b.   d888b  d88888b 
+88  `8D d8' `8b 88' Y8b 88'     
+88oodD' 88ooo88 88      88ooooo 
+88~~~   88~~~88 88  ooo 88~~~~~ 
+88      88   88 88. ~8~ 88.     
+88      YP   YP  Y888P  Y88888P
+*/
+.page {
+	background:#F7F9FB;
+	padding:30px 30px 60px 30px;
+	font-weight:400;
+	line-height:1.4em;
+	min-height:100%;
+	box-sizing:border-box;
+	color:#525252;
+	h1 {
+		font-weight:700;
+		color:$primary;
+		margin:20px 0;
+		font-size:1.5em;
+	}
+	h1:first-of-type {margin-top:0;}
+	h2 {
+		font-weight:700;
+		margin:20px 0;
+		font-size:1.4em;
+	}
+	h3 {
+		font-weight:700;
+		margin:20px 0;
+		font-size:1em;
+		text-transform:uppercase;
+	}
+	hr {
+		margin:30px -30px;
+		border:0;
+		border-bottom:1px solid rgba(0,0,0,.2);
+	}
+	a:link, a:visited {
+		color:$primary;
+	}
+	a:hover {
+		color:$primary-alt;
+	}
+	ul, ol {
+		padding:10px 10px 10px 30px;
+	}
+	ul li {
+		list-style:circle;
+	}
+	ol li {
+		list-style:decimal;
+	}
+	table {
+		margin:15px 0;
+		border-collapse: collapse;
+		a:link, a:visited {
+			color:inherit;
+			padding:2px;
+			i {
+				font-size:16px;
+			}
+		}
+		a:hover {
+			color:$primary;
+		}
+		}
+		thead tr{
+			background:#DEE3E9;
+			text-transform:uppercase;
+			font-size:12px;
+		}
+		tr {
+			background:#DEE3E9;
+		}
+		tr:nth-child(2n) {
+			background:none;
+		}
+		td, th {
+			padding:5px 10px;
+			border: 1px solid #fff;
+		}
+}
 /*
 d88888b d8888b. d888888b d888888b  .d88b.  d8888b. 
 88'     88  `8D   `88'   `~~88~~' .8P  Y8. 88  `8D 
@@ -668,9 +768,13 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	background-repeat:no-repeat;
 	background-position:center;
 }
+.main-no-pad {
+	padding:0
+}
 .main-scroll {
 	height: 100%;
 	overflow:auto;
+	position:relative;
 }
 .main-scroll::-webkit-scrollbar {
 	width: 8px;
@@ -699,6 +803,17 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	width: 200px;
 	min-width: 200px;
 	background-color: $light-gray;
+	h1 {
+		text-transform:uppercase;
+		background:$primary-alt;
+		font-weight:700;
+		font-size:12px;
+		padding:15px;
+		color:#fff;
+		i {
+			font-size: 14px;
+		}
+	}
 }
 .sidebar-left-scroll {
 	height:100%;
@@ -723,6 +838,42 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 .sidebar-left-scroll::-webkit-scrollbar-thumb:hover,
 .sidebar-left-scroll::-webkit-scrollbar-thumb:active {
 	background: #ccc; 
+}
+
+.side-options {
+	font-size:12px;
+	a:link,
+	a:visited {
+		display:block;
+		color:#BAC2C6;
+		background:$medium-gray;
+		text-decoration:none;
+		padding:15px;
+		position:relative;
+		margin-bottom:1px;
+	}
+	a:hover {
+		color:#fff;
+		background:$dark-gray;
+	}
+	#current-setting {
+		background:$primary;
+		color:#fff;
+	}
+	#current-setting:after {
+		content: '';
+		border: 5px solid transparent;
+		border-right: 5px solid #F7F9FB;
+		position: absolute;
+		right: 0;
+		top: 50%;
+		margin-top: -5px;
+	}
+}
+.two-column {
+	-moz-column-count: 2;
+	-webkit-column-count: 2;
+	column-count: 2;
 }
 .editor-toolbar {
 	li {
@@ -812,13 +963,6 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		display:inline-block;
 		font-size:10px;
 		padding:4px 0 0 0;
-		span {
-			position:relative;
-			i{
-			color:$primary;
-			cursor:help;
-			}
-		}
 	}
 	input[type="text"]{
 		font-size: 11px;
@@ -856,6 +1000,14 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	}
 	.tool-highlight {
 		color:$primary!important;
+	}
+}
+
+span {
+	position:relative;
+	.fa-warning{
+	color:$primary;
+	cursor:help;
 	}
 }
 .tooltip {
@@ -1047,27 +1199,6 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	h1:first-of-type {
 		margin-top:0;
 	}
-	.button {
-		display: inline-block;
-		border: 2px solid #C8C8C8;
-		color: #8A8A8A;
-		text-decoration: none;
-		padding: 6px;
-		font-size: 13px;
-		border-radius: 4px;
-		box-shadow:0 0 0 $primary;
-		transition:.2s;
-	}
-	.button:hover {
-		border:2px solid $primary;
-		color:$primary;
-	}
-	.button:active {
-		transition:none;
-		background:$primary-alt;
-		border:2px solid $primary-alt;
-		color:#fff;
-	}
 	table {
 		margin:15px 0;
 		border-collapse: collapse;
@@ -1117,6 +1248,28 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 			border:2px solid $primary;
 		}
 	}
+}
+
+.button {
+	display: inline-block;
+	border: 2px solid #C8C8C8;
+	color: #8A8A8A!important;
+	text-decoration: none;
+	padding: 6px;
+	font-size: 13px;
+	border-radius: 4px;
+	box-shadow:0 0 0 $primary;
+	transition:.2s;
+}
+.button:hover {
+	border:2px solid $primary;
+	color:$primary!important;
+}
+.button:active {
+	transition:none;
+	background:$primary-alt;
+	border:2px solid $primary-alt;
+	color:#fff!important;
 }
 
 .special-content:after {

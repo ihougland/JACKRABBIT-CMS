@@ -13,6 +13,7 @@
 /* asterisk */
 .form-field-required {
 	color:#bd000b;
+	font-size:8px;
 }
 /* applies to specific fiels with errors */
 .form-field-error {
@@ -25,22 +26,58 @@
 .form-field-textbox-name {
 }
 .form-field-name {
+	display:block;
+	text-transform:uppercase;
+	margin-bottom:15px;
+	font-size: 12px;
+	color:#828282;
+	transition:.2s ease-out;
 }
 
 /************************/
 /*        FIELDS        */
 /************************/
-.form-field-text,
-.form-field-textarea {
-    outline:none;
-    border:2px solid #ccc;
-    padding:4px;
-    margin:2px 0;
-    font-size:14px;
+.form-field-text {
+	outline: none;
+	background: none;
+	border: 0;
+	border-bottom: 2px solid #ccc;
+	padding: 10px 5px;
+	color:#525252;
+	margin: 2px 0 0 0;
+	font-size: 12px;
+	width:250px;
+	transition:.2s ease-out;
+	position:relative;
+	font-weight:bold;
 }
-.form-field-text:focus,
-.form-field-textarea:focus {
+.form-field-text:focus{
+	border-bottom:2px solid #8CAB28;
+	box-shadow: 0 1px 0 #8CAB28, inset 0 -1px 0 #8CAB28, inset 0 -35px 0 #E6EAD8;
+	color:#8CAB28;
+}
 
+.form-field-textarea {
+	outline: none;
+	background: none;
+	border: 2px solid #ccc;
+	padding: 4px;
+	color:#525252;
+	margin: 2px 0 -6px 0;
+	padding:5px;
+	font-size: 12px;
+	width:250px;
+	height:150px;
+	transition:.2s ease-out;
+	position:relative;
+	font-weight:bold;
+}
+
+.form-field-textarea:focus {
+	border:2px solid #8CAB28;
+	box-shadow: 0 0 0 1px #8CAB28, inset 0 0 0 1px #8CAB28;
+	color:#8CAB28;
+	background:#E6EAD8;
 }
 .form-field-select {}
 .form-field-submit {}
@@ -50,24 +87,25 @@
 .form-field-checkbox {}
 
 .form-field-submit {
-    display: inline-block;
-    outline: none;
-    border:none;
-    border-radius:30px;
-    background:#000;
-    color:#fff;
-    font-size:14px;
-    line-height:1em;
-    font-family:sans-serif;
-    padding:10px 15px;
-    margin:2px 0;
-    border:0;
+	display: inline-block;
+	outline: none;
+	border:none;
+	border-radius:6px;
+	background:#8CAB28;
+	color:#fff;
+	font-size:14px;
+	line-height:1em;
+	font-family:sans-serif;
+	padding:10px 15px;
+	margin:2px 0;
+	border:0;
 }
 .form-field-submit:hover {
-    cursor: pointer;
+	cursor: pointer;
+	background:#7a9521;
 }
 
 .sending {
-    @extend .form-field-submit;
-    background:#329b5b;
+	@extend .form-field-submit;
+	background:#329b5b;
 }
