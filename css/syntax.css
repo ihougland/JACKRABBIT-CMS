@@ -20,7 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-.cm-s-syntax.CodeMirror { background: #2A2E32; color: #f8f8f8; }
+.cm-s-syntax.CodeMirror { background: #2A2E32; color: #C1C6CD; line-height:1.4em; }
 .cm-s-syntax .CodeMirror-selected { background: #27007A !important; }
 .cm-s-syntax .CodeMirror-gutters { background: #44474d; border-right: 1px solid #555; }
 .cm-s-syntax .CodeMirror-guttermarker { color: #8CAB28; }
@@ -38,13 +38,13 @@ THE SOFTWARE.
 .cm-s-syntax span.cm-property {}
 .cm-s-syntax span.cm-operator {}
 .cm-s-syntax span.cm-comment {color: gray;}
-.cm-s-syntax span.cm-string {color: #9FEE00;}
+.cm-s-syntax span.cm-string {color: #AD924E;}
 .cm-s-syntax span.cm-meta {color: yellow;}
 .cm-s-syntax span.cm-qualifier {color: #A1DBEC;}
 .cm-s-syntax span.cm-builtin {color: #30a;}
-.cm-s-syntax span.cm-bracket {color: #cc7;}
+.cm-s-syntax span.cm-bracket {color:#C1C6CD!important}
 .cm-s-syntax span.cm-tag {color: #8CAB28;}
-.cm-s-syntax span.cm-attribute {color: #A1DBEC;}
+.cm-s-syntax span.cm-attribute {color: #D35E74;}
 .cm-s-syntax span.cm-error {color: #f00;}
 
 .cm-s-syntax .CodeMirror-activeline-background {background: #27282E !important;}

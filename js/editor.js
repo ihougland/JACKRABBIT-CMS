@@ -5,15 +5,7 @@ function createLink(){
 	document.execCommand("createlink",false, url);
 }
 
-// Create New Hyperlinks
-function createnewLink(){
-	var url = prompt("What link would you like?", "http://");
-	var text = prompt("What text should be displayed to the user?", "");
-	var combined = "<a href="+url+">"+text+"</a>";
-	if (url && text) {
-		document.execCommand("insertHTML",false, combined);
-	}
-}
+var createnewLink;
 
 // Add embedded stuff
 function createEmbed(){
@@ -60,11 +52,43 @@ $(document).ready(function() {
 					sel.addRange(range);
 				}
 			}
-		} else if (document.selection && document.selection.type != "Control") {
-			document.selection.createRange().pasteHTML(html);
+		} else {
+			alert('Please click where you want to insert and try again');
 		}
 	}
 
+	// Is within element? function
+	function isSelectionInsideElement(tagName) {
+		var sel, containerNode;
+		tagName = tagName.toUpperCase();
+		if (window.getSelection) {
+			sel = window.getSelection();
+			if (sel.rangeCount > 0) {
+				containerNode = sel.getRangeAt(0).commonAncestorContainer;
+			}
+		} else if ( (sel = document.selection) && sel.type != "Control" ) {
+			containerNode = sel.createRange().parentElement();
+		}
+		while (containerNode) {
+			if (containerNode.nodeType == 1 && containerNode.tagName == tagName) {
+				return true;
+			}
+			containerNode = containerNode.parentNode;
+		}
+		return false;
+	}
+
+// Create New Hyperlinks
+createnewLink = function() {
+	var url = prompt("What link would you like?", "http://");
+	var text = prompt("What text should be displayed to the user?", "");
+	var combined = "<a href="+url+">"+text+"</a>";
+	if (url && text) {
+		pasteHtmlAtCaret(combined,'.editor-text');
+	} else {
+		alert('Please try again and enter both a URL and the text that should be displayed.');
+	}
+}
 
 	//Editor Nav Dropdowns
 	$('.editor-drop').hover(
@@ -90,7 +114,29 @@ $(document).ready(function() {
 		document.execCommand('insertText', false, token);
 	});
 
-	
+	// Show current link in panel
+	$(document).on('click','.editor-text a', function(){
+		$('.link-selected').removeClass('link-selected')
+		$(this).addClass('link-selected');
+
+		$('.panel:nth-child(2)').find('.panel-title-active').removeClass('panel-title-active');
+		$('.panel:nth-child(2)').find('.panel-group').hide();
+		$('.panel:nth-child(2)').find('.panel-title-tab:nth-child(5)').addClass('panel-title-active');
+		$('.panel:nth-child(2)').find('.panel-group:nth-child(4)').show();
+		$('.panel:nth-child(2)').find('.panel-group:nth-child(4)').css({
+			'pointerEvents':'auto',
+			'opacity':'1'
+		});
+
+		var currentLink = $('.link-selected').attr('href');
+		$('#link-location').val(currentLink);
+	});
+
+	// Set New Link
+	$('#link-location').on('input', function() {
+		newLink = $('#link-location').attr('value');
+		$('.link-selected').attr('href', newLink);
+	});
 
 	
 /*
@@ -151,6 +197,8 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 			} else {
 				$('#photo-width').val('');
 			}
+			var naturalWidth = $('.selectedImg')[0].naturalWidth;
+			$('#original-size').html('(originally '+naturalWidth+')');
 
 			// Update selected float
 			if($(this).hasClass('float-left')){
@@ -167,7 +215,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 	});
 
 	// So clicking these fields doesn't close the image edit session
-	$(document).on('click', '#photo-desc, #photo-url, #photo-width', function(event) {
+	$(document).on('click', '#photo-desc, #photo-url, #photo-width, #link-location, .editor-text a', function(event) {
 	   event.stopPropagation();
 	});
 
@@ -231,6 +279,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		});
 		$('#photo-desc, #photo-url, #photo-width').val('');
 		$('#img-size-label .fa-warning').remove();
+		$('#original-size').empty();
 	}
 	doneWithImage();
 
@@ -354,10 +403,12 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 
 	$(document).on('click', function (event) {
 		$('#selectedCell').removeAttr('id');
-		$('.panel:nth-child(2)').find('.panel-group:nth-child(3)').css({
+		$('.panel:nth-child(2)').find('.panel-group:nth-child(3), .panel-group:nth-child(4)').css({
 			'pointerEvents':'none',
 			'opacity':'.2'
 		});
+		$('#link-location').val('');
+		$('.link-selected').removeClass('link-selected');
 		doneWithImage();
 	});
 
@@ -479,15 +530,13 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 				el.CodeMirror.refresh();
 				var text = el.CodeMirror.getValue();
 				//alert(text);
-				$('.CodeMirror').css({
-					'transform': 'scale(.8)',
-					'opacity': '0'
-				});
+				$('.CodeMirror').fadeOut(250);
 				setTimeout(function() {
+					$('.editor-text').html(text).show().css('transform');
 					$('.editor-text').css({
 						'transform': 'scale(1)',
 						'opacity': '1'
-					}).html(text).fadeIn();
+					});
 					$('.html-mode').empty().html('<textarea name="htmlTextarea" id="htmlTextarea"></textarea>').hide();
 				}, 250);
 			});
@@ -495,7 +544,8 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 			
 		} else {
 			$(this).addClass('on');
-			var saveText = $('.editor-text').html();
+			var saveText = $('.editor-text').html(),
+				formatText = $.htmlClean(saveText, {format:true});
 			$('.editor-text').css({
 				'transform': 'scale(.8)',
 				'opacity': '0'
@@ -503,7 +553,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 
 			setTimeout(function() {
 				$('.editor-text').hide();
-				$('.html-mode textarea').html(saveText);
+				$('.html-mode textarea').html(formatText);
 
 				var htmlEditor = CodeMirror(function(elt) {
 					htmlTextarea.parentNode.replaceChild(elt, htmlTextarea);
@@ -512,7 +562,8 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 					lineNumbers: true,
 					lineWrapping: true,
 					viewportMargin: Infinity,
-					theme: "syntax"
+					theme: "syntax",
+					indentWithTabs: true
 				});
 				$('.html-mode').fadeIn();
 				$('.CodeMirror').each(function(i, el) {

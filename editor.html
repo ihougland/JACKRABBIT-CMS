@@ -14,12 +14,12 @@
 	<script src="mode/javascript/javascript.js"></script>
 	<script src="mode/css/css.js"></script>
 	<script src="mode/xml/xml.js"></script>
-	<script src="mode/htmlmixed/htmlmixed.js"></script>
 	<script src="addon/edit/matchbrackets.js"></script>
 
 			<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 			<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 			<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+			<script type="text/javascript" src="js/jquery.htmlClean.min.js"></script>
 			<script type="text/javascript" src="js/gui.js"></script>
 			<script type="text/javascript" src="js/editor.js"></script>
 			<script>
@@ -138,6 +138,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
 						<a href="#" class="panel-title-tab panel-title-active">Text</a>
 						<a href="#" class="panel-title-tab">Image</a>
 						<a href="#" class="panel-title-tab">Table</a>
+						<a href="#" class="panel-title-tab">Link</a>
 					</div>
 					<div class="panel-contents">
 						<div class="panel-group editor-toolbar">
@@ -202,11 +203,11 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
 								<li><a href="#" title="Wrap & Align Left" class="fl"><i class="icon-float-left"></i></a></li>
 								<li><a href="#" title="Wrap & Align Right" class="fr"><i class="icon-float-right"></i></a></li>
 								<li><a href="#" title="Center Image" class="fc"><i class="icon-center"></i></a></li>
-								<li><a href="#" title="Inline With Text" class="fn"><i class="icon-inline-image"></i></a></li>
+								<li><a href="#" title="Inline With Text" class="fn"><i class="icon-inline"></i></a></li>
 								<li><a href="#" title="Delete Image" class="fd"><i class="fa fa-trash"></i></a></li>
 							</ul>
 							<hr>
-							<label id="img-size-label"><span></span> <i class="fa fa-arrows-h"></i> Max Size (number or %)</label> <br><input type="text" placeholder="ex: 300 or 50%" id="photo-width"><br>
+							<label id="img-size-label"><span></span> <i class="fa fa-arrows-h"></i> Size <div id="original-size"></div></label> <br><input type="text" placeholder="ex: 300 or 50%" id="photo-width"><br>
 							<label><i class="fa fa-info-circle"></i> Photo Description</label> <br><input type="text" placeholder="Photo Description" id="photo-desc"><br>
 							<label><i class="fa fa-link"></i> Optional Link</label> <br><input type="text" placeholder="http://www.example.com" id="photo-url">
 
@@ -215,8 +216,8 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
 
 						<div class="panel-group editor-toolbar">
 							<ul>
-								<li><a href="#" title="Add Row Above" class="add-row-above"><i class="icon-add-row-above"></i></a></li>
-								<li><a href="#" title="Add Row Below" class="add-row-below"><i class="icon-add-row-below"></i></a></li>
+								<li><a href="#" title="Add Row Above" class="add-row-above"><i class="icon-add-row-before"></i></a></li>
+								<li><a href="#" title="Add Row Below" class="add-row-below"><i class="icon-add-row-after"></i></a></li>
 
 								<li><a href="#" title="Add Column Before" class="add-column-before"><i class="icon-add-column-before"></i></a></li>
 
@@ -228,6 +229,10 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
 								<li><a href="#" title="Delete Table Heading" class="delete-header"><i class="icon-remove-heading"></i></a></li>
 								<li><a href="#" title="Delete Entire Table" class="delete-table"><i class="fa fa-trash"></i></a></li>
 							</ul>
+						</div>
+
+						<div class="panel-group editor-toolbar">
+							<label id="link-label"><span></span> <i class="fa fa-link"></i> Link Location</label> <br><input type="text" id="link-location"><br>
 						</div>
 						
 					</div>
@@ -349,10 +354,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
 							<h2>Header Level 2</h2>
 
 							<table class="rwd-table" width="100%">
-								<thead>
-									<tr>
-										<th>&nbsp;Animals</th>
-										<th>&nbsp;Legs</th>
+								<thead><tr><th>&nbsp;Animals</th><th>&nbsp;Legs</th>
 										<th>&nbsp;Eyes</th>
 										<th>&nbsp;Weight</th>
 									</tr>
