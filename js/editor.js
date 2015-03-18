@@ -577,6 +577,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 
 	});
 
+
 	/**** Insert BR on enter ****/
 	$('div[contenteditable]').keydown(function(e) {
 		if (e.keyCode === 13) {
@@ -584,6 +585,8 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 			return false;
 		}
 	});
+
+
 	/**** Remove Header Formatting ****/
 	function nextNode(node) {
 		if (node.hasChildNodes()) {
