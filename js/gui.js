@@ -2,20 +2,22 @@
 
 $(document).ready(function() {
 
-	// Add Header?
+	/* Add Header?
 	var urlParam = function(name, w){
 		w = w || window;
 		var rx = new RegExp('[\&|\?]'+name+'=([^\&\#]+)'),
 			val = w.location.search.match(rx);
 		return !val ? '':val[1];
 	}
-	var app = urlParam('app');
-	if (app) {
-		//$('body').append('result:no menu bar');
-	} else {
+	var app = urlParam('app'),
+		appCookie = $.cookie('isApp');
+	if (app == true){
+
+	} else if (appCookie == true || )
 		$('.main-wrap').prepend('<header><div class="head-title">JACKRABBIT<span>CMS</span></header>');
 		$('.table').css('height','calc(100% - 100px)');
 	}
+	*/
 
 	// Connection Tabs 
 	$('.connection-tabs .tab-content:first').show();
@@ -99,26 +101,31 @@ $(document).ready(function() {
 		event.stopPropagation();
 		event.preventDefault();
 		var getUrl = $(this).attr('href');
-		$('body').append('<div class="modal"><div class="modal-content"><iframe id="jr-iframe" src="'+getUrl+'"></iframe></div></div>');
-		$('.main-wrap').css({
-			'filter': 'blur(5px)',
-			'-webkit-filter': 'blur(5px)'
-		});
-		$('.modal').fadeIn();
-
-		$('#jr-iframe').load(function() {
-			$('.modal-content').css('visibility','visible');
-		});
+		$('body').append('<div class="modal"></div>');
+		$('.main-wrap').addClass('blurout');
+		$('.modal').show().css('opacity');
+		$('.modal').css('opacity','1');
+		setTimeout(function(){ 
+			$('.modal').append('<div class="modal-content"><iframe id="jr-iframe" src="'+getUrl+'"></iframe></div>');
+			$('#jr-iframe').load(function() {
+				$('.modal-content').css({
+					'transform':'scale(1)',
+					'opacity':'1'
+				});
+			});
+		}, 550);
 	});
 	$(document.body).on('click', '.modal', function (event) {
-		$('.modal-content').remove();
-		$('.modal').css('background-image','none').fadeOut(function(){
-			$('.modal').remove();
-		})
-		$('.main-wrap').css({
-			'filter': 'blur(0px)',
-			'-webkit-filter': 'blur(0px)'
+		$('.modal-content').css({
+			'transform':'scale(1.2)',
+			'opacity':'0'
 		});
+		setTimeout(function(){ 
+			$('.modal').css('background-image','none').fadeOut(function(){
+				$('.modal').remove();
+			})
+			$('.main-wrap').removeClass('blurout');
+		}, 550);
 	});
 
 	// Special Content
