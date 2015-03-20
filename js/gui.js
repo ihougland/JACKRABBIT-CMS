@@ -116,12 +116,13 @@ $(document).ready(function() {
 		}, 550);
 	});
 	$(document.body).on('click', '.modal', function (event) {
+		$('.modal').css('background-image','none');
 		$('.modal-content').css({
 			'transform':'scale(1.2)',
 			'opacity':'0'
 		});
 		setTimeout(function(){ 
-			$('.modal').css('background-image','none').fadeOut(function(){
+			$('.modal').fadeOut(function(){
 				$('.modal').remove();
 			})
 			$('.main-wrap').removeClass('blurout');
