@@ -49,9 +49,10 @@ html, body {
 	transition:opacity .5s ease-out;
 }
 .modal-content {
-	width: 90vw;
+	width: 600px;
+	margin:0 auto;
 	height: 90vh;
-	border-radius:6px;
+	border-radius:10px;
 	box-shadow:0 10px 50px rgba(0,0,0,.6);
 	background: rgba(0, 0, 0, 0.4);
 	display: inline-block;
@@ -457,10 +458,15 @@ header {
 		box-shadow: 1px 1px 0 0px rgba(255, 255, 255, 0.15);
 	}
 	h1 {
-		font-weight:bold;
-		color:$primary;
-		font-size:12px;
-		display:inline-block;
+		font-weight: bold;
+		color: #FFF;
+		font-size: 12px;
+		display: inline-block;
+		width: 100%;
+		text-align: center;
+		padding: 7px 0;
+		text-transform: uppercase;
+		letter-spacing: .3em;
 	}
 	>ul>li {
 		display:inline-block;
@@ -930,7 +936,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	background: $light-gray;
 }
 .panel-toggle {
-	color: #5C5C5C;
+	color: #676767;
 	text-decoration: none;
 	float: right;
 	font-size: 14px;
@@ -941,7 +947,6 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	color:$primary;
 }
 .panel-title {
-	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1), inset 0 -1px $dark-gray;
 	overflow:hidden;
 }
 .panel-title-tab {
@@ -960,9 +965,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	background:$medium-gray!important;
 	color:#fff!important;
 	z-index:2;
-	border-right:1px solid $dark-gray;
-	border-left:1px solid $dark-gray;
-	box-shadow:inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 0 $medium-gray;
+	border-top:2px solid $primary;
 }
 .panel-title-active:after {
 	content: '';
@@ -970,12 +973,11 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	width: 12px;
 	height: 12px;
 	border-radius: 0 0 0 7px;
-	border: 1px solid $dark-gray;
 	bottom: -1px;
-	right: -13px;
+	right: -12px;
 	border-right: 0;
 	border-top: 0;
-	box-shadow: -2px 2px 0 -1px $medium-gray;
+	box-shadow: -2px 2px 0 0px $medium-gray;
 }
 .panel-title-active:before {
 	content: '';
@@ -983,12 +985,11 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	width: 12px;
 	height: 12px;
 	border-radius: 0 0 7px 0;
-	border: 1px solid $dark-gray;
 	bottom: -1px;
-	left: -13px;
+	left: -12px;
 	border-left: 0;
 	border-top: 0;
-	box-shadow: 2px 2px 0 -1px $medium-gray;
+	box-shadow: 2px 2px 0 0px $medium-gray;
 }
 .panel-contents {
 	background:$medium-gray;
@@ -1185,7 +1186,7 @@ span {
 	margin: 0px auto;
 }
 .editor-title {
-	background: linear-gradient(to bottom, #EFF0F1 0%, #DEE2E8 100%);
+	background: $light-gray;
 	color: #979797;
 	padding: 10px;
 	text-align: center;
@@ -1193,7 +1194,7 @@ span {
 	border-radius: 2px 2px 0 0;
 	font-size:12px;
 	h1 {
-		color: #797979;
+		color: #fff;
 		font-size:12px;
 		font-weight:bold;
 		display:inline-block;
@@ -1204,22 +1205,25 @@ span {
 		color:inherit;
 	}
 	a:hover {
-		color:#222;
+		color:#fff;
 	}
 }
 .title-btn-right {
-	display: inline-block;
-	text-decoration: none;
-	border: 1px solid #CACACA;
-	padding: 5px 8px 4px 8px;
-	position: absolute;
-	right: 10px;
-	top: 5px;
-	margin-left: 5px;
-	border-radius: 4px;
-	font-size: 11px;
-	box-shadow: inset 0 1px 0 #fff;
-	color: #5D5D5D!important;
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid #808080;
+  padding: 5px 8px 4px 8px;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  margin-left: 5px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #B0B0B0 !important;
+}
+.title-btn-right:hover {
+	color:#fff!important;
+	border:1px solid #fff;
 }
 .title-btn-left {
 	@extend .title-btn-right;
@@ -1228,9 +1232,9 @@ span {
 }
 .special-open {
 	padding: 6px 8px 3px 8px;
-	background: #dee2e8;
-	color: #3b3b3b !important;
-	box-shadow: inset 0 1px 0px rgba(0,0,0,0.3);
+	background:$primary;
+	color: #fff !important;
+	border:1px solid $primary;
 }
 .special-list {
 	overflow:auto;

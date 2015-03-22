@@ -153,6 +153,7 @@ $(document).ready(function() {
 
 	// Word Counter
 	counter = function() {
+		if ($(".editor-text").length){
 		var copyText = $('.editor-text').text();
 		$('#stripformat').val(copyText);
 		var value = $('#stripformat').val();
@@ -175,6 +176,7 @@ $(document).ready(function() {
 		$('#read-time').html(readTime+" min(s)");
 		$('#words').html(wordCount);		
 		$('#characters').html(charCountNoSpace);
+	}
 	};
 	counter();
 
