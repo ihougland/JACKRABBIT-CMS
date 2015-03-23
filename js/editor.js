@@ -12,7 +12,7 @@ function createEmbed(){
 	var code = prompt("Paste Embed Code", "");
 	if (code) {
 		var finalCode = "<div class='responsive-iframe-container'>"+code+"</div>";
-		document.execCommand('insertHTML', false, finalCode);
+		pasteHtmlAtCaret(finalCode,'.editor-text');
 	}
 }
 
@@ -111,7 +111,7 @@ createnewLink = function() {
 	$(document).on('click', '.token', function(event) {
 		event.preventDefault();
 		var token = $(this).html();
-		document.execCommand('insertText', false, token);
+		pasteHtmlAtCaret(token,'.editor-text');
 	});
 
 	// Show current link in panel

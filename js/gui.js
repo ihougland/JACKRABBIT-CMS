@@ -101,7 +101,7 @@ $(document).ready(function() {
 		event.stopPropagation();
 		event.preventDefault();
 		var getUrl = $(this).attr('href');
-		$('body').append('<div class="modal"></div>');
+		$('body').append('<div class="modal"><a href="#" class="modal-close"><i class="fa fa-times"></i></a></div>');
 		$('.main-wrap').addClass('blurout');
 		$('.modal').show().css('opacity');
 		$('.modal').css('opacity','1');
@@ -112,10 +112,14 @@ $(document).ready(function() {
 					'transform':'scale(1)',
 					'opacity':'1'
 				});
+
+		$('.modal-close').fadeIn();
 			});
 		}, 550);
 	});
-	$(document.body).on('click', '.modal', function (event) {
+
+	$(document.body).on('click', '.modal, .modal-close', function (event) {
+		$('.modal-close').fadeOut();
 		$('.modal').css('background-image','none');
 		$('.modal-content').css({
 			'transform':'scale(1.2)',
@@ -159,10 +163,10 @@ $(document).ready(function() {
 		var value = $('#stripformat').val();
 
 		if (value.length == 0) {
-			$('#wordCount').html(0);
-			$('#totalChars').html(0);
-			$('#charCount').html(0);
-			$('#charCountNoSpace').html(0);
+			$('#wordCount').html('0');
+			$('#totalChars').html('0');
+			$('#charCount').html('0');
+			$('#charCountNoSpace').html('0');
 			return;
 		}
 
@@ -198,7 +202,8 @@ $(document).ready(function() {
 			thisObj.parent().find('.seo-length').html("("+current+"/"+max+")");
 			thisObj.parent().find('.warn').empty();
 		} else {
-			thisObj.parent().find('.warn').html("<i class='fa fa-warning' rel='Please enter text.'></i> ");
+			thisObj.parent().find('.warn').html("<i class='fa fa-warning' rel='Nothing entered.'></i> ");
+			thisObj.parent().find('.seo-length').empty();
 		}
 	}
 
