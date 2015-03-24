@@ -20,7 +20,7 @@ html, body {
 	width:100%;
 	overflow:hidden;
 	background:rgb(27, 31, 33);
-	border-radius:10px;
+	border-radius:0 0 10px 10px;
 	font-size:0;
 	font-family: 'Montserrat', sans-serif;
 	-webkit-font-smoothing:antialiased;
@@ -509,7 +509,6 @@ header {
 		}
 	}
 	>ul>li>ul {
-		transition:all .2s ease-out;
 		position:absolute;
 		display:none;
 		top:100%;
@@ -518,11 +517,7 @@ header {
 		background:$primary;
 		box-shadow:0 6px 15px rgba(0,0,0,.3);
 		border-radius:0 0 2px 2px;
-	}
-	>ul>li:hover > ul {
-		display:block;
 		min-width:200px;
-		height:auto;
 	}
 	>ul>li>ul>li {
 		display:block;

@@ -19,6 +19,21 @@ $(document).ready(function() {
 	}
 	*/
 
+	// Menu Bar Dropdowns
+	$(document.body).on('mousedown', '.menu-bar>ul>li>a', function (event) {
+		$('.menu-bar > ul > li > ul').slideUp(150);
+		if ($(this).parent().find('ul').length ){
+			if ($(this).parent().find('> ul').is(":hidden")) {
+				$(this).parent().find('> ul').slideDown(150);
+			}
+		}
+		event.preventDefault();
+	});
+
+	closeDropdowns = function() {
+		$('.menu-bar > ul > li > ul').slideUp(150);
+	}
+
 	// Connection Tabs 
 	$('.connection-tabs .tab-content:first').show();
 	$(document.body).on('click', '.connection-tabs .tab', function (event) {
