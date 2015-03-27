@@ -31,8 +31,7 @@ html, body {
 	transition: all 500ms ease-out;
 }
 .blurout {
-	-webkit-filter:(grayscale(1));
-	transform:(scale(1.05));
+	  -webkit-filter: grayscale(1) brightness(.3) contrast(1.2);
 }
 .modal {
 	position: fixed;
@@ -40,7 +39,9 @@ html, body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background:url('../images/loading.gif') center no-repeat, rgba(0,0,0,.6);
+	background-image:url('../images/loading.gif');
+	background-repeat:no-repeat;
+	background-position:center;
 	border-radius: 0 0 6px 6px;
 	z-index: 400;
 	text-align: center;
@@ -50,13 +51,13 @@ html, body {
 }
 .modal-content {
 	width: 90vw;
-	height: 90vh;
+	height: calc(100vh - 50px);
 	border-radius:10px;
 	box-shadow:0 10px 50px rgba(0,0,0,.6);
 	background: rgba(0, 0, 0, 0.4);
 	display: inline-block;
 	position: relative;
-	top: 5vh;
+	top: 25px;
 	transform:scale(1.2);
 	opacity:0;
 	transition:all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
@@ -68,28 +69,25 @@ html, body {
 }
 .modal-close {
 	position: absolute;
-	top: 4%;
-	right: 4%;
-	background: #000;
-	color: #ccc;
-	font-size: 14px;
-	text-shadow: 0 1px 8px #000;
-	padding: 5px 0 0 0;
+	top: 33px;
+	left: 6%;
+	background: #E26757;
+	font-size: 9px;
+	padding: 0px 0 0 0;
 	display: none;
-	border: 2px solid #ccc;
-	width: 30px;
-	height: 30px;
+	width: 14px;
+	height: 14px;
 	box-sizing: border-box;
 	z-index: 999;
 	border-radius: 20px;
+	border:2px solid $light-gray;
 }
 .modal-close:hover {
-	color:#fff;
-	border:2px solid #fff;
+	background:#f33226;
 }
 .modal-close:active {
-	color:#D22626;
-	border:2px solid #D22626;
+	color:#f33226;
+	border:2px solid $dark-gray;
 }
 body{
 	box-sizing: border-box;
@@ -856,7 +854,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 .main-scroll::-webkit-scrollbar-thumb {
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	background: #5c5c5c; 
+	background: $light-gray; 
 	-webkit-box-shadow: inset 0 0 0 2px $dark-gray; 
 }
 .main-scroll::-webkit-scrollbar-thumb:hover,
@@ -899,7 +897,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 .sidebar-left-scroll::-webkit-scrollbar-thumb {
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	background: #5c5c5c; 
+	background: $light-gray; 
 	-webkit-box-shadow: inset 0 0 0 2px $dark-gray; 
 }
 .sidebar-left-scroll::-webkit-scrollbar-thumb:hover,
@@ -1207,7 +1205,7 @@ span {
 .editor-title {
 	background: $light-gray;
 	color: #979797;
-	padding: 10px;
+	padding: 10px 8px;
 	text-align: center;
 	position: relative;
 	border-radius: 2px 2px 0 0;
@@ -1218,43 +1216,67 @@ span {
 		font-weight:bold;
 		display:inline-block;
 	}
-	a:link,
-	a:visited {
-		float:left;
-		color:inherit;
-	}
-	a:hover {
-		color:#fff;
+	.on {
+		background:$primary!important;
+		color:$dark-gray!important;
 	}
 }
-.title-btn-right {
-  display: inline-block;
-  text-decoration: none;
-  border: 1px solid #808080;
-  padding: 5px 8px 4px 8px;
-  position: absolute;
-  right: 10px;
-  top: 5px;
-  margin-left: 5px;
-  border-radius: 4px;
-  font-size: 11px;
-  color: #B0B0B0 !important;
+.special-btn {
+	position:absolute;
+	right:8px;
+	top:6px;
+	color: #afb7c8;
+	font-size: 10px;
+	line-height: 1em;
+	padding: 5px;
+	text-decoration: none;
+	background:$medium-gray;
+	color:#BAC2C6;
+	display: inline-block;
+	border-radius:3px;
+	font-weight:bold;
+	i {
+		font-size: 10px;
+		transition:.2s;
+	}
 }
-.title-btn-right:hover {
+.special-btn:hover {
 	color:#fff!important;
-	border:1px solid #fff;
 }
-.title-btn-left {
-	@extend .title-btn-right;
-	left:10px;
-	right:auto;
-}
-.special-open, .special-open:hover {
-	padding: 6px 8px 3px 8px;
+
+.special-open {
 	background:$primary;
 	color: #fff !important;
-	border:1px solid $primary;
+	i {
+		transform:rotate(45deg);
+	}
 }
+
+.view-btns{
+	top: 6px;
+	position: absolute;
+	left: 8px;
+	a:link,
+	a:visited {
+		color: #afb7c8;
+		font-size: 10px;
+		line-height: 1em;
+		padding: 5px;
+		text-decoration: none;
+		background:$medium-gray;
+		width: 36px;
+		color:#BAC2C6;
+		display: inline-block;
+		font-weight:bold;
+	}
+	a:first-of-type {
+		border-radius:3px 0 0 3px;
+	}
+	a:last-of-type {
+		border-radius:0 3px 3px 0;
+	}
+}
+
 .special-list {
 	overflow:auto;
 	white-space:nowrap;
@@ -1295,15 +1317,20 @@ span {
 	background: #898C92; 
 }
 
-.add-special-content, .special-content {
-	display: none;
-
+.add-special-content {
 	text-align:center;
 	background: #cbced3;
 	color: #515151;
-	padding: 30px;
 	font-size: 12px;
 	line-height:1.4em;
+	overflow:hidden;
+	max-height:0px;
+	box-sizing:border-box;
+	opacity:0;
+	transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+	>div {		
+	padding: 30px;
+	}
 	h1 {
 		font-weight:bold;
 		font-size:16px;
@@ -1362,7 +1389,10 @@ span {
 		}
 	}
 }
-
+.special-content-open {
+	max-height:260px;
+	opacity:1;
+}
 .button {
 	display: inline-block;
 	border: 2px solid #C8C8C8;
@@ -1402,9 +1432,13 @@ span {
 	position: relative;
 	line-height: 1.4em;
 	color: #525252;
+	background:$medium-gray;
 	border-radius: 0 0 2px 2px;
-	max-width: 960px;
+	max-width: 900px;
+	padding:30px;
 	margin: 0 auto;
+	transition:.2s ease-out;
+	transform-origin:top center;
 }
 .editor-text {    
 	padding: 30px;    
@@ -1414,6 +1448,7 @@ span {
 	background: #F7F9FB;
 	border-radius: 0 0 2px 2px;
 	transition:all .2s ease-out;
+	transform-origin:top center;
 	a:link,
 	a:visited {
 		color:$primary;

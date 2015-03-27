@@ -34,6 +34,16 @@ $(document).ready(function() {
 		$('.menu-bar > ul > li > ul').slideUp(150);
 	}
 
+	//Editor Nav Dropdowns
+	$('.editor-drop').hover(
+		function() {
+			$(this).find('ul').slideDown(100);
+		},
+		function() {
+			$(this).find('ul').slideUp(100);
+		}
+	);
+
 	// Connection Tabs 
 	$('.connection-tabs .tab-content:first').show();
 	$(document.body).on('click', '.connection-tabs .tab', function (event) {
@@ -115,8 +125,9 @@ $(document).ready(function() {
 	$(document.body).on('click', '.in-iframe', function (event) {
 		event.stopPropagation();
 		event.preventDefault();
+		closeDropdowns();
 		var getUrl = $(this).attr('href');
-		$('body').append('<div class="modal"><a href="#" class="modal-close"><i class="fa fa-times"></i></a></div>');
+		$('body').append('<div class="modal"><a href="#" class="modal-close"></a></div>');
 		$('.main-wrap').addClass('blurout');
 		$('.modal').show().css('opacity');
 		$('.modal').css('opacity','1');
@@ -127,8 +138,9 @@ $(document).ready(function() {
 					'transform':'scale(1)',
 					'opacity':'1'
 				});
-
-		$('.modal-close').fadeIn();
+				setTimeout(function(){ 
+					$('.modal-close').fadeIn();
+				}, 550);
 			});
 		}, 550);
 	});
@@ -151,7 +163,7 @@ $(document).ready(function() {
 	// Special Content
 	$(document.body).on('click', '.special-btn', function (event) {
 		$(this).toggleClass('special-open');
-		$('.add-special-content').slideToggle();
+		$('.add-special-content').toggleClass('special-content-open');
 		event.preventDefault();
 	});
 

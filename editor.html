@@ -93,16 +93,7 @@
                             <li><a href="manage-products.html" class="in-iframe">Products</a>
 						</ul>
 					</li>
-					<li><a href="#">View</a>
-						<ul>
-							<li><a href="#" id="htmlMode" class="off">HTML Mode</a>
-							</li>
-							<!-- no worky in node-webkit :(
-							<li><a href="#" id="spellcheckToggle" class="on">Spellcheck</a></li>
-							-->
-							<li><a href="#" target="_blank">Open Live Page</a>
-						</ul>
-					</li>
+					
 					<li><a href="#">Help</a>
 						<ul>
 							<li><a href="help.html" class="in-iframe">Help Docs</a></li>
@@ -141,7 +132,7 @@
 						<div class="panel-group editor-toolbar">
 
 							<ul>
-								<li><a href="#" title="Bold" onclick="document.execCommand('bold', false, null);"><i class="fa fa-bold"></i></a>
+								<li><a href="#" title="Bold" onclick="document.execCommand ('bold', false, null);"><i class="fa fa-bold"></i></a>
 								</li>
 								<li><a href="#" title="Italic" onclick="document.execCommand ('italic', false, null);"><i class="fa fa-italic"></i></a>
 								</li>
@@ -149,14 +140,14 @@
 								</li>
 								<li><a href="#" title="Strikethrough" onclick="document.execCommand('strikethrough', false, null);"><i class="fa fa-strikethrough"></i></a>
 								</li>
-								<li><a href="#" title="Block Quote" onclick="document.execCommand('formatBlock', false, 'blockquote');"><i class="fa fa-quote-left"></i></a>
+								<li><a href="#" title="Block Quote"  onclick="wrapElement('blockquote');"><i class="fa fa-quote-left"></i></a>
 								</li>
 
-								<li><a href="#" title="Large Heading" onclick="document.execCommand('formatBlock', false, 'H1');"><b style="font-size:.8em">H1</b></a>
+								<li><a href="#" title="Large Heading" onclick="wrapElement('h1');"><b style="font-size:.8em">H1</b></a>
 								</li>
-								<li><a href="#" title="Medium Heading" onclick="document.execCommand('formatBlock', false, 'H2');"><b style="font-size:.8em">H2</b></a>
+								<li><a href="#" title="Medium Heading" onclick="wrapElement('h2');"><b style="font-size:.8em">H2</b></a>
 								</li>
-								<li><a href="#" title="Small Heading" onclick="document.execCommand('formatBlock', false, 'H3');"><b style="font-size:.8em">H3</b></a>
+								<li><a href="#" title="Small Heading" onclick="wrapElement('h3');"><b style="font-size:.8em">H3</b></a>
 								</li>
 
 								<li><a href="#" title="Subscript" onclick="document.execCommand('subscript', false, null);"><i class="fa fa-subscript"></i></a>
@@ -204,7 +195,7 @@
 								<li><a href="#" title="Delete Image" class="fd"><i class="fa fa-trash"></i></a></li>
 							</ul>
 							<hr>
-							<label id="img-size-label"><span></span> <i class="fa fa-arrows-h"></i> Size <div id="original-size"></div></label> <br><input type="text" placeholder="ex: 300 or 50%" id="photo-width"><br>
+							<label id="img-size-label"><span></span> <i class="fa fa-arrows-h"></i> Max Size <div id="original-size"></div></label> <br><input type="text" placeholder="ex: 300 or 50%" id="photo-width"><br>
 							<label><i class="fa fa-info-circle"></i> Photo Description</label> <br><input type="text" placeholder="Photo Description" id="photo-desc"><br>
 							<label><i class="fa fa-link"></i> Optional Link</label> <br><input type="text" placeholder="http://www.example.com" id="photo-url">
 
@@ -219,12 +210,12 @@
 								<li><a href="#" title="Add Column Before" class="add-column-before"><i class="icon-add-column-before"></i></a></li>
 
 								<li><a href="#" title="Add Column After" class="add-column-after"><i class="icon-add-column-after"></i></a></li>
-								</li>
+								<li><a href="#" title="Delete Entire Table" class="delete-table"><i class="fa fa-trash"></i></a></li>
 								<li><a href="#" title="Delete Row" class="delete-row"><i class="icon-delete-row"></i></a></li>
 								<li><a href="#" title="Delete Column" class="delete-column"><i class="icon-delete-column"></i></a></li>                        		
 								<li><a href="#" title="Add Table Heading" class="add-header"><i class="icon-add-heading"></i></a></li>
 								<li><a href="#" title="Delete Table Heading" class="delete-header"><i class="icon-remove-heading"></i></a></li>
-								<li><a href="#" title="Delete Entire Table" class="delete-table"><i class="fa fa-trash"></i></a></li>
+								
 							</ul>
 						</div>
 
@@ -278,11 +269,16 @@
 							<!--<a href="settings.html" class="title-btn-right in-iframe"><i class="fa fa-user"></i> Manage Staff</a>-->
 
 							<a href="#" class="title-btn-right special-btn"><i class="fa fa-plus"></i> Add Special Content</a>
-							<a href="index.html"><i class="fa fa-times"></i></a>
+							<div class="view-btns">
+								<a href="#" class="on">EDIT</a><!--
+								--><a href="#"  id="htmlMode">HTML</a><!--
+								--><a href="http://www.woot.co.uk/" class="in-iframe">LIVE</a>
+							</div>
 							<h1>Home</h1> <span id="save-warning">*Unsaved Changes*</span>
 						</div>
 
 						<div class="add-special-content">
+							<div><!-- for padding -->
 							<h1>Add Special Content</h1>
 							You may choose one special content element to appear below the regular text of this page.<br>
 							<div class="special-list">
@@ -310,6 +306,7 @@
 								<img src="images/logos.svg" alt="">
 								Logos
 							</a>
+							</div>
 							</div>
 						</div>
 

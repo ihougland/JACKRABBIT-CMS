@@ -1,16 +1,28 @@
-﻿// Create Hyperlinks
-function createLink(){
-	var url = prompt("Enter URL:", "http://");
-	if (url)
-	document.execCommand("createlink",false, url);
-}
-
-
-
+﻿
 
 $(document).ready(function() {
 
-	// Paste At Caret Funciton
+/*
+ d888b  db       .d88b.  d8888b.  .d8b.  db      
+88' Y8b 88      .8P  Y8. 88  `8D d8' `8b 88      
+88      88      88    88 88oooY' 88ooo88 88      
+88  ooo 88      88    88 88~~~b. 88~~~88 88      
+88. ~8~ 88booo. `8b  d8' 88   8D 88   88 88booo. 
+ Y888P  Y88888P  `Y88P'  Y8888P' YP   YP Y88888P
+ */
+
+	// Ctl+S Save
+	$(document).keydown(function(e) {
+		if ((e.which == '115' || e.which == '83' ) && (e.ctrlKey || e.metaKey))
+		{
+			e.preventDefault();
+			alert("Ctrl-s pressed");
+			return false;
+		}
+		return true;
+	}); 
+
+	// Paste At Caret Function	
 	function pasteHtmlAtCaret(html, selector) {
 		var sel, range, parent, node = null;
 		
@@ -22,7 +34,7 @@ $(document).ready(function() {
 				node = selection.getRangeAt(0).startContainer.parentNode;
 		}
 		
-		if ( node && $(node).is(selector) && window.getSelection) {
+		if ( node && $(node).closest(selector).length > 0 && window.getSelection) {
 			sel = window.getSelection();
 			if (sel.getRangeAt && sel.rangeCount) {
 				range = sel.getRangeAt(0);
@@ -44,8 +56,8 @@ $(document).ready(function() {
 					sel.addRange(range);
 				}
 			}
-		} else {
-			alert('Please click where you want to insert and try again');
+		} else if (document.selection && document.selection.type != "Control") {
+			document.selection.createRange().pasteHTML(html);
 		}
 	}
 
@@ -70,53 +82,107 @@ $(document).ready(function() {
 		return false;
 	}
 
+/*
+d888888b d8b   db .d8888. d88888b d8888b. d888888b 
+  `88'   888o  88 88'  YP 88'     88  `8D `~~88~~' 
+   88    88V8o 88 `8bo.   88ooooo 88oobY'    88    
+   88    88 V8o88   `Y8b. 88~~~~~ 88`8b      88    
+  .88.   88  V888 db   8D 88.     88 `88.    88    
+Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP   
+*/
 
-// Add embedded stuff
-createEmbed = function() {
-	var code = prompt("Paste Embed Code", "");
-	if (code) {
-		var finalCode = "<div class='responsive-iframe-container'>"+code+"</div>";
-		pasteHtmlAtCaret(finalCode,'.editor-text');
-	}
-	closeDropdowns();
-}
+	// Wrap Selection
+	wrapElement = function (elem){
+		var element = elem,
+			sel = window.getSelection(),
+			isAlready = isSelectionInsideElement(elem);
+		$('.editor-text').attr('rel',''+sel+'');
+			
+		if (isAlready) {
+			removeSelectedElements("h1,h2,h3,h4,h5,h6,blockquote");
+			document.execCommand('removeFormat', false, 'null');
+		} else if (sel.rangeCount) {
+			var selected = $('.editor-text').attr('rel'),
+				finalCode = '<'+element+'>'+selected+'</'+element+'>';
+				range = sel.getRangeAt(0);
 
-// Create New Hyperlinks
-createnewLink = function() {
-	var url = prompt("What link would you like?", "http://");
-	var text = prompt("What text should be displayed to the user?", "");
-	var combined = "<a href="+url+">"+text+"</a>";
-	if (url && text) {
-		pasteHtmlAtCaret(combined,'.editor-text');
-	} else {
-		alert('Please try again and enter both a URL and the text that should be displayed.');
-	}
-	closeDropdowns();
-}
-
-	//Editor Nav Dropdowns
-	$('.editor-drop').hover(
-		function() {
-			$(this).find('ul').slideDown(100);
-		},
-		function() {
-			$(this).find('ul').slideUp(100);
+			range.deleteContents();
+				removeSelectedElements("h1,h2,h3,h4,h5,h6,blockquote");
+			//range.insertNode(document.createTextNode(finalCode));
+			pasteHtmlAtCaret(finalCode,'.editor-text');
+			$('.editor-text').attr('rel','');
 		}
-	);
+	}
 
-	// Fix Copy & Paste formatting
-	$('[contenteditable]').on('paste', function(e) {
-		e.preventDefault();
-		var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something..');
-		document.execCommand('insertText', false, text);
-	});
+	// Insert embedded code
+	createEmbed = function() {
+		var code = prompt("Paste Embed Code", "");
+		if (code) {
+			var finalCode = "<div class='responsive-iframe-container'>"+code+"</div>";
+			pasteHtmlAtCaret(finalCode,'.editor-text');
+		}
+		closeDropdowns();
+	}
 
-	// Add Token
+	// Insert Hyperlink on Existing Text
+	createLink = function() {
+		var url = prompt("Enter URL:", "http://");
+		if (url)
+		document.execCommand("createlink",false, url);
+	}
+
+	// Insert New Hyperlinks
+	createnewLink = function() {
+		var url = prompt("What link would you like?", "http://");
+		var text = prompt("What text should be displayed to the user?", "");
+		var combined = "<a href="+url+">"+text+"</a>";
+		if (url && text) {
+			pasteHtmlAtCaret(combined,'.editor-text');
+		} else {
+			alert('Please try again and enter both a URL and the text that should be displayed.');
+		}
+		closeDropdowns();
+	}
+	
+	// Insert Form Token
 	$(document).on('click', '.token', function(event) {
 		event.preventDefault();
 		var token = $(this).html();
 		pasteHtmlAtCaret(token,'.editor-text');
+		closeDropdowns();
 	});
+
+	// Insert Table
+	$(document.body).on("click", ".cell-add", function(event) {
+		event.preventDefault();
+		// get # of rows & cols
+		var cols = $(this).index() + 1,
+			rows = $(this).parent().index() + 1;
+		if (cols != 0 && rows != 0) {
+			var table = '<table class="rwd-table" width="100%"><tbody>';
+			for (var i = 1; i <= rows; i++) {
+				table += '<tr>';
+				for (var j = 1; j <= cols; j++) {
+					table += '<td>&nbsp;</td>';
+				}
+				table += '</tr>';
+			}
+			table += '</tbody></table>';
+
+			pasteHtmlAtCaret(table,'.editor-text');
+		}
+
+		closeDropdowns();
+	});
+
+/*
+db      d888888b d8b   db db   dD .d8888. 
+88        `88'   888o  88 88 ,8P' 88'  YP 
+88         88    88V8o 88 88,8P   `8bo.   
+88         88    88 V8o88 88`8b     `Y8b. 
+88booo.   .88.   88  V888 88 `88. db   8D 
+Y88888P Y888888P VP   V8P YP   YD `8888Y' 
+*/
 
 	// Show current link in panel
 	$(document).on('click','.editor-text a', function(){
@@ -374,28 +440,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		}
 		$('.table-dimension').html(table);
 	});
-	// Insert Table
-	$(document.body).on("click", ".cell-add", function(event) {
-		event.preventDefault();
-		// get # of rows & cols
-		var cols = $(this).index() + 1,
-			rows = $(this).parent().index() + 1;
-		if (cols != 0 && rows != 0) {
-			var table = '<table class="rwd-table" width="100%"><tbody>';
-			for (var i = 1; i <= rows; i++) {
-				table += '<tr>';
-				for (var j = 1; j <= cols; j++) {
-					table += '<td>&nbsp;</td>';
-				}
-				table += '</tr>';
-			}
-			table += '</tbody></table>';
-
-			pasteHtmlAtCaret(table,'.editor-text');
-		}
-
-		closeDropdowns();
-	});
+	
 
 	// Click Cell
 	$(document).on('click', '.editor-text td, .editor-text th', function (event) {
@@ -551,19 +596,30 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		event.preventDefault();
 	});
 
-
-	/*** HTML MODE ***/
-	$(document.body).on("click", "#htmlMode", function(event) {
-
-		// If already in html mode
+/*
+db    db d888888b d88888b db   d8b   db      .88b  d88.  .d88b.  d8888b. d88888b 
+88    88   `88'   88'     88   I8I   88      88'YbdP`88 .8P  Y8. 88  `8D 88'     
+Y8    8P    88    88ooooo 88   I8I   88      88  88  88 88    88 88   88 88ooooo 
+`8b  d8'    88    88~~~~~ Y8   I8I   88      88  88  88 88    88 88   88 88~~~~~ 
+ `8bd8'    .88.   88.     `8b d8'8b d8'      88  88  88 `8b  d8' 88  .8D 88.     
+   YP    Y888888P Y88888P  `8b8' `8d8'       YP  YP  YP  `Y88P'  Y8888D' Y88888P 
+*/
+	// Normal Mode
+	$(document.body).on("click", ".view-btns a:nth-child(1)", function(event) {
 		if ($(this).hasClass('on')) {
-			$(this).removeClass('on');
+			//chill
+		} else {
+			$('.on').removeClass();
+			$(this).addClass('on');
 			$('.CodeMirror').each(function(i, el) {
 				el.CodeMirror.refresh();
 				var text = el.CodeMirror.getValue();
-				//alert(text);
-				$('.CodeMirror').fadeOut(250);
+				$('.html-mode').css({
+					'transform': 'scale(.2)',
+					'opacity': '0'
+				});
 				setTimeout(function() {
+					$('.html-mode').hide();
 					$('.editor-text').html(text).show().css('transform');
 					$('.editor-text').css({
 						'transform': 'scale(1)',
@@ -572,14 +628,22 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 					$('.html-mode').empty().html('<textarea name="htmlTextarea" id="htmlTextarea"></textarea>').hide();
 				}, 250);
 			});
-			
-			
+		}
+	});
+
+	// HTML Mode 
+	$(document.body).on("click", ".view-btns a:nth-child(2)", function(event) {
+
+		// If already in html mode
+		if ($(this).hasClass('on')) {
+			// Chill
 		} else {
+			$('.on').removeClass();
 			$(this).addClass('on');
 			var saveText = $('.editor-text').html(),
 				formatText = $.htmlClean(saveText, {format:true});
 			$('.editor-text').css({
-				'transform': 'scale(.8)',
+				'transform': 'scale(.2)',
 				'opacity': '0'
 			});
 
@@ -591,13 +655,21 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 					htmlTextarea.parentNode.replaceChild(elt, htmlTextarea);
 				}, {
 					value: htmlTextarea.value,
-					lineNumbers: true,
+					lineNumbers: false,
 					lineWrapping: true,
 					viewportMargin: Infinity,
 					theme: "syntax",
 					indentWithTabs: true
 				});
-				$('.html-mode').fadeIn();
+				$('.html-mode').css({
+					'transform': 'scale(.2)',
+					'opacity': '0'
+				});
+				$('.html-mode').show().css('opacity');
+				$('.html-mode').css({
+					'opacity': '1',
+					'transform': 'scale(1)'
+				});
 				$('.CodeMirror').each(function(i, el) {
 					el.CodeMirror.refresh();
 				});
@@ -610,7 +682,22 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 	});
 
 
-	/**** Insert BR on enter ****/
+/*
+d88888b d8888b. d888888b d888888b d888888b d8b   db  d888b  
+88'     88  `8D   `88'   `~~88~~'   `88'   888o  88 88' Y8b 
+88ooooo 88   88    88       88       88    88V8o 88 88      
+88~~~~~ 88   88    88       88       88    88 V8o88 88  ooo 
+88.     88  .8D   .88.      88      .88.   88  V888 88. ~8~ 
+Y88888P Y8888D' Y888888P    YP    Y888888P VP   V8P  Y888P  
+*/
+
+	// Fix Copy & Paste formatting
+	$('[contenteditable]').on('paste', function(e) {
+		e.preventDefault();
+		var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something..');
+		document.execCommand('insertText', false, text);
+	});
+	// Insert BR on enter
 	$('div[contenteditable]').keydown(function(e) {
 		if (e.keyCode === 13) {
 			document.execCommand('insertHTML', false, '<br>');
@@ -703,4 +790,10 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		document.execCommand('removeFormat', false, 'null');
 		return false;
 	};
+
+	$(document.body).on("click", ".editor-text", function(event) {
+
+	});
+
+
 });

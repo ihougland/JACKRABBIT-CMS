@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 .cm-s-syntax.CodeMirror { background: #2A2E32; color: #C1C6CD; line-height:1.4em; }
-.cm-s-syntax .CodeMirror-selected { background: #27007A !important; }
+.cm-s-syntax .CodeMirror-selected { background: #72737A !important; }
 .cm-s-syntax .CodeMirror-gutters { background: #44474d; border-right: 1px solid #555; }
 .cm-s-syntax .CodeMirror-guttermarker { color: #8CAB28; }
 .cm-s-syntax .CodeMirror-guttermarker-subtle { color: #f8f8f8; }
