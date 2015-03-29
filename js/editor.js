@@ -16,11 +16,28 @@ $(document).ready(function() {
 		if ((e.which == '115' || e.which == '83' ) && (e.ctrlKey || e.metaKey))
 		{
 			e.preventDefault();
-			alert("Ctrl-s pressed");
+			savePage();
 			return false;
 		}
 		return true;
 	}); 
+
+	savePage = function (){
+		alert("Save function goes here.");
+		closeDropdowns();
+		$('#save-warning').remove();
+	}
+
+	// Delete Page
+	deletePage = function (){
+		var r = confirm("Whoa there, are you sure you want to delete this page forever?");
+		if (r == true) {
+			alert('Delete function goes here');
+		} else {
+			// do nothing
+		}
+		closeDropdowns();
+	}
 
 	// Paste At Caret Function	
 	function pasteHtmlAtCaret(html, selector) {
@@ -670,10 +687,12 @@ Y8    8P    88    88ooooo 88   I8I   88      88  88  88 88    88 88   88 88ooooo
 					'opacity': '1',
 					'transform': 'scale(1)'
 				});
+			}, 250);
+			setTimeout(function() {
 				$('.CodeMirror').each(function(i, el) {
 					el.CodeMirror.refresh();
 				});
-			}, 250);
+			}, 400);
 
 		}
 
@@ -792,7 +811,12 @@ Y88888P Y8888D' Y888888P    YP    Y888888P VP   V8P  Y888P
 	};
 
 	$(document.body).on("click", ".editor-text", function(event) {
+		if($('.editor-title #save-warning').length){
 
+		}else {
+		$('.editor-title').append('<span id="save-warning">- Not Saved</span>');
+	}
+		closeDropdowns();
 	});
 
 

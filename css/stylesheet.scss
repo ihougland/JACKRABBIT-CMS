@@ -180,6 +180,9 @@ header {
 		color:#575757;
 	}
 }
+#save-warning {
+	color:$primary;
+}
 
 .head-connection {
 	color: #393D41;
@@ -572,6 +575,11 @@ db   8D   .88.   88  .8D 88.
 	vertical-align:top;
 	width:250px;
 	transition:width .25s ease-out;
+	.placeholder {
+		height:17px;
+		border:2px dashed $primary;
+		border-radius:3px;
+	}
 }
 .panel-toggler {
 	display: block;
@@ -594,7 +602,7 @@ db   8D   .88.   88  .8D 88.
 
 .sidebar-right-scroll {
 	height:100%;
-	overflow-y:auto;
+	overflow:hidden;
 	position:relative;
 	width: 250px;
 	transition:width .2s ease-out;
@@ -615,6 +623,7 @@ db   8D   .88.   88  .8D 88.
 		margin-top:10px;
 		font-weight:bold;
 	}
+	
 	>ul>li ul {
 		padding-left:22px;
 		i{
@@ -631,11 +640,24 @@ db   8D   .88.   88  .8D 88.
 			position:relative;
 			overflow:hidden;
 			text-overflow: ellipsis;
-			white-space: nowrap;            
+			white-space: nowrap;
 			border-radius:2px;
+			.sort-drag {
+				position: absolute;
+				right:5px;
+				top:5px;
+				width:auto!important;
+				color:#363B3F;
+				opacity:0;
+				cursor: -webkit-grab;
+			}
+			.sort-drag:active {
+				cursor: -webkit-grabbing;
+			}
 		}
 		a:hover {
 			background:#CFD3D7;
+			.sort-drag {opacity:1;}
 		}
 	}
 	#current-page {
@@ -715,20 +737,8 @@ db   8D   .88.   88  .8D 88.
 	}
 	a:hover, a:active {color:#363B3F!important}
 }
-.sort-drag {
-	position: absolute;
-	right:5px;
-	top:5px;
-	width:auto!important;
-	color:#B7BBC3;
-	cursor: -webkit-grab;
-}
-.sort-drag:active {
-	cursor: -webkit-grabbing;
-}
-.sort-drag:hover {
-	color:#222;
-}
+
+
 
 /*
 d8888b.  .d8b.   d888b  d88888b 
@@ -1011,7 +1021,7 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 .panel-contents {
 	background:$medium-gray;
 	font-size:11px;
-	color:#BAC2C6;
+	color:#ccc;
 	padding:15px;
 	line-height:1.4em;
 	hr {
@@ -1439,6 +1449,10 @@ span {
 	margin: 0 auto;
 	transition:.2s ease-out;
 	transform-origin:top center;
+	-webkit-user-select:none;
+	textarea {
+		visibility: none;
+	}
 }
 .editor-text {    
 	padding: 30px;    
@@ -1455,11 +1469,13 @@ span {
 	}
 	h1 {
 		font-size:2em;
+		line-height:1.4em;
 		display:block;
 		padding:10px 0;
 	}
 	h2 {
 		font-size:1.5em;
+		line-height:1.4em;
 		display:block;
 		padding:10px 0;
 	}
@@ -1632,7 +1648,35 @@ span {
 	background:rgba(0,0,0,.8)!important;
 	cursor:pointer;
 }
-
+.form-builder-block {
+	background:#eee;
+	padding:15px;
+	margin-bottom:15px;
+	border-radius:10px;
+	input[type="text"] {
+		padding:5px;
+		border-radius:3px;
+		border:1px solid #ccc;
+		outline:none;
+	}
+	input[type="text"]:focus {
+		border:1px solid $primary;
+	}
+	h3:first-of-type {
+		margin-top:0;
+	}
+}
+.dinosaur {
+	font-size: 16px;
+	background: #E8D98D;
+	color: #896D14;
+	padding: 10px;
+	text-align: center;
+	a:link,
+	a:visited {
+		color: #896D14;
+	}
+}
 
 @media screen and (max-width: 1250px) {
 }

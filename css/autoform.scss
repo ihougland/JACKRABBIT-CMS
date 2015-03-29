@@ -56,7 +56,24 @@
 	box-shadow: 0 1px 0 #8CAB28, inset 0 -1px 0 #8CAB28, inset 0 -35px 0 #E6EAD8;
 	color:#8CAB28;
 }
-
+.form-field-select {
+	outline: none;
+	background: none;
+	border: 0;
+	border: 2px solid #ccc;
+	padding: 10px 5px;
+	color:#525252;
+	margin: 2px 0 0 0;
+	font-size: 12px;
+	width:250px;
+	transition:.2s ease-out;
+	position:relative;
+	font-weight:bold;
+}
+.form-field-select:focus {
+	border:2px solid #8CAB28;
+	color:#8CAB28;
+}
 .form-field-textarea {
 	outline: none;
 	background: none;

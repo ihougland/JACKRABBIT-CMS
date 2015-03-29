@@ -104,16 +104,25 @@ $(document).ready(function() {
 	$(document.body).on('click', '.page-add-confirm', function (event) {
 		var pageName = $(this).parent().find('input').val();
 		$(this).parent().empty().append("<i class='fa fa-reorder sort-drag'></i><i class='fa fa-file'></i> "+pageName+"");
+
+		pagesSortable();
 		event.preventDefault();
 	});
 
-	// Draggable Pages
-	$(".draggable-parent").sortable({
-		handle: ".sort-drag",
-		axis: "y",
-		opacity:".5",
-		toleranceElement: '> div',
-	});
+	// Draggable Pages https://github.com/ilikenwf/nestedSortable
+	pagesSortable = function() {
+		$('.draggable-parent').nestedSortable({
+            handle: '.sort-drag',
+            listType: 'ul',
+            items: 'li',
+            opacity: .6,
+            tabSize: 2,
+            maxLevels: 3,
+			placeholder: 'placeholder',
+            toleranceElement: '> div'
+        });
+	}
+	pagesSortable();
 
 	// Connection Dropdown
 	$('.con-result').click(function(){
