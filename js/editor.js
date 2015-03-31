@@ -135,7 +135,7 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 	createEmbed = function() {
 		var code = prompt("Paste Embed Code", "");
 		if (code) {
-			var finalCode = "<div class='responsive-iframe-container'>"+code+"</div>";
+			var finalCode = "<div class='rwd-embed'><div class='rwd-aspect rwd-embed-16-9'></div>"+code+"<div class='rwd-embed-overlay'></div></div>";
 			pasteHtmlAtCaret(finalCode,'.editor-text');
 		}
 		closeDropdowns();
@@ -225,7 +225,102 @@ Y88888P Y888888P VP   V8P YP   YD `8888Y'
 		$('.link-selected').attr('href', newLink);
 	});
 
-	
+/*
+d88888b .88b  d88. d8888b. d88888b d8888b. 
+88'     88'YbdP`88 88  `8D 88'     88  `8D 
+88ooooo 88  88  88 88oooY' 88ooooo 88   88 
+88~~~~~ 88  88  88 88~~~b. 88~~~~~ 88   88 
+88.     88  88  88 88   8D 88.     88  .8D 
+Y88888P YP  YP  YP Y8888P' Y88888P Y8888D' 
+*/
+
+// Click Image
+	$(document).on('click', '.editor-text .rwd-embed-overlay', function(event) {
+		if ($(this).hasClass("selectedEmbed")) {
+			doneWithEmbed();
+		} else {
+			$('.selectedEmbed').removeClass('selectedEmbed');
+			$('#selectedCell').removeAttr('id');
+			$(this).addClass('selectedEmbed');
+			$('.panel:nth-child(2)').find('.panel-title-active').removeClass('panel-title-active');
+			$('.panel:nth-child(2)').find('.panel-group').hide();
+
+			$('.panel:nth-child(2)').find('.panel-title-tab:nth-child(6)').addClass('panel-title-active');
+			$('.panel:nth-child(2)').find('.panel-group:nth-child(5)').show().css({
+				'pointerEvents':'auto',
+				'opacity':'1'
+			});
+
+			// Set current aspect
+			if ($(this).parent().find('.rwd-embed-4-3')[0]) {
+				$('#aspect-4-3').attr('checked','check');
+			} else if ($(this).parent().find('.rwd-embed-16-9')[0]) {
+				$('#aspect-16-9').attr('checked','check');
+			} else if ($(this).parent().find('.rwd-embed-21-9')[0]) {
+				$('#aspect-21-9').attr('checked','check');
+			}
+
+			// Set current max size
+			var embedWidth = $('.selectedEmbed').parents('.rwd-embed').css('maxWidth');
+			if (embedWidth != 'none') {
+				$('#embed-size').val(embedWidth);
+			}
+		}
+		event.stopPropagation();
+	});
+
+	// Set New Embed Max Width
+	$('#embed-size').on('input', function() {
+		var newembedWidth = $('#embed-size').attr('value'),
+			reg = /^\d+(\%$|\d*$)/,
+			reg2 = /(\d\%$)/,
+			charTest = reg.test(newembedWidth),
+			percentTest = reg2.test(newembedWidth);
+
+		// passes char test
+		if (!newembedWidth){
+
+		} else if(charTest == true) {
+			if (percentTest == true) {
+				$('.selectedEmbed').parent().css('maxWidth', newembedWidth);
+			}
+			else {
+				$('.selectedEmbed').parent().css('maxWidth', newembedWidth + 'px');
+			}
+		// fails chartest
+		} else {
+			alert('Please enter only numbers such as 300, or percents such as 50%');
+		}
+	});
+
+	// Set New Aspect
+	$('#aspect-4-3-label').on('click', function() {
+		$('.selectedEmbed').parents('.rwd-embed').find('.rwd-aspect').removeClass().addClass('rwd-embed-4-3').addClass('rwd-aspect');
+	});
+	$('#aspect-16-9-label').on('click', function() {
+		$('.selectedEmbed').parents('.rwd-embed').find('.rwd-aspect').removeClass().addClass('rwd-embed-16-9').addClass('rwd-aspect');
+	});
+	$('#aspect-21-9-label').on('click', function() {
+		$('.selectedEmbed').parents('.rwd-embed').find('.rwd-aspect').removeClass().addClass('rwd-embed-21-9').addClass('rwd-aspect');
+	});
+
+	// Delete Embed
+	$('.delete-embed').on('click', function() {
+		$('.selectedEmbed').parents('.rwd-embed').fadeOut(250, function(){
+			$(this).remove();
+		});
+	});
+
+	function doneWithEmbed() {
+		$('.selectedEmbed').removeClass('selectedEmbed');
+		$('.panel:nth-child(2)').find('.panel-group:nth-child(5)').css({
+			'pointerEvents':'none',
+			'opacity':'.2'
+		});
+		$('#embed-size').val('');
+	}
+	doneWithEmbed();
+
 /*
 d888888b .88b  d88.  .d8b.   d888b  d88888b .d8888. 
   `88'   88'YbdP`88 d8' `8b 88' Y8b 88'     88'  YP 
@@ -247,6 +342,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		if ($(this).hasClass("selectedImg")) {
 			doneWithImage();
 		} else {
+			doneWithEmbed();
 			$('.selectedImg').removeClass('selectedImg');
 			$('#selectedCell').removeAttr('id');
 			$('.tool-highlight').removeClass('tool-highlight');
@@ -303,7 +399,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 	});
 
 	// So clicking these fields doesn't close the image edit session
-	$(document).on('click', '#photo-desc, #photo-url, #photo-width, #link-location, .editor-text a', function(event) {
+	$(document).on('click', '#photo-desc, #photo-url, #photo-width, #link-location, .editor-text a, .radio-wrap, #embed-size', function(event) {
 	   event.stopPropagation();
 	});
 
@@ -473,13 +569,14 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 
 	$(document).on('click', function (event) {
 		$('#selectedCell').removeAttr('id');
-		$('.panel:nth-child(2)').find('.panel-group:nth-child(3), .panel-group:nth-child(4)').css({
+		$('.panel:nth-child(2)').find('.panel-group:nth-child(3), .panel-group:nth-child(4), .panel-group:nth-child(5)').css({
 			'pointerEvents':'none',
 			'opacity':'.2'
 		});
 		$('#link-location').val('');
 		$('.link-selected').removeClass('link-selected');
 		doneWithImage();
+		doneWithEmbed();
 	});
 
 
