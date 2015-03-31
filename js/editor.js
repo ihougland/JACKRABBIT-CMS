@@ -135,7 +135,7 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 	createEmbed = function() {
 		var code = prompt("Paste Embed Code", "");
 		if (code) {
-			var finalCode = "<div class='rwd-embed'><div class='rwd-aspect rwd-embed-16-9'></div>"+code+"<div class='rwd-embed-overlay'></div></div>";
+			var finalCode = "<div class='rwd-embed' style='max-width:100%;'><div class='rwd-aspect rwd-embed-16-9'></div>"+code+"<div class='rwd-embed-overlay'></div></div>";
 			pasteHtmlAtCaret(finalCode,'.editor-text');
 		}
 		closeDropdowns();
@@ -239,6 +239,8 @@ Y88888P YP  YP  YP Y8888P' Y88888P Y8888D'
 		if ($(this).hasClass("selectedEmbed")) {
 			doneWithEmbed();
 		} else {
+			doneWithImage();
+			$('.editor-text').attr('contenteditable',false);
 			$('.selectedEmbed').removeClass('selectedEmbed');
 			$('#selectedCell').removeAttr('id');
 			$(this).addClass('selectedEmbed');
@@ -261,9 +263,15 @@ Y88888P YP  YP  YP Y8888P' Y88888P Y8888D'
 			}
 
 			// Set current max size
-			var embedWidth = $('.selectedEmbed').parents('.rwd-embed').css('maxWidth');
-			if (embedWidth != 'none') {
+			var embedWidth = $('.selectedEmbed').parents('.rwd-embed').css('maxWidth'),
+				reg2 = /(\d\%$)/,
+				percentTest = reg2.test(embedWidth);
+
+			if (percentTest == true) {
 				$('#embed-size').val(embedWidth);
+			} else  {
+				var adjustedWidth = parseInt(embedWidth);
+				$('#embed-size').val(adjustedWidth);
 			}
 		}
 		event.stopPropagation();
@@ -754,8 +762,14 @@ Y8    8P    88    88ooooo 88   I8I   88      88  88  88 88    88 88   88 88ooooo
 		} else {
 			$('.on').removeClass();
 			$(this).addClass('on');
+			doneWithImage();
+			doneWithEmbed();
+			$('#selectedCell').removeAttr('id');
 			var saveText = $('.editor-text').html(),
-				formatText = $.htmlClean(saveText, {format:true});
+				formatText = $.htmlClean(saveText, {
+					format:true,
+					allowComments:true,
+				});
 			$('.editor-text').css({
 				'transform': 'scale(.2)',
 				'opacity': '0'

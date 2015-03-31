@@ -1684,6 +1684,7 @@ span {
 		padding: 4px;
 	}
 	img {
+		border-image-width: 6px;
 		transition: all .2s ease-out;
 		cursor: pointer;
 		box-sizing: border-box;
@@ -1731,6 +1732,18 @@ span {
 		width:100%;
 		height:100%;
 		z-index:1;
+		transition:.2s;
+		border-image-width: 0px;
+		box-sizing:border-box;
+		border-radius:2px;
+	}
+	.selectedEmbed {
+		background: rgba(0,0,0,0.5);
+		border: 6px;
+		border-image: url("../images/lines-border.gif") repeat;
+		border-image-width: 6px;
+		border-image-slice: 6;
+		border-image-repeat: round;
 	}
 	.rwd-embed-4-3 {
 		width: 100%;
@@ -1754,13 +1767,11 @@ span {
 		clear: both;
 	}
 	.selectedImg {
-		background: url("../images/lines.gif");
-		padding: 3px;
-		border: 0!important;
-	}
-	.selectedEmbed {
-		box-shadow:inset 0 0 0 4px $primary;
-		background:rgba(0,0,0,.5);
+		border: 6px;
+		border-image: url("../images/lines-border.gif") repeat;
+		border-image-width: 6px;
+		border-image-slice: 6;
+		border-image-repeat: round;
 	}
 	#selectedCell {
 		background: #E9F5C5;
