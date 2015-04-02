@@ -142,50 +142,50 @@
 						<div class="panel-group editor-toolbar">
 
 							<ul>
-								<li><a href="#" title="Bold" onclick="document.execCommand ('bold', false, null);"><i class="fa fa-bold"></i></a>
+								<li><a href="#" title="Bold" rel="B" onclick="document.execCommand ('bold', false, null);"><i class="fa fa-bold"></i></a>
 								</li>
-								<li><a href="#" title="Italic" onclick="document.execCommand ('italic', false, null);"><i class="fa fa-italic"></i></a>
+								<li><a href="#" title="Italic" rel="I" onclick="document.execCommand ('italic', false, null);"><i class="fa fa-italic"></i></a>
 								</li>
-								<li><a href="#" title="Underline" onclick="document.execCommand('underline', false, null);"><i class="fa fa-underline"></i></a>
+								<li><a href="#" title="Underline" rel="U" onclick="document.execCommand('underline', false, null);"><i class="fa fa-underline"></i></a>
 								</li>
-								<li><a href="#" title="Strikethrough" onclick="document.execCommand('strikethrough', false, null);"><i class="fa fa-strikethrough"></i></a>
+								<li><a href="#" title="Strikethrough" rel="Strike" onclick="document.execCommand('strikethrough', false, null);"><i class="fa fa-strikethrough"></i></a>
 								</li>
-								<li><a href="#" title="Block Quote"  onclick="wrapElement('blockquote');"><i class="fa fa-quote-left"></i></a>
-								</li>
-
-								<li><a href="#" title="Large Heading" onclick="wrapElement('h1');"><b style="font-size:.8em">H1</b></a>
-								</li>
-								<li><a href="#" title="Medium Heading" onclick="wrapElement('h2');"><b style="font-size:.8em">H2</b></a>
-								</li>
-								<li><a href="#" title="Small Heading" onclick="wrapElement('h3');"><b style="font-size:.8em">H3</b></a>
+								<li><a href="#" title="Block Quote" rel="Blockquote" onclick="wrapElement('blockquote');"><i class="fa fa-quote-left"></i></a>
 								</li>
 
-								<li><a href="#" title="Subscript" onclick="document.execCommand('subscript', false, null);"><i class="fa fa-subscript"></i></a>
+								<li><a href="#" title="Large Heading" rel="h1" onclick="wrapElement('h1');"><b style="font-size:.8em">H1</b></a>
 								</li>
-								<li><a href="#" title="Superscript" onclick="document.execCommand('superscript', false, null);"><i class="fa fa-superscript"></i></a>
+								<li><a href="#" title="Medium Heading" rel="h2" onclick="wrapElement('h2');"><b style="font-size:.8em">H2</b></a>
+								</li>
+								<li><a href="#" title="Small Heading" rel="h3" onclick="wrapElement('h3');"><b style="font-size:.8em">H3</b></a>
+								</li>
+
+								<li><a href="#" title="Subscript" rel="Sub" onclick="document.execCommand('subscript', false, null);"><i class="fa fa-subscript"></i></a>
+								</li>
+								<li><a href="#" title="Superscript" rel="Sup" onclick="document.execCommand('superscript', false, null);"><i class="fa fa-superscript"></i></a>
 								</li>
 
 
 
-								<li><a href="#" title="Align Left" onclick="document.execCommand('justifyLeft', false, null);"><i class="fa fa-align-left"></i></a>
+								<li><a href="#" title="Align Left" rel="Left" onclick="document.execCommand('justifyLeft', false, null);"><i class="fa fa-align-left"></i></a>
 								</li>
-								<li><a href="#" title="Align Center" onclick="document.execCommand('justifyCenter', false, null);"><i class="fa fa-align-center"></i></a>
+								<li><a href="#" title="Align Center" rel="Center" onclick="document.execCommand('justifyCenter', false, null);"><i class="fa fa-align-center"></i></a>
 								</li>
-								<li><a href="#" title="Align Right" onclick="document.execCommand('justifyRight', false, null);"><i class="fa fa-align-right"></i></a>
+								<li><a href="#" title="Align Right" rel="Right" onclick="document.execCommand('justifyRight', false, null);"><i class="fa fa-align-right"></i></a>
 								</li>
-								<li><a href="#" title="Jusitfy" onclick="document.execCommand('justifyFull', false, null);"><i class="fa fa-align-justify"></i></a>
+								<li><a href="#" title="Jusitfy" rel="Justify" onclick="document.execCommand('justifyFull', false, null);"><i class="fa fa-align-justify"></i></a>
 								</li>
 
-								<li><a href="#" title="Bulleted List" onclick="document.execCommand('insertOrderedList', false, null);"><i class="fa fa-list-ol"></i></a>
+								<li><a href="#" title="Bulleted List" rel="OL" onclick="document.execCommand('insertOrderedList', false, null); rangeMouseup();"><i class="fa fa-list-ol"></i></a>
 								</li>
-								<li><a href="#" title="Numbered List" onclick="document.execCommand('insertUnorderedList', false, null);"><i class="fa fa-list-ul"></i></a>
+								<li><a href="#" title="Numbered List" rel="UL" onclick="document.execCommand('insertUnorderedList', false, null); rangeMouseup();"><i class="fa fa-list-ul"></i></a>
 								</li>
 								<li><a href="#" title="Add Link" onclick="createLink();"><i class="fa fa-link"></i></a>
 								</li>
 								<li><a href="#" title="Remove Link" onclick="document.execCommand('unlink', false, null);"><i class="fa fa-unlink"></i></a>
 								</li>
 
-								<li><a href="#" title="Horizontal Line" onclick="document.execCommand('insertHorizontalRule', false, null);"><i class="fa fa-minus"></i></a>
+								<li><a href="#" title="Horizontal Line" rel="hr" onclick="document.execCommand('insertHorizontalRule', false, null);"><i class="fa fa-minus"></i></a>
 								</li>
 
 

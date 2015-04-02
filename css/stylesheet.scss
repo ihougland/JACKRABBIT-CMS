@@ -1046,6 +1046,9 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 		display: inline-block;
 		padding: 5px 10px;
 	}
+	.active {
+		color:$primary!important;
+	}
 }
 
 input[type="radio"] {

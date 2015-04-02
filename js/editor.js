@@ -99,6 +99,31 @@ $(document).ready(function() {
 		return false;
 	}
 
+// Highlight current buttons
+$('.editor-text').on('keyup', function(){
+	rangeMouseup();
+});
+				
+$('.editor-text').on('mouseup', function(event){
+	$('a').removeClass('active');
+	var node = event.target;
+	while(node.nodeName != 'DIV'){
+		$('a[rel='+node.nodeName+']').addClass('active');
+		node = node.parentNode;
+	}
+});
+
+function rangeMouseup(){
+	if (document.selection){
+		$(document.selection.createRange().parentElement()).trigger('mouseup');
+	}
+	else if (window.getSelection){
+		var range = window.getSelection().getRangeAt(0);
+		$(range.commonAncestorContainer.parentNode).trigger('mouseup');
+		$(range.commonAncestorContainer).trigger('mouseup');
+	}
+}
+
 /*
 d888888b d8b   db .d8888. d88888b d8888b. d888888b 
   `88'   888o  88 88'  YP 88'     88  `8D `~~88~~' 
@@ -123,8 +148,8 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 				finalCode = '<'+element+'>'+selected+'</'+element+'>';
 				range = sel.getRangeAt(0);
 
-			range.deleteContents();
 				removeSelectedElements("h1,h2,h3,h4,h5,h6,blockquote");
+			range.deleteContents();
 			//range.insertNode(document.createTextNode(finalCode));
 			pasteHtmlAtCaret(finalCode,'.editor-text');
 			$('.editor-text').attr('rel','');
@@ -830,7 +855,8 @@ Y88888P Y8888D' Y888888P    YP    Y888888P VP   V8P  Y888P
 	// Insert BR on enter
 	$('div[contenteditable]').keydown(function(e) {
 		if (e.keyCode === 13) {
-			document.execCommand('insertHTML', false, '<br>');
+			//document.execCommand('insertHTML', false, '<br>');
+			pasteHtmlAtCaret('<br>','.editor-text');
 			return false;
 		}
 	});
