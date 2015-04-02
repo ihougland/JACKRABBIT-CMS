@@ -41,42 +41,48 @@ $(document).ready(function() {
 
 	// Paste At Caret Function	
 	function pasteHtmlAtCaret(html, selector) {
-		var sel, range, parent, node = null;
-		
-		if (document.selection) {
-			node = document.selection.createRange().parentElement();
-		} else {
-			var selection = window.getSelection();
-			if (selection.rangeCount > 0)
-				node = selection.getRangeAt(0).startContainer.parentNode;
-		}
-		
-		if ( node && $(node).closest(selector).length > 0 && window.getSelection) {
-			sel = window.getSelection();
-			if (sel.getRangeAt && sel.rangeCount) {
-				range = sel.getRangeAt(0);
-				range.deleteContents();
-				var el = document.createElement("div");
-				el.innerHTML = html;
-				var frag = document.createDocumentFragment(),
-					node, lastNode;
-				while ((node = el.firstChild)) {
-					lastNode = frag.appendChild(node);
-				}
-				range.insertNode(frag);
+    var sel, range, parent, node = null;
 
-				if (lastNode) {
-					range = range.cloneRange();
-					range.setStartAfter(lastNode);
-					range.collapse(true);
-					sel.removeAllRanges();
-					sel.addRange(range);
-				}
-			}
-		} else if (document.selection && document.selection.type != "Control") {
-			document.selection.createRange().pasteHTML(html);
-		}
-	}
+    if (document.selection) {
+        node = document.selection.createRange().parentElement();
+    } else {
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            node = selection.getRangeAt(0).startContainer;
+            if (node !== $(node).closest(selector).get(0)) {
+                node = node.parentNode;
+            }
+        }
+    }
+    
+    
+
+    if (node && $(node).closest(selector).length > 0 && window.getSelection) {
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+            var el = document.createElement("div");
+            el.innerHTML = html;
+            var frag = document.createDocumentFragment(),
+                node, lastNode;
+            while ((node = el.firstChild)) {
+                lastNode = frag.appendChild(node);
+            }
+            range.insertNode(frag);
+
+            if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+    } else if (document.selection && document.selection.type != "Control") {
+        document.selection.createRange().pasteHTML(html);
+    }
+}
 
 	// Is within element? function
 	function isSelectionInsideElement(tagName) {
@@ -113,6 +119,7 @@ $('.editor-text').on('mouseup', function(event){
 	}
 });
 
+
 function rangeMouseup(){
 	if (document.selection){
 		$(document.selection.createRange().parentElement()).trigger('mouseup');
@@ -145,16 +152,33 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 			document.execCommand('removeFormat', false, 'null');
 		} else if (sel.rangeCount) {
 			var selected = $('.editor-text').attr('rel'),
-				finalCode = '<'+element+'>'+selected+'</'+element+'>';
+				finalCode = '<'+element+'>'+selected+'</'+element+'>',
 				range = sel.getRangeAt(0);
 
-				removeSelectedElements("h1,h2,h3,h4,h5,h6,blockquote");
 			range.deleteContents();
+			removeSelectedElements("h1,h2,h3,h4,h5,h6,blockquote");
 			//range.insertNode(document.createTextNode(finalCode));
 			pasteHtmlAtCaret(finalCode,'.editor-text');
 			$('.editor-text').attr('rel','');
 		}
 	}
+
+	// Fix Chrome Adding Spans
+	checkForSpan = function (elem){
+  this.$editor.on("DOMNodeInserted", $.proxy(function(e) {
+    if (e.target.tagName == "SPAN" ) {
+      var helper = $("<b>helper</b>");
+
+      $(e.target).before(helper);
+
+      helper.after($(e.target).contents());
+      helper.remove();
+
+      $(e.target).remove();
+    }
+
+  }, this));
+}
 
 	// Insert embedded code
 	createEmbed = function() {
@@ -948,6 +972,7 @@ Y88888P Y8888D' Y888888P    YP    Y888888P VP   V8P  Y888P
 	};
 
 	$(document.body).on("click", ".editor-text", function(event) {
+		$('.editor-text span').contents().unwrap();
 		if($('.editor-title #save-warning').length){
 
 		}else {
