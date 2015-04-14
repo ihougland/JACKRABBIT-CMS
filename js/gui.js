@@ -85,13 +85,14 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 
+
 	// Draggable Pages https://github.com/ilikenwf/nestedSortable
 	pagesSortable = function() {
 		$('.draggable-parent').nestedSortable({
 			handle: '.sort-drag',
 			listType: 'ul',
 			items: 'li',
-			opacity: .6,
+			opacity: .3,
 			tabSize: 2,
 			maxLevels: 3,
 			placeholder: 'placeholder',
@@ -99,6 +100,30 @@ $(document).ready(function() {
 		});
 	}
 	pagesSortable();
+
+	// Add A Page
+	$('#addpage').click(function(event){
+		$('<li class="page-add"><div><a href="#"><i class="fa fa-times page-add-cancel"></i><i class="fa fa-check page-add-confirm"></i><input type="text" placeholder="Add Page Name..." /></a></div></li>').appendTo('.pages>ul');
+		$('.page-add').slideDown(300, 'easeOutExpo');
+		event.preventDefault();
+	});
+
+	// Cancel Adding A Page
+	$(document.body).on('click', '.page-add-cancel', function (event) {
+		$(this).parent().slideUp(300, 'easeOutExpo', function(){
+			$(this).remove();
+		});
+		event.preventDefault();
+	});
+
+	// Confirm Page Add
+	$(document.body).on('click', '.page-add-confirm', function (event) {
+		var pageName = $(this).parent().find('input').val();
+		$(this).parent().empty().append("<i class='fa fa-reorder sort-drag'></i><i class='fa fa-file'></i> "+pageName+"");
+		$('.page-add').removeClass().addClass('draggable');
+		$('.draggable-parent').nestedSortable('refresh');
+		event.preventDefault();
+	});
 
 	// Connection Dropdown
 	$('.con-result').click(function(){
