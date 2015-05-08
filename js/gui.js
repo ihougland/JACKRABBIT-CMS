@@ -137,7 +137,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		closeDropdowns();
 		var getUrl = $(this).attr('href');
-		$('body').append('<div class="modal"><a href="#" class="modal-close"></a></div>');
+		$('body').append('<div class="modal"><a href="#" class="modal-close"><i class="fa fa-chevron-left"></i> DONE</a></div>');
 		$('.main-wrap').addClass('blurout');
 		$('.modal').show().css('opacity');
 		$('.modal').css('opacity','1');
@@ -159,7 +159,7 @@ $(document).ready(function() {
 		$('.modal-close').fadeOut();
 		$('.modal').css('background-image','none');
 		$('.modal-content').css({
-			'transform':'scale(1.2)',
+			'transform':'',
 			'opacity':'0'
 		});
 		setTimeout(function(){ 
