@@ -1479,7 +1479,7 @@ span {
 	}
 }
 
-.special-btn {
+.addon-btn {
 	position: absolute;
 	right: 8px;
 	top: 6px;
@@ -1499,11 +1499,11 @@ span {
 	}
 }
 
-.special-btn:hover {
+.addon-btn:hover {
 	color: #fff!important;
 }
 
-.special-open {
+.addon-open {
 	background: $primary;
 	color: #fff !important;
 	i {
@@ -1535,9 +1535,10 @@ span {
 	}
 }
 
-.special-list {
+.addon-list {
 	overflow: auto;
 	white-space: nowrap;
+	padding:0 0 10px 0;
 	margin: 25px 0;
 	a:link, a:visited {
 		display: inline-block;
@@ -1563,24 +1564,24 @@ span {
 	}
 }
 
-.special-list::-webkit-scrollbar {
+.addon-list::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 }
 
-.special-list::-webkit-scrollbar-track {
-	background: #BABDC3;
+.addon-list::-webkit-scrollbar-track {
+	background: #D2D7DF;
 	border-radius: 4px;
 }
 
-.special-list::-webkit-scrollbar-thumb {
+.addon-list::-webkit-scrollbar-thumb {
 	border-radius: 4px;
 	background: #898C92;
 }
 
-.add-special-content {
+.addon-selector{
 	text-align: center;
-	background: #cbced3;
+	background: #D2D7DF;
 	color: #515151;
 	font-size: 12px;
 	line-height: 1.4em;
@@ -1651,11 +1652,44 @@ span {
 	}
 }
 
-.special-content-open {
-	max-height: 260px;
+.addon-content-open {
+	max-height: 300px;
 	opacity: 1;
 }
 
+.addon {
+	background:#DEE2E8;
+	padding:10px 15px;
+	font-size:14px;
+	line-height: 20px;
+	color:#656C6F;
+	border-radius:2px 2px 0 0;
+	a:link, a:visited {
+		float:right;
+		font-size: 10px;
+		line-height: 1em;
+		padding: 5px;
+		text-decoration: none;
+		background: rgba(0,0,0,.1);
+		display: inline-block;
+		border-radius: 3px;
+		font-weight: bold;
+		margin-left:2px;
+		color:#656C6F;
+	}
+	a:hover {
+		background:$primary;
+		color:#fff;
+	}
+	a:active {
+		background:$primary-alt;
+	}
+}
+.addon:after {
+	display:block;
+	clear:both;
+	content:'';
+}
 .button {
 	display: inline-block;
 	border: 2px solid #C8C8C8;
@@ -1680,7 +1714,7 @@ span {
 	color: #fff!important;
 }
 
-.special-content:after {
+.addon-content:after {
 	content: '';
 	display: block;
 	clear: both;

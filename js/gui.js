@@ -170,10 +170,10 @@ $(document).ready(function() {
 		}, 550);
 	});
 
-	// Special Content
-	$(document.body).on('click', '.special-btn', function (event) {
-		$(this).toggleClass('special-open');
-		$('.add-special-content').toggleClass('special-content-open');
+	// addon Content
+	$(document.body).on('click', '.addon-btn', function (event) {
+		$(this).toggleClass('addon-open');
+		$('.addon-selector').toggleClass('addon-content-open');
 		event.preventDefault();
 	});
 
