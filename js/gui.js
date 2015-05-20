@@ -98,6 +98,14 @@ $(document).ready(function() {
 			placeholder: 'placeholder',
 			toleranceElement: '> div'
 		});
+		$('.addon-sort').nestedSortable({
+			handle: '.addon-drag',
+			listType: 'ul',
+			items: 'li',
+			opacity: .3,
+			placeholder: 'placeholder',
+			toleranceElement: '> div'
+		});
 	}
 	pagesSortable();
 
@@ -274,5 +282,19 @@ $(document).ready(function() {
 		}
 		return $this;
 	});
+
+	// Page Messages 
+	function message(message, type) {
+		var messageContent = message,
+			messageType = type
+		$('body').append('<div class="message message-'+messageType+'">'+messageContent+'</div>');
+
+		$('.message').slideDown();
+		setTimeout(function(){ 
+			$('.message').slideUp( function(){
+				$('.message').remove();
+			});
+		}, 2500);
+	}
 
 });

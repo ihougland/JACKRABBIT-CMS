@@ -6,6 +6,9 @@ $primary-alt:#9DC047;
 $dark-gray:#1b1f21;
 $medium-gray:#2A2E32;
 $light-gray:#44474d;
+$warning:#E7983E;
+$error:#A74D4D;
+
 @-webkit-keyframes shake {
 	0%, 100% {
 		-webkit-transform: translateX(0);
@@ -168,7 +171,30 @@ db   db d88888b  .d8b.  d8888b.
 88   88 88.     88   88 88  .8D 
 YP   YP Y88888P YP   YP Y8888D' 
 */
-
+.message {	
+	display: none;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:999;
+	width:100%;
+	padding:25px 0;
+	color:#fff;
+	font-size:16px;
+	text-align: center;
+	box-shadow:0 3px 3px rgba(0,0,0,.3);
+}
+.message:before {
+	font-family: fontawesome;
+	font-size:22px;
+	line-height:16px;
+}
+.message-success {background:$primary;}
+.message-success:before {content:'\f00c';}
+.message-warn {background:$warning;}
+.message-warn:before {content:'\f06a';}
+.message-error {background:$error;}
+.message-error:before {content:'\f00d';}
 header {
 	background: $medium-gray;
 	padding-top: 25px;
@@ -1657,13 +1683,29 @@ span {
 	opacity: 1;
 }
 
+.addon-sort {
+	margin-bottom: 10px;
+	.placeholder {
+		background: #DEE2E8;
+		height:36px;
+		width:100%;
+		display:block;
+		border: 2px dashed $primary;
+		border-radius: 3px;
+	}
+}
+.addon-sort:empty {
+	margin:0;
+}
+.addon:first-of-type {border-radius:2px 2px 0 0;}
+.addon:last-of-type {border-radius:0 0 2px 2px;}
 .addon {
-	background:#DEE2E8;
-	padding:10px 15px;
-	font-size:14px;
+	background: #DEE2E8;
+	padding: 10px 15px;
+	font-size: 14px;
 	line-height: 20px;
-	color:#656C6F;
-	border-radius:2px 2px 0 0;
+	color: #656C6F;
+	box-shadow: 0 1px 0px 2px rgba(0, 0, 0, 0.08);
 	a:link, a:visited {
 		float:right;
 		font-size: 10px;
@@ -1683,6 +1725,18 @@ span {
 	}
 	a:active {
 		background:$primary-alt;
+	}
+	.addon-drag {
+		float:right;
+		font-size: 10px;
+		line-height: 1em;
+		padding: 5px;
+		margin-left:15px;
+		opacity: .4;
+	}
+	.addon-drag:hover {
+		cursor: -webkit-grab;
+		opacity: 1;
 	}
 }
 .addon:after {
@@ -1752,7 +1806,7 @@ span {
 	line-height: 1.4em;
 	color: #525252;
 	background: #F7F9FB;
-	border-radius: 0 0 2px 2px;
+	border-radius: 2px;
 	transition: all .2s ease-out;
 	transform-origin: top center;
 	a:link, a:visited {
