@@ -32,7 +32,7 @@ $(document).ready(function() {
 		// post(file, data, callback, type); (only "file" is required)
         $.post(  
         "ajax_update.php", //The update file
-        { type: 'page', id: page_id, title: pageTitle, meta_title: metaTitle, meta_description: metaDescription, text: pageText },  // create an object will all values
+        { type: 'pageUpdate', id: page_id, title: pageTitle, meta_title: metaTitle, meta_description: metaDescription, text: pageText },  // create an object will all values
         //function that is called when server returns a value.
         function(data){
             closeDropdowns();
@@ -47,10 +47,27 @@ $(document).ready(function() {
 	// Delete Page
 	deletePage = function (){
 		var r = confirm("Whoa there, are you sure you want to delete this page forever?");
-		if (r == true) {
-			alert('Delete function goes here');
-		} else {
-			// do nothing
+		if (r == true) 
+		{
+			var page_id = $('#page_id').val();
+			$.post(  
+	        "ajax_update.php", //The update file
+	        { type: 'pageDelete', id: page_id },  // create an object will all values
+	        //function that is called when server returns a value.
+	        function(data){
+	            if(data.disallow=="yes")
+	            {
+	            	alert("This page cannot be deleted.");
+	            }
+	            else
+	            {
+	            	//redirect to main pages.php
+	            	window.location.href= "pages.php";
+	            }
+	        }, 
+	        //How you want the data formated when it is returned from the server.
+	        "json"
+	        );
 		}
 		closeDropdowns();
 	}

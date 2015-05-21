@@ -178,7 +178,7 @@ if(isset($_GET['page_id']))
 					<div class="editor">
 						<div class="editor-title">
 							<!--<a href="settings.html" class="title-btn-right in-iframe"><i class="fa fa-user"></i> Manage Staff</a>-->
-							<a href="#" class="title-btn-right special-btn"><i class="fa fa-plus"></i> Add Special Content</a>
+							<a href="#" class="title-btn-right addon-btn"><i class="fa fa-plus"></i> ADD-ONS</a>
 							<div class="view-btns">
 								<a href="#" class="on">EDIT</a><!--
 								--><a href="#"  id="htmlMode">HTML</a><!--
@@ -187,39 +187,85 @@ if(isset($_GET['page_id']))
 							<h1><?php echo db_output($row['title']); ?></h1>
 						</div>
 
-						<div class="add-special-content">
+						<div class="addon-selector">
 							<div><!-- for padding -->
 							<h1>Add Special Content</h1>
-							You may choose one special content element to appear below the regular text of this page.<br>
-							<div class="special-list">
+							Choose from the items below to place Add-Ons on this page. They will appear above or below the regular page text depending on which you choose.<br>
+							<div class="addon-list">
 							<a href="#">
 								<img src="images/gallery.svg" alt="">
 								Gallery
 							</a>
 							<a href="#">
-								<img src="images/gallery-multi.svg" alt="">
-								Multi Galleries
+								<img src="images/video-gallery.svg" alt="">
+								Video Gallery
 							</a>
 							<a href="#">
 								<img src="images/staff.svg" alt="">
 								Staff Members
 							</a>
 							<a href="#">
-								<img src="images/faq.svg" alt="">
-								FAQs
+								<img src="images/accordion.svg" alt="">
+								Accordion
 							</a>
 							<a href="#">
-								<img src="images/products.svg" alt="">
-								Products
+								<img src="images/form.svg" alt="">
+								Form
 							</a>
 							<a href="#">
 								<img src="images/logos.svg" alt="">
 								Logos
 							</a>
+							<a href="#">
+								<img src="images/slideshow.svg" alt="">
+								Slideshow
+							</a>
+							<a href="#">
+								<img src="images/calendar.svg" alt="">
+								Calendar
+							</a>
+							<a href="#">
+								<img src="images/documents.svg" alt="">
+								Document List
+							</a>
 							</div>
 							</div>
 						</div>
-
+						<div>
+						<ul class="addon-sort">
+							<!-- if empty, make sure no spaces are left here -->
+							<li class="addon">
+								<div>
+								<i class="fa fa-bars addon-drag"></i>
+								<a href="#">DELETE</a>
+								<a href="#">MANAGE</a>
+								Slideshow
+								</div>
+							</li>
+							<li class="addon">
+								<div>
+								<i class="fa fa-bars addon-drag"></i>
+								Page Text
+								</div>
+							</li>
+							<li class="addon">
+								<div>
+								<i class="fa fa-bars addon-drag"></i>
+								<a href="#">DELETE</a>
+								<a href="#">MANAGE</a>
+								Form
+								</div>
+							</li>
+							<li class="addon">
+								<div>
+								<i class="fa fa-bars addon-drag"></i>
+								<a href="#">DELETE</a>
+								<a href="#">MANAGE</a>
+								Photo Gallery
+								</div>
+							</li>
+						</ul>
+						</div>
 						<div id="pageText" class="editor-text" contenteditable="true">
 							<?php echo db_output($row['text']); ?>
 						</div><!-- end .editor-text -->

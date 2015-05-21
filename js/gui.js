@@ -137,9 +137,22 @@ $(document).ready(function() {
 	// Confirm Page Add
 	$(document.body).on('click', '.page-add-confirm', function (event) {
 		var pageName = $(this).parent().find('input').val();
+		// post(file, data, callback, type); (only "file" is required)
+        $.post(  
+        "ajax_update.php", //The update file
+        { type: 'pageAdd', title: pageName },  // create an object will all values
+        //function that is called when server returns a value.
+        function(data){
+			window.location.href = "pages.php?page_id="+data.page_id;
+        }, 
+        //How you want the data formated when it is returned from the server.
+        "json"
+        );
+        /*
 		$(this).parent().empty().append("<i class='fa fa-reorder sort-drag'></i><i class='fa fa-file'></i> "+pageName+"");
 		$('.page-add').removeClass().addClass('draggable');
 		$('.draggable-parent').nestedSortable('refresh');
+		*/
 		event.preventDefault();
 	});
 

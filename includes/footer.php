@@ -49,6 +49,28 @@
 						?>
 										<li class="draggable" id="list_<?php echo $child['page_id']; ?>">
 											<div><a href="pages.php?page_id=<?php echo $child['page_id']; ?>" <?php if($_GET['page_id']==$child['page_id']){ ?>id="current-page"<?php } ?>><i class="fa fa-reorder sort-drag"></i><i class="fa fa-file"></i> <?php echo db_output($child['title']); ?></a></div>
+						<?php
+									//get sub pages
+									$grandchild_res = SRPCore()->query("SELECT page_id, title FROM pages WHERE parent_id = ".$child['page_id']." AND sort_order>0 ORDER BY sort_order");
+									if($grandchild_res->num_rows()!=0)
+									{
+								?>
+											<ul class="dd-list">
+								<?php
+										while($grandchild = $grandchild_res->fetch())
+										{
+								?>
+												<li class="draggable" id="list_<?php echo $grandchild['page_id']; ?>">
+													<div><a href="pages.php?page_id=<?php echo $grandchild['page_id']; ?>" <?php if($_GET['page_id']==$grandchild['page_id']){ ?>id="current-page"<?php } ?>><i class="fa fa-reorder sort-drag"></i><i class="fa fa-file"></i> <?php echo db_output($grandchild['title']); ?></a></div>
+												</li>
+								<?php
+										}
+								?>
+											</ul>
+								<?php
+									}
+						?>
+										
 										</li>
 						<?php
 								}
@@ -63,11 +85,21 @@
 						?>
 							</ul>
 						<?php
+						
+						//Only Allow Add option if set in Configuration
+						?>
+							<div class="sidebar-option">
+								<hr><a href="#" id="addpage"><i class="fa fa-plus"></i> Add Page</a>
+							</div>
+						</li>
+						<?php
 						//get pages that aren't "sortable" (not found in navigation)
 						$nonsort_res = SRPCore()->query("SELECT page_id, title FROM pages WHERE sort_order = 0 ORDER BY title");
 						if($nonsort_res->num_rows()!=0)
 						{
 						?>
+						<li><a href="#"><i class="fa fa-chevron-down"></i> Misc Pages</a>
+						
 							<ul>
 						<?php
 							while($nonsort = $nonsort_res->fetch())
@@ -81,28 +113,11 @@
 							}
 						?>
 							</ul>
-						<?php
-						}
-						//Only Allow Add option if set in Configuration
-						?>
-							<div class="sidebar-option">
-								<hr><a href="#" id="addpage"><i class="fa fa-plus"></i> Add Page</a>
-							</div>
-						</li>
-						<li><a href="#"><i class="fa fa-chevron-down"></i> Misc</a>
-	                        <ul>
-	                            <li><a href="manage-soc.html" class="in-iframe"><i class="fa fa-share-alt"></i> Social Media</a>
-	                            </li>
-	                            <li><a href="manage-forms.html" class="in-iframe"><i class="fa fa-file"></i> Forms</a>
-	                            </li>
-	                            <li><a href="manage-settings.html" class="in-iframe"><i class="fa fa-cog"></i> Settings</a>
-	                            </li>
-	                            <li><a href="manage-products.html" class="in-iframe"><i class="fa fa-shopping-cart"></i> Products</a>
-	                            </li>
-	                            <li><a href="help.html" class="in-iframe"><i class="fa fa-question"></i> Help</a>
-	                            </li>
-	                        </ul>
+						
 	                    </li>
+	                    <?php
+						}
+						?>
 					</ul>
 					<a href="#" class="panel-toggler"><i class="fa fa-chevron-right"></i></a>
 				</div><!-- end .sidebar-right-scroll-->
