@@ -96,7 +96,17 @@ $(document).ready(function() {
 			tabSize: 2,
 			maxLevels: 3,
 			placeholder: 'placeholder',
-			toleranceElement: '> div'
+			toleranceElement: '> div',
+			update : function () {
+				var orderNew = $('.draggable-parent').nestedSortable('serialize');
+				//alert(orderNew);
+				
+			    $.ajax({
+		            type: 'post',
+		            url: 'ajax_update.php',
+		            data: orderNew
+	            });
+			}
 		});
 		$('.addon-sort').nestedSortable({
 			handle: '.addon-drag',

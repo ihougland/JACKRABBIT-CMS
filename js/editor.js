@@ -23,9 +23,25 @@ $(document).ready(function() {
 	}); 
 
 	savePage = function (){
-		alert("Save function goes here.");
-		closeDropdowns();
-		$('#save-warning').remove();
+		//get the text, id, title, etc
+        var pageText = $('#pageText').html();
+        var page_id = $('#page_id').val();
+        var pageTitle = $('#pageTitle').val();
+        var metaTitle = $('#metaTitle').val();
+        var metaDescription = $('#metaDescription').val();
+		// post(file, data, callback, type); (only "file" is required)
+        $.post(  
+        "ajax_update.php", //The update file
+        { type: 'page', id: page_id, title: pageTitle, meta_title: metaTitle, meta_description: metaDescription, text: pageText },  // create an object will all values
+        //function that is called when server returns a value.
+        function(data){
+            closeDropdowns();
+			$('#save-warning').remove();
+			$('#edited-date').html(data.last_updated);
+        }, 
+        //How you want the data formated when it is returned from the server.
+        "json"
+        );
 	}
 
 	// Delete Page
