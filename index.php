@@ -19,7 +19,9 @@
 include('includes/application_top.php');
 
 if (login_check() == true) {
-    $logged = 'in';
+   //redirect to pages.php
+    header("Location: pages.php");
+    exit;
 } else {
     $logged = 'out';
 }

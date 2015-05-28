@@ -43,14 +43,19 @@
 			<?php
 			if($nav_page=="pages.php" && isset($_GET['page_id']))
 			{
+				$headrow = SRPCore()->query("SELECT * FROM pages WHERE page_id = ".intval($_GET['page_id']))->fetch();
 			?>
 				<li><a href="#">File</a>
 					<ul>
-						<li><a href="#" onClick="savePage();">Save</a></li>
+						<?php if($headrow['type']!=0){ ?><li><a href="#" onClick="<?php if($headrow['type']==3){ ?>savePageUpload();<?php } else { ?>savePage();<?php } ?>">Save</a></li><?php } ?>
 						<li><a href="pages.php">Close Page</a></li>
 						<li><a href="#" onClick="deletePage();">Delete Page</a></li>
 					</ul>
 				</li>
+			<?php
+				if($headrow['type']==1)
+				{
+			?>
 				<li><a href="#">Insert</a>
 					<ul>
 						<li><a href="#">Image</a></li>
@@ -100,18 +105,13 @@
 					</ul>
 				</li>
 			<?php
+				}
 			}
 			?>
 				<li><a href="#">Manage</a>
 					<ul>
-						<li><a href="settings.html" class="in-iframe">Website Settings</a>
+						<li><a href="settings.php" class="in-iframe">Website Settings</a>
 						</li>
-						<li><a href="manage-soc.html" class="in-iframe">Social Media</a>
-	                    </li>
-	                    <li><a href="manage-forms.html" class="in-iframe">Custom Forms</a>
-	                    </li>
-	                    <li><a href="manage-info.html" class="in-iframe">Info Blocks</a>
-	                    <li><a href="manage-products.html" class="in-iframe">Products</a>
 					</ul>
 				</li>
 				

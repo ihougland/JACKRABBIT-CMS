@@ -1,12 +1,55 @@
 <?php
 include('includes/application_top.php');
 include('includes/session_check.php');
+if(isset($_POST['upload']))
+{
+	//handle file upload for pages that are documents instead of links or page text
+	//include upload files
+	include('includes/classes/upload.php');
+	include('includes/classes/smart_resize.php');
+	//get posted values
+	$page_id = $_POST['page_id'];
+	$title = db_input($_POST['title']);
+
+	//upload file
+	$file_uploader = new uploader('../files_uploaded/');
+    $file_uploader->addAllowedFileType(array('.jpeg', '.jpg', '.gif', '.png', '.doc', '.docx', '.pdf'));
+    $filename = $file_uploader -> uploadFile('file');
+    if($filename)
+    {
+        list($name_file, $ext) = split('[.]', $filename);
+
+        //resize if its an image
+        if($ext == 'jpeg' || $ext == 'jpg' || $ext == 'gif' || $ext == 'png')
+        {
+            $image_src = "../files_uploaded/" . stripslashes($filename);
+            $image_size = getimagesize($image_src);
+            if($image_size[0]>1500)
+            {
+                smart_resize_image($image_src, $image_src, 1500, 0, true, 'file', false, false);
+            }
+        } 
+	   	//update the row
+	    $sql = "UPDATE pages SET filename='$filename', title='$title', last_updated=now() WHERE page_id = ".intval($page_id);
+	    SRPCore()->query($sql);
+    }
+    else
+    {
+    	$sql = "UPDATE pages SET title='$title', last_updated=now() WHERE page_id = ".intval($page_id);
+	    SRPCore()->query($sql);
+    }
+	//go back to page
+	header('Location: pages.php?page_id='.$page_id); 
+	exit;
+}
 include('includes/header.php');
 $db = SRPCore();
 
 if(isset($_GET['page_id'])) 
 { 
 	$row = SRPCore()->query("SELECT * FROM pages WHERE page_id = ".intval($_GET['page_id']))->fetch();
+	if($row['type']==1)
+	{
 ?>
 			<div class="sidebar-left">
 				<div class="sidebar-left-scroll">
@@ -192,80 +235,50 @@ if(isset($_GET['page_id']))
 							<h1>Add Special Content</h1>
 							Choose from the items below to place Add-Ons on this page. They will appear above or below the regular page text depending on which you choose.<br>
 							<div class="addon-list">
-							<a href="#">
-								<img src="images/gallery.svg" alt="">
-								Gallery
+<?php
+		$addon_res = SRPCore()->query("SELECT * FROM addons WHERE inactive = 0 AND type = 0 ORDER BY sort_order");
+		while($addon = $addon_res->fetch())
+		{
+?>
+							<a href="<?php echo $addon['url']; ?>" class="in-iframe">
+								<img src="images/<?php echo $addon['icon']; ?>" alt="<?php echo $addon['title']; ?>">
+								<?php echo $addon['title']; ?>
 							</a>
-							<a href="#">
-								<img src="images/video-gallery.svg" alt="">
-								Video Gallery
-							</a>
-							<a href="#">
-								<img src="images/staff.svg" alt="">
-								Staff Members
-							</a>
-							<a href="#">
-								<img src="images/accordion.svg" alt="">
-								Accordion
-							</a>
-							<a href="#">
-								<img src="images/form.svg" alt="">
-								Form
-							</a>
-							<a href="#">
-								<img src="images/logos.svg" alt="">
-								Logos
-							</a>
-							<a href="#">
-								<img src="images/slideshow.svg" alt="">
-								Slideshow
-							</a>
-							<a href="#">
-								<img src="images/calendar.svg" alt="">
-								Calendar
-							</a>
-							<a href="#">
-								<img src="images/documents.svg" alt="">
-								Document List
-							</a>
+<?php
+		}
+?>
+							</div><!-- end .addon-list-->
 							</div>
-							</div>
-						</div>
+						</div><!-- end .addon-selector-->
+<?php
+		//check for addons
+		$pg_addon_res = SRPCore()->query("SELECT pa.*, a.title as addon_title FROM pages_addons pa LEFT JOIN addons a ON pa.addon_id = a.addon_id WHERE pa.page_id = ".intval($_GET['page_id'])." ORDER BY pa.sort_order");
+		if($pg_addon_res->num_rows()!=0)
+		{
+?>
 						<div>
 						<ul class="addon-sort">
 							<!-- if empty, make sure no spaces are left here -->
+<?php
+			while($pg_addon = $pg_addon_res->fetch())
+			{
+?>
 							<li class="addon">
 								<div>
 								<i class="fa fa-bars addon-drag"></i>
-								<a href="#">DELETE</a>
-								<a href="#">MANAGE</a>
-								Slideshow
+								<?php if(!empty($addon_id)){ ?><a href="#">DELETE</a>
+								<a href="#">MANAGE</a><?php } ?>
+								<?php echo (!empty($addon_id))?$pg_addon['addon_title']:"Page Text"; ?>
 								</div>
 							</li>
-							<li class="addon">
-								<div>
-								<i class="fa fa-bars addon-drag"></i>
-								Page Text
-								</div>
-							</li>
-							<li class="addon">
-								<div>
-								<i class="fa fa-bars addon-drag"></i>
-								<a href="#">DELETE</a>
-								<a href="#">MANAGE</a>
-								Form
-								</div>
-							</li>
-							<li class="addon">
-								<div>
-								<i class="fa fa-bars addon-drag"></i>
-								<a href="#">DELETE</a>
-								<a href="#">MANAGE</a>
-								Photo Gallery
-								</div>
-							</li>
+<?php
+			}
+?>
 						</ul>
 						</div>
+<?php
+		}
+?>
 						<div id="pageText" class="editor-text" contenteditable="true">
 							<?php echo db_output($row['text']); ?>
 						</div><!-- end .editor-text -->
@@ -276,6 +289,107 @@ if(isset($_GET['page_id']))
 				</div><!-- end .main-scroll-->
 			</div><!-- end .main -->
 <?php
+	}
+	elseif($row['type']==2)
+	{
+?>
+	<div class="main">
+		<div class="main-scroll">
+			<div class="editor">
+				<div class="editor-title">
+					<h1><?php echo db_output($row['title']); ?></h1>
+				</div>
+				<div class="page-type-select">
+					<form method="post">
+					
+					<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
+					<label class="form-field-name">Link Title</label>
+
+					<input type="Text" class="form-field-text" value="<?php echo db_output($row['external_url']); ?>" name="external_url" id="externalURL">
+					<label class="form-field-name">URL</label>
+
+					<input type="hidden" id="page_id" value="<?php echo $_GET['page_id']; ?>">
+					</form>
+				</div>
+			</div>
+		</div><!-- end .main-scroll-->
+	</div><!-- end .main -->
+<?php
+	}
+	elseif($row['type']==3)
+	{
+?>
+	<div class="main">
+		<div class="main-scroll">
+			<div class="editor">
+				<div class="editor-title">
+					<h1><?php echo db_output($row['title']); ?></h1>
+				</div>
+				<div class="page-type-select">
+					<form method="post" id="pageUploadForm">
+					
+					<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
+					<label class="form-field-name">Link Title</label>
+
+					<input type="file" class="form-field-text" name="file" id="filename">
+					<label class="form-field-name">File</label>
+
+					<input type="hidden" id="page_id" value="<?php echo $_GET['page_id']; ?>">
+					<input type="hidden" name="upload" value="1" />
+					</form>
+				</div>
+			</div>
+		</div><!-- end .main-scroll-->
+	</div><!-- end .main -->
+<?php
+	}
+	elseif($row['type']==4)
+	{
+?>
+	<div class="main">
+		<div class="main-scroll">
+			<div class="editor">
+				<div class="editor-title">
+					<h1><?php echo db_output($row['title']); ?></h1>
+				</div>
+				<div class="page-type-select">
+					<form method="post">
+					
+					<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
+					<label class="form-field-name">Link Title</label>
+
+					<input type="hidden" id="page_id" value="<?php echo $_GET['page_id']; ?>">
+					</form>
+				</div>
+			</div>
+		</div><!-- end .main-scroll-->
+	</div><!-- end .main -->
+<?php	
+	}
+	else
+	{
+		//no type has been set! Show options
+	?>
+	<div class="main">
+		<div class="main-scroll">
+			<div class="editor">
+				<div class="editor-title">
+					<h1><?php echo db_output($row['title']); ?></h1>
+				</div>
+				<div class="page-type-select">
+					<p>Select Page Type</p>
+					<label class="form-field-name"><input type="radio" value="1" class="form-field-radio" name="page_type"/> Text Page</label>
+					<label class="form-field-name"><input type="radio" value="2" class="form-field-radio" name="page_type"/> External Link</label>
+					<label class="form-field-name"><input type="radio" value="3" class="form-field-radio" name="page_type"/> Document</label>
+					<label class="form-field-name"><input type="radio" value="4" class="form-field-radio" name="page_type"/> Navigation Only</label>
+					<input type="hidden" id="page_id" value="<?php echo $_GET['page_id']; ?>">
+					<a href="#" class="button" id="savePageType">Save Type</a>
+				</div>
+			</div>
+		</div><!-- end .main-scroll-->
+	</div><!-- end .main -->
+	<?php
+	}
 }
 else
 {

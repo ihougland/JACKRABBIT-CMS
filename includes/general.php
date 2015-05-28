@@ -463,19 +463,15 @@ function draw_select_menu($name, $values, $default = '', $parameters = '', $requ
     
 // Output a form textarea
 function cfg_draw_textarea($value, $key) {
-    $field = '<textarea class="set-textarea" name="' . $key . '">'.stripslashes($value).'</textarea>';
+    $field = '<textarea class="form-field-textarea saveSetting" name="' . $key . '">'.stripslashes($value).'</textarea>';
     return $field;
 }
 
 // Output site live/hidden checkbox
 function cfg_draw_onoff($value, $key) {
-  	$field = '<div class="onoffswitch">
-				    <input type="checkbox" name="'.$key.'" class="onoffswitch-checkbox" id="'.$key.'" '.(($value=='true')?'checked':'').'>
-				    <label class="onoffswitch-label" for="'.$key.'">
-				        <div class="onoffswitch-inner"></div>
-				        <div class="onoffswitch-switch"></div>
-				    </label>
-				</div>';
+    $field = '<div>
+            <input type="radio" id="'.$key.'" name="'.$key.'" class="switch" '.(($value=='true')?'checked':'').'/>
+          </div>';
     return $field;
 }
 
@@ -496,7 +492,7 @@ function cfg_draw_radio($default, $key, $values) {
 
 // Output a form select
 function cfg_draw_select($default, $key, $values) {
-    $field = '<select name="'.$key.'" class="set-select" id="'.$key.'">';
+    $field = '<select name="'.$key.'" class="form-field-select saveSetting" id="'.$key.'">';
 	$values_array = explode(',', $values);
     for ($i=0, $n=sizeof($values_array); $i<$n; $i++) {
       $field .= '<option value="' . $values_array[$i] . '"';

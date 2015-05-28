@@ -156,6 +156,29 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 
+	//Save Page Type Selection
+	$(document.body).on('click', '#savePageType', function (event) {
+		var id = $("#page_id").val();
+		var type = $("input[name=page_type]:checked").val();
+		// post(file, data, callback, type); (only "file" is required)
+        $.post(  
+        "ajax_update.php", //The update file
+        { type: 'pageType', id: id, page_type: type },  // create an object will all values
+        //function that is called when server returns a value.
+        function(data){
+			window.location.href = "pages.php?page_id="+data.page_id;
+        }, 
+        //How you want the data formated when it is returned from the server.
+        "json"
+        );
+        /*
+		$(this).parent().empty().append("<i class='fa fa-reorder sort-drag'></i><i class='fa fa-file'></i> "+pageName+"");
+		$('.page-add').removeClass().addClass('draggable');
+		$('.draggable-parent').nestedSortable('refresh');
+		*/
+		event.preventDefault();
+	});
+
 	// Connection Dropdown
 	$('.con-result').click(function(){
 		$('.con-panel').fadeToggle();
@@ -319,5 +342,39 @@ $(document).ready(function() {
 			});
 		}, 2500);
 	}
+
+	//Settings
+	$('.switch').change(function(){
+	        //get
+	        id = $(this).attr('name');
+	        value = $(this).prop('checked');
+	        $.post(  
+		        "ajax_update.php", //The update file
+		        { type: 'setting', id: id, value: value },  // create an object will all values
+		        //function that is called when server returns a value.
+		        function(data){
+		            message('Changes Saved!', 'success');
+		        }, 
+		        //How you want the data formated when it is returned from the server.
+		        "json"
+            );
+        });
+        
+    $('.saveSetting').change(function()
+    {
+        //get
+        id = $(this).attr('name');
+        value = $(this).val();
+        $.post(  
+	        "ajax_update.php", //The update file
+	        { type: 'setting', id: id, value: value },  // create an object will all values
+	        //function that is called when server returns a value.
+	        function(data){
+	            message('Changes Saved!', 'success');
+	        }, 
+	        //How you want the data formated when it is returned from the server.
+	        "json"
+        );
+    });
 
 });

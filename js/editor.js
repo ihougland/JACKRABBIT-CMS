@@ -29,10 +29,11 @@ $(document).ready(function() {
         var pageTitle = $('#pageTitle').val();
         var metaTitle = $('#metaTitle').val();
         var metaDescription = $('#metaDescription').val();
+        var externalURL = $('#externalURL').val();
 		// post(file, data, callback, type); (only "file" is required)
         $.post(  
         "ajax_update.php", //The update file
-        { type: 'pageUpdate', id: page_id, title: pageTitle, meta_title: metaTitle, meta_description: metaDescription, text: pageText },  // create an object will all values
+        { type: 'pageUpdate', id: page_id, title: pageTitle, meta_title: metaTitle, meta_description: metaDescription, text: pageText, external_url: externalURL },  // create an object will all values
         //function that is called when server returns a value.
         function(data){
             closeDropdowns();
@@ -42,6 +43,11 @@ $(document).ready(function() {
         //How you want the data formated when it is returned from the server.
         "json"
         );
+	}
+	savePageUpload = function (){
+		//get the text, id, title, etc
+		$('#pageUploadForm').submit();
+        return false;
 	}
 
 	// Delete Page

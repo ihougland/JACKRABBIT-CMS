@@ -9,6 +9,7 @@ $light-gray:#44474d;
 $warning:#E7983E;
 $error:#A74D4D;
 
+
 @-webkit-keyframes shake {
 	0%, 100% {
 		-webkit-transform: translateX(0);
@@ -1184,24 +1185,24 @@ Y88888P Y8888D' Y888888P    YP     `Y88P'  88   YD
 	.active {
 		color:$primary!important;
 	}
-}
 
-input[type="radio"] {
-	display: none;
-}
+	input[type="radio"] {
+		display: none;
+	}
 
-input[type="radio"] + label span {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	border-radius: 8px;
-	vertical-align: middle;
-	background: $light-gray;
-	cursor: pointer;
-}
+	input[type="radio"] + label span {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		border-radius: 8px;
+		vertical-align: middle;
+		background: $light-gray;
+		cursor: pointer;
+	}
 
-input[type="radio"]:checked + label span {
-	background: $primary;
+	input[type="radio"]:checked + label span {
+		background: $primary;
+	}
 }
 
 .panel {

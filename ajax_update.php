@@ -14,7 +14,7 @@ if($_POST['type'] == 'pageUpdate')
     $last_updated = date("Y-m-d H:i:s");
 
     //update the page
-    $sql = "UPDATE pages SET `title`='$title', `text`='$text', meta_description='$meta_description', meta_title='$meta_title', last_updated='$last_updated' WHERE page_id = ".intval($id);
+    $sql = "UPDATE pages SET `title`='$title', `text`='$text', meta_description='$meta_description', meta_title='$meta_title', external_url='$external_url', last_updated='$last_updated' WHERE page_id = ".intval($id);
     SRPCore()->query($sql);
     //set last updated date for display
     $data_array = array("last_updated"=>date('m/d/Y g:i A', strtotime($last_updated)));
@@ -32,6 +32,18 @@ elseif($_POST['type'] == 'pageAdd')
     //get inserted page id
     $page_id = SRPCore()->last_inserted();
     $data_array = array("page_id"=>$page_id);
+    echo json_encode($data_array);
+}
+elseif($_POST['type'] == 'pageType')
+{
+    $id = db_input($_POST['id']);
+    $type = db_input($_POST['page_type']);
+    $last_updated = date("Y-m-d H:i:s");
+    //insert the page
+    $sql = "UPDATE pages SET type='$type', last_updated='$last_updated' WHERE page_id = ".intval($id);
+    SRPCore()->query($sql);
+   
+    $data_array = array("page_id"=>$id);
     echo json_encode($data_array);
 }
 elseif($_POST['type'] == 'pageDelete')
@@ -83,12 +95,7 @@ elseif($_POST['type'] == 'pageDelete')
     }
     echo json_encode($data_array);
 }
-if($_POST['list'])
-{
-    order($_POST['list']);
-}/*
-//update settings
-else if($_POST['type'] == 'setting')
+elseif($_POST['type'] == 'setting')
 {
     //get values
     //id is key
@@ -100,8 +107,13 @@ else if($_POST['type'] == 'setting')
     //now update that particular config item
     $sql = "UPDATE configuration SET value='$value' WHERE `key` = '".$id."'";
     $db->query($sql);
-    //mail('derrek@scaredrabbit.com', 'TEST', $sql);
 }
+if($_POST['list'])
+{
+    order($_POST['list']);
+}/*
+//update settings
+
 else if($_POST['type'] == 'library')
 {
     $id = $_POST['id'];

@@ -87,12 +87,15 @@
 						<?php
 						
 						//Only Allow Add option if set in Configuration
+						if(SRPCore()->cfg("ADD_PAGES")=='true')
+						{
 						?>
 							<div class="sidebar-option">
 								<hr><a href="#" id="addpage"><i class="fa fa-plus"></i> Add Page</a>
 							</div>
 						</li>
 						<?php
+						}
 						//get pages that aren't "sortable" (not found in navigation)
 						$nonsort_res = SRPCore()->query("SELECT page_id, title FROM pages WHERE sort_order = 0 ORDER BY title");
 						if($nonsort_res->num_rows()!=0)

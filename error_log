@@ -1,0 +1,3 @@
+[Wed May 27 14:05:44 2015] [critical] Query failed to run: 
+        SELECT * FROM configuration WHERE category = Basic Info ORDER BY configuration_id ASC
+        1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Info ORDER BY configuration_id ASC' at line 1
