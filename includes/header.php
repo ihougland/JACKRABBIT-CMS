@@ -1,3 +1,9 @@
+<?php
+	if(isset($_GET['page_id']))
+	{
+		$headrow = SRPCore()->query("SELECT * FROM pages WHERE page_id = ".intval($_GET['page_id']))->fetch();
+	}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -24,7 +30,7 @@
 	<script type="text/javascript" src="js/jquery-cookie.js"></script>
 	<script type="text/javascript" src="js/jquery.htmlClean.min.js"></script>
 	<script type="text/javascript" src="js/gui.js"></script>
-	<script type="text/javascript" src="js/editor.js"></script>
+	<script type="text/javascript" src="js/editor.js"></script>	
 	<script type="text/javascript" src="js/jquery.mjs.nestedSortable.js"></script>
 
 </head>
@@ -41,9 +47,8 @@
 			<div class="account"><i class="fa fa-user"></i> <?php echo $_SESSION['username']; ?> | <a href="includes/logout.php"><i class="fa fa-sign-out"></i> Log Out</a></div>
 			<ul>
 			<?php
-			if($nav_page=="pages.php" && isset($_GET['page_id']))
+			if($nav_page=="pages.php")
 			{
-				$headrow = SRPCore()->query("SELECT * FROM pages WHERE page_id = ".intval($_GET['page_id']))->fetch();
 			?>
 				<li><a href="#">File</a>
 					<ul>
@@ -58,7 +63,7 @@
 			?>
 				<li><a href="#">Insert</a>
 					<ul>
-						<li><a href="#">Image</a></li>
+						<li><a href="#" onclick="insertImage();">Image</a></li>
 						<li><a href="#">Link to Document</a></li>
 						<li><a href="#" onclick="createnewLink();">Link to Webpage</a></li>
 						<li class="editor-drop"><a href="#" title="Insert Table" id="tableInsert">Table</a>

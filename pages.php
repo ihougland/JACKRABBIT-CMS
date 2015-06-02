@@ -11,13 +11,16 @@ if(isset($_POST['upload']))
 	$page_id = $_POST['page_id'];
 	$title = db_input($_POST['title']);
 
+	$sql = "UPDATE pages SET title='$title', last_updated=now() WHERE page_id = ".intval($page_id);
+	SRPCore()->query($sql);
+
 	//upload file
 	$file_uploader = new uploader('../files_uploaded/');
     $file_uploader->addAllowedFileType(array('.jpeg', '.jpg', '.gif', '.png', '.doc', '.docx', '.pdf'));
-    $filename = $file_uploader -> uploadFile('file');
-    if($filename)
+    try 
     {
-        list($name_file, $ext) = split('[.]', $filename);
+	    $filename = $file_uploader -> uploadFile('file');
+	    list($name_file, $ext) = split('[.]', $filename);
 
         //resize if its an image
         if($ext == 'jpeg' || $ext == 'jpg' || $ext == 'gif' || $ext == 'png')
@@ -29,15 +32,25 @@ if(isset($_POST['upload']))
                 smart_resize_image($image_src, $image_src, 1500, 0, true, 'file', false, false);
             }
         } 
+        //see if we have a file already uploaded & delete it
+        $old_file = SRPCore()->query("SELECT filename FROM pages WHERE page_id = ".intval($page_id))->fetch_item();
+        if(!empty($old_file))
+        {
+        	//file exists
+        	if(file_exists("../files_uploaded/".$old_file))
+        	{
+        		//delete it
+        		unlink("../files_uploaded/".$old_file);
+        	}
+        }
 	   	//update the row
 	    $sql = "UPDATE pages SET filename='$filename', title='$title', last_updated=now() WHERE page_id = ".intval($page_id);
 	    SRPCore()->query($sql);
-    }
-    else
-    {
-    	$sql = "UPDATE pages SET title='$title', last_updated=now() WHERE page_id = ".intval($page_id);
-	    SRPCore()->query($sql);
-    }
+	} 
+	catch (Exception $e) 
+	{
+	    $_SESSION['upload_error'] = $e->getMessage();
+	}
 	//go back to page
 	header('Location: pages.php?page_id='.$page_id); 
 	exit;
@@ -318,6 +331,15 @@ if(isset($_GET['page_id']))
 	}
 	elseif($row['type']==3)
 	{
+		if(!empty($_SESSION['upload_error']))
+		{
+?>
+	<script type="text/javascript">
+		message('<?php echo $_SESSION['upload_error']; ?>', 'error');
+	</script>
+<?php
+			$_SESSION['upload_error'] = '';
+		}
 ?>
 	<div class="main">
 		<div class="main-scroll">
@@ -326,15 +348,21 @@ if(isset($_GET['page_id']))
 					<h1><?php echo db_output($row['title']); ?></h1>
 				</div>
 				<div class="page-type-select">
-					<form method="post" id="pageUploadForm">
+					<form method="post" id="pageUploadForm" enctype="multipart/form-data">
 					
 					<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
 					<label class="form-field-name">Link Title</label>
-
 					<input type="file" class="form-field-text" name="file" id="filename">
 					<label class="form-field-name">File</label>
-
-					<input type="hidden" id="page_id" value="<?php echo $_GET['page_id']; ?>">
+					<?php
+					if(!empty($row['filename']))
+					{
+					?>
+					<a href="../files_uploaded/<?php echo $row['filename']; ?>" target="_blank">View Current File</a>
+					<?php
+					}
+					?>
+					<input type="hidden" name="page_id" id="page_id" value="<?php echo $_GET['page_id']; ?>">
 					<input type="hidden" name="upload" value="1" />
 					</form>
 				</div>
@@ -358,7 +386,7 @@ if(isset($_GET['page_id']))
 					<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
 					<label class="form-field-name">Link Title</label>
 
-					<input type="hidden" id="page_id" value="<?php echo $_GET['page_id']; ?>">
+					<input type="hidden" name="page_id" id="page_id" value="<?php echo $_GET['page_id']; ?>">
 					</form>
 				</div>
 			</div>

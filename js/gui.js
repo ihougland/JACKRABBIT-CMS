@@ -209,7 +209,7 @@ $(document).ready(function() {
 		}, 550);
 	});
 
-	$(document.body).on('click', '.modal, .modal-close', function (event) {
+	$(document.body).on('click', '.modal-close', function (event) {
 		$('.modal-close').fadeOut();
 		$('.modal').css('background-image','none');
 		$('.modal-content').css({
@@ -329,19 +329,7 @@ $(document).ready(function() {
 		return $this;
 	});
 
-	// Page Messages 
-	function message(message, type) {
-		var messageContent = message,
-			messageType = type
-		$('body').append('<div class="message message-'+messageType+'">'+messageContent+'</div>');
-
-		$('.message').slideDown();
-		setTimeout(function(){ 
-			$('.message').slideUp( function(){
-				$('.message').remove();
-			});
-		}, 2500);
-	}
+	
 
 	//Settings
 	$('.switch').change(function(){
@@ -376,5 +364,18 @@ $(document).ready(function() {
 	        "json"
         );
     });
-
 });
+
+// Page Messages 
+function message(message, type) {
+	var messageContent = message,
+		messageType = type
+	$('body').append('<div class="message message-'+messageType+'">'+messageContent+'</div>');
+
+	$('.message').slideDown();
+	setTimeout(function(){ 
+		$('.message').slideUp( function(){
+			$('.message').remove();
+		});
+	}, 2500);
+}

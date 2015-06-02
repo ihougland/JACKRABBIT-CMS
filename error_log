@@ -1,3 +1,1 @@
-[Wed May 27 14:05:44 2015] [critical] Query failed to run: 
-        SELECT * FROM configuration WHERE category = Basic Info ORDER BY configuration_id ASC
-        1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Info ORDER BY configuration_id ASC' at line 1
+[01-Jun-2015 16:25:46 America/New_York] PHP Parse error:  syntax error, unexpected '}' in /home/scaredrp/public_html/jr3/admin/includes/header.php on line 5

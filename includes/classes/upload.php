@@ -57,8 +57,30 @@ class uploader
 			$this->fileType = $_FILES[$fieldName]['type'];
 			$this->fileSize = $_FILES[$fieldName]['size'];
 			$tmp_name = $_FILES[$fieldName]['tmp_name'];
+			if($this->fileSizeLimit>=$this->fileSize)
+			{
+				if( empty($this->allowedFileTypes) || in_array( $this->getFileExtension( $this->fileName ), $this->allowedFileTypes ) )
+				{
+					if(!@move_uploaded_file($tmp_name, $this->fileDestination.$this->fileName))
+					{
+						throw new Exception('File failed to upload.');
+					}
+					else
+					{
+						return $this->fileName;
+					}
+				}
+				else
+				{
+					throw new Exception($this->getFileExtension($this->fileName)." is not an allowed type.");
+				}
+			}
+			else
+			{
+				throw new Exception('File is too large.');
+			}
 			//if is an allowed type or less than allowed size
-			if((empty($this->allowedFileTypes)||in_array($this->getFileExtension($this->fileName),$this->allowedFileTypes))&&($this -> fileSizeLimit>=$this->fileSize))
+			/*if((empty($this->allowedFileTypes)||in_array($this->getFileExtension($this->fileName),$this->allowedFileTypes))&&($this -> fileSizeLimit>=$this->fileSize))
 			{					
 				if(!@move_uploaded_file($tmp_name, $this->fileDestination.$this->fileName))
 				{
@@ -72,9 +94,19 @@ class uploader
 			else
 			{
 				SRPCore()->log_notice($this->getFileExtension($this->fileName)." is not an allowed type.");
-			}
+				throw new Exception('Division by zero.');
+			}*/
 		}
-		return false;
+		else
+		{
+			if($error!=UPLOAD_ERR_NO_FILE)
+			{
+				throw new Exception('Error uploading file. '.$_FILES[$fieldName]['error']);
+			}
+			else
+				return false;
+		}
+		//return false;
 	}
 	
 	function getFileName()

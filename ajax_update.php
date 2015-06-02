@@ -51,7 +51,7 @@ elseif($_POST['type'] == 'pageDelete')
     $id = $_POST['id'];
 
     //check to see if page can be deleted
-    $page_res = SRPCore()->query("SELECT parent_id, disable_delete FROM pages WHERE page_id = ".intval($id));
+    $page_res = SRPCore()->query("SELECT * FROM pages WHERE page_id = ".intval($id));
     $page = $page_res->fetch();
     if($page['disable_delete'] == 1)
     {
@@ -62,6 +62,15 @@ elseif($_POST['type'] == 'pageDelete')
     {
         //this page can be deleted
         //check for all documents to delete
+        if(!empty($page['filename']))
+        {
+            //see if file exists
+            if(file_exists("../files_uploaded/".$page['filename']))
+            {
+                //delete the file
+                unlink("../files_uploaded/".$page['filename']);
+            }
+        }
         //check for all images to delete
         //delete the page record
         SRPCore()->query("DELETE FROM pages WHERE page_id = ".intval($id));

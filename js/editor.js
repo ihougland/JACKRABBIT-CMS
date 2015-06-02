@@ -63,7 +63,7 @@ $(document).ready(function() {
 	        function(data){
 	            if(data.disallow=="yes")
 	            {
-	            	alert("This page cannot be deleted.");
+	            	message("This page cannot be deleted.","error");
 	            }
 	            else
 	            {
@@ -433,6 +433,67 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		});
 	*/
 
+	//Insert Image
+	insertImage = function ()
+	{
+		closeDropdowns();
+		var uploaded_tag = '';
+		var formData = '';
+		//open modal
+		$("body").append('<div class="modal"><div class="modal-small"><h1>Upload an Image</h1><form enctype="multipart/form-data" id="insertForm"><input type="file" value="" name="image" class="form-field-text" id="imageToUpload"><label class="form-field-name">Photo</label><input type="text" value="" name="description" class="form-field-text" id="Description"><label class="form-field-name">Photo Description</label><input type="hidden" name="filetype" value="image" /><input type="submit" value="Upload" name="submit" class="form-field-submit"></form></div></div><div id="newImage"></div>');
+
+		$('.modal').show().css('opacity');
+		$('.modal').css('opacity','1');
+
+		$("form#insertForm").submit(function(event)
+		{
+		  //disable the default form submission
+		  event.preventDefault();
+		 
+		  //grab all form data  
+		  formData = new FormData($( this )[0]);
+
+		  var request = $.ajax({
+		    url: 'upload.php',
+		    type: 'POST',
+		    data: formData,
+		    contentType: false,
+		    processData: false,
+		    dataType: 'json',
+		    
+		  });
+		  request.done(function(returndata){
+		  	  //insert image or file into page
+		      if(returndata.error_msg!='')
+		      {
+		      	//show error message
+		      	message(returndata.error_msg, "error");
+		      }
+		      else
+		      {
+		      	//put together image or link tag
+		      	
+		      	if(returndata.file_type=='image')
+		      	{
+		      		uploaded_tag = '<img src="'+returndata.new_file+'" class="float-normal" alt="'+returndata.file_description+'" />';
+		      	} 
+		      	else
+		      	{
+		      		uploaded_tag = '<a href="'+returndata.new_file+'" target="_blank" title="'+returndata.file_description+'">'+returndata.file_description+'</a>';
+		      	}
+		      	//console.log(uploaded_tag);
+		 		$('#newImage').text(uploaded_tag);
+		      	//show new button
+		      	pasteHtmlAtCaret($('#newImage').text(),'.editor-text');
+				$("#newImage").remove();
+				$('.modal').fadeOut(function(){
+					$('.modal').remove();
+				});
+		      }
+		  });
+		});
+	}
+	
 	// Click Image
 	$(document).on('click', '.editor-text img', function(event) {
 		if ($(this).hasClass("selectedImg")) {
