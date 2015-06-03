@@ -440,13 +440,12 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		var uploaded_tag = '';
 		var formData = '';
 		//open modal
-		$("body").append('<div class="modal"><div class="modal-small"><h1>Upload an Image</h1><form enctype="multipart/form-data" id="insertForm"><input type="file" value="" name="image" class="form-field-text" id="imageToUpload"><label class="form-field-name">Photo</label><input type="text" value="" name="description" class="form-field-text" id="Description"><label class="form-field-name">Photo Description</label><input type="hidden" name="filetype" value="image" /><input type="submit" value="Upload" name="submit" class="form-field-submit"></form></div></div><div id="newImage"></div>');
+		$("body").append('<div class="modal-small-wrap"><div class="modal-small"><h1>Upload an Image</h1><form enctype="multipart/form-data" id="insertForm"><input type="file" value="" name="image" class="form-field-text" id="imageToUpload"><label class="form-field-name">Photo</label><input type="text" value="" name="description" class="form-field-text" id="Description"><label class="form-field-name">Photo Description</label><input type="hidden" name="filetype" value="image" /><input type="submit" value="Upload" name="submit" class="form-field-submit"> <a href="#" class="small-modal-cancel">Cancel</a></form></div></div><div id="newImage"></div>');
+		pasteHtmlAtCaret('<span id="insert-img-target"></span>','.editor-text');
+		$('.modal-small-wrap').css('opacity');
+		$('.modal-small-wrap').css('opacity','1');
 
-		$('.modal').show().css('opacity');
-		$('.modal').css('opacity','1');
-
-		$("form#insertForm").submit(function(event)
-		{
+		$("form#insertForm").submit(function(event){
 		  //disable the default form submission
 		  event.preventDefault();
 		 
@@ -482,9 +481,9 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		      		uploaded_tag = '<a href="'+returndata.new_file+'" target="_blank" title="'+returndata.file_description+'">'+returndata.file_description+'</a>';
 		      	}
 		      	//console.log(uploaded_tag);
-		 		$('#newImage').text(uploaded_tag);
+		 		$('#insert-img-target').replaceWith(uploaded_tag);
 		      	//show new button
-		      	pasteHtmlAtCaret($('#newImage').text(),'.editor-text');
+		      	
 				$("#newImage").remove();
 				$('.modal').fadeOut(function(){
 					$('.modal').remove();
@@ -493,6 +492,13 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		  });
 		});
 	}
+
+	$(document).on('click', '.small-modal-cancel', function(event) {
+		$('.modal-small-wrap').css('opacity','0');
+		setTimeout(function(){
+			$('.modal-small-wrap, #insert-img-target').remove();
+		}, 500);
+	});
 	
 	// Click Image
 	$(document).on('click', '.editor-text img', function(event) {
