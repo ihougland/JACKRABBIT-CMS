@@ -209,18 +209,18 @@ if(isset($_GET['page_id']))
 								<div>
 									<label><span class="warn"></span>Page Name <span class="seo-length"></span></label>
 									<br>
-									<input id="pageTitle" class="seo-input" type="text" placeholder="Page name on website" maxlength="55" value="<?php echo db_output($row['title']); ?>"> 
+									<input id="pageTitle" name="title" class="seo-input" type="text" placeholder="Page name on website" maxlength="55" value="<?php echo db_output($row['title']); ?>"> 
 								</div>
 								<div>
 									<label><span class="warn"></span>Page Browser Title <span class="seo-length"></span></label>
 									<br>
-									<input id="metaTitle" class="seo-input" type="text" placeholder="Text for browser's title" maxlength="55" value="<?php echo db_output($row['meta_title']); ?>">
+									<input id="metaTitle" name="meta_title" class="seo-input" type="text" placeholder="Text for browser's title" maxlength="55" value="<?php echo db_output($row['meta_title']); ?>">
 									<br> 
 								</div>
 								<div>
 									<label><span class="warn"></span>Page Description <span class="seo-length"></span></label>
 									<br>
-									<textarea id="metaDescription" class="seo-input" placeholder="A quick description of this page." maxlength="160"><?php echo db_output($row['meta_description']); ?></textarea>
+									<textarea id="metaDescription" name="meta_description" class="seo-input" placeholder="A quick description of this page." maxlength="160"><?php echo db_output($row['meta_description']); ?></textarea>
 								</div>
 							</div>
 						</div><!-- end .panel-contents-->

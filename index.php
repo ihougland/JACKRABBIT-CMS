@@ -99,9 +99,9 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     <?php
                         }
                     ?>
-                        <!--<label for="remember"><input type="checkbox" id="remember"> Remember Me?</label>-->
+                        <label for="remember"><input type="checkbox" id="remember"> Remember Me?</label>
                         <input type="button" value="Sign In" onclick="formhash(this.form, this.form.password);">
-                        <a href="http://scaredrabbit.com/help" target="_blank">Forgot Login?</a>
+                        <a href="https://scaredrabbit.com/pages/srp-account-login-help" target="_blank">Forgot Login?</a>
                     </div>
                     </form>
                 </div>

@@ -78,6 +78,25 @@ $(document).ready(function() {
 		closeDropdowns();
 	}
 
+	$('.seo-input').change(function()
+    {
+        //get
+        var page_id = $("#page_id").val();
+        var fieldname = $(this).attr('name');
+        var value = $(this).val();
+
+        $.post(  
+	        "ajax_update.php", //The update file
+	        { type: 'seoData', page_id: page_id, fieldname: fieldname, value: value },  // create an object will all values
+	        //function that is called when server returns a value.
+	        function(data){
+	            //message('Changes Saved!', 'success');
+	        }, 
+	        //How you want the data formated when it is returned from the server.
+	        "json"
+        );
+    });
+
 	// Paste At Caret Function	
 	function pasteHtmlAtCaret(html, selector) {
     var sel, range, parent, node = null;
@@ -250,12 +269,12 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 	}
 	
 	// Insert Form Token
-	$(document).on('click', '.token', function(event) {
+	/*$(document).on('click', '.token', function(event) {
 		event.preventDefault();
 		var token = $(this).html();
 		pasteHtmlAtCaret(token,'.editor-text');
 		closeDropdowns();
-	});
+	});*/
 
 	// Insert Table
 	$(document.body).on("click", ".cell-add", function(event) {
@@ -279,6 +298,57 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 
 		closeDropdowns();
 	});
+
+	//Insert Image
+	insertDocument = function ()
+	{
+		closeDropdowns();
+		var uploaded_tag = '';
+		var formData = '';
+		//open modal
+		$("body").append('<div class="modal-small-wrap"><div class="modal-small"><h1>Upload a Document</h1><form enctype="multipart/form-data" id="insertForm"><input type="file" value="" name="image" class="form-field-text" id="imageToUpload"><label class="form-field-name">Document</label><input type="text" value="" name="description" class="form-field-text" id="Description"><label class="form-field-name">Document Title</label><input type="hidden" name="filetype" value="document" /><input type="submit" value="Upload" name="submit" class="form-field-submit"> <a href="#" class="small-modal-cancel">Cancel</a></form></div></div>');
+		pasteHtmlAtCaret('<span id="cursor-placeholder"></span>','.editor-text');
+		$('.modal-small-wrap').css('opacity');
+		$('.modal-small-wrap').css('opacity','1');
+
+		$("form#insertForm").submit(function(event){
+		  //disable the default form submission
+		  event.preventDefault();
+		 
+		  //grab all form data  
+		  formData = new FormData($( this )[0]);
+
+		  var request = $.ajax({
+		    url: 'upload.php',
+		    type: 'POST',
+		    data: formData,
+		    contentType: false,
+		    processData: false,
+		    dataType: 'json',
+		    
+		  });
+		  request.done(function(returndata){
+		  	  //insert file into page
+		      if(returndata.error_msg!='')
+		      {
+		      	//show error message
+		      	message(returndata.error_msg, "error");
+		      }
+		      else
+		      {
+		      	//put together document link
+		      	uploaded_tag = '<a href="'+returndata.new_file+'" target="_blank" title="'+returndata.file_description+'">'+returndata.file_description+'</a>';
+		      	
+		      	//console.log(uploaded_tag);
+		 		$('#cursor-placeholder').replaceWith(uploaded_tag);
+		      	
+				$('.modal-small-wrap').fadeOut(function(){
+					$('.modal-small-wrap').remove();
+				});
+		      }
+		  });
+		});
+	}
 
 /*
 db      d888888b d8b   db db   dD .d8888. 
@@ -440,8 +510,8 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		var uploaded_tag = '';
 		var formData = '';
 		//open modal
-		$("body").append('<div class="modal-small-wrap"><div class="modal-small"><h1>Upload an Image</h1><form enctype="multipart/form-data" id="insertForm"><input type="file" value="" name="image" class="form-field-text" id="imageToUpload"><label class="form-field-name">Photo</label><input type="text" value="" name="description" class="form-field-text" id="Description"><label class="form-field-name">Photo Description</label><input type="hidden" name="filetype" value="image" /><input type="submit" value="Upload" name="submit" class="form-field-submit"> <a href="#" class="small-modal-cancel">Cancel</a></form></div></div><div id="newImage"></div>');
-		pasteHtmlAtCaret('<span id="insert-img-target"></span>','.editor-text');
+		$("body").append('<div class="modal-small-wrap"><div class="modal-small"><h1>Upload an Image</h1><form enctype="multipart/form-data" id="insertForm"><input type="file" value="" name="image" class="form-field-text" id="imageToUpload"><label class="form-field-name">Photo</label><input type="text" value="" name="description" class="form-field-text" id="Description"><label class="form-field-name">Photo Description</label><input type="hidden" name="filetype" value="image" /><input type="submit" value="Upload" name="submit" class="form-field-submit"> <a href="#" class="small-modal-cancel">Cancel</a></form></div></div>');
+		pasteHtmlAtCaret('<span id="cursor-placeholder"></span>','.editor-text');
 		$('.modal-small-wrap').css('opacity');
 		$('.modal-small-wrap').css('opacity','1');
 
@@ -470,23 +540,14 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 		      }
 		      else
 		      {
-		      	//put together image or link tag
+		      	//put together image
+		      	uploaded_tag = '<img src="'+returndata.new_file+'" class="float-normal" alt="'+returndata.file_description+'" />';
 		      	
-		      	if(returndata.file_type=='image')
-		      	{
-		      		uploaded_tag = '<img src="'+returndata.new_file+'" class="float-normal" alt="'+returndata.file_description+'" />';
-		      	} 
-		      	else
-		      	{
-		      		uploaded_tag = '<a href="'+returndata.new_file+'" target="_blank" title="'+returndata.file_description+'">'+returndata.file_description+'</a>';
-		      	}
 		      	//console.log(uploaded_tag);
-		 		$('#insert-img-target').replaceWith(uploaded_tag);
-		      	//show new button
+		 		$('#cursor-placeholder').replaceWith(uploaded_tag);
 		      	
-				$("#newImage").remove();
-				$('.modal').fadeOut(function(){
-					$('.modal').remove();
+				$('.modal-small-wrap').fadeOut(function(){
+					$('.modal-small-wrap').remove();
 				});
 		      }
 		  });
@@ -496,7 +557,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 	$(document).on('click', '.small-modal-cancel', function(event) {
 		$('.modal-small-wrap').css('opacity','0');
 		setTimeout(function(){
-			$('.modal-small-wrap, #insert-img-target').remove();
+			$('.modal-small-wrap, #cursor-placeholder').remove();
 		}, 500);
 	});
 	
@@ -662,11 +723,33 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 	// Apply delete
 	$(document.body).on("click", ".fd", function(event) {
 		event.stopPropagation();
-		$('.selectedImg').css('opacity','0');
-		setTimeout(function(){
-			$('.selectedImg').remove();
-			doneWithImage();
-		}, 300);
+		var r = confirm("Are you sure you want to delete the image?");
+		if (r == true) {
+			$('.selectedImg').css('opacity','0');
+			var filename = $('.selectedImg').attr('src');
+			setTimeout(function(){
+				$('.selectedImg').remove();
+				//delete file
+				// post(file, data, callback, type); (only "file" is required)
+		        $.post(  
+			        "ajax_update.php", //The update file
+			        { type: 'fileDelete', filename: filename },  // create an object will all values
+			        //function that is called when server returns a value.
+			        function(data){
+			            if(data.error_msg!='')
+			            {
+			            	message(data.error_msg, "error");
+			            }
+			        }, 
+			        //How you want the data formated when it is returned from the server.
+			        "json"
+		        );
+				savePage();
+				doneWithImage();
+			}, 300);
+		}
+		
+		
 		event.preventDefault();
 	});
 

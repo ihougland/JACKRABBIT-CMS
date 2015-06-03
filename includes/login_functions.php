@@ -58,6 +58,7 @@ function login($user_name, $password, $attempts, $captcha_text)
         $stmt->pfetch();
 
         // hash the password with the unique salt.
+        $entered_password = $password;
         $password = hash('sha512', $password . $salt);
         if ($stmt->num_rows() == 1) 
         {
@@ -120,7 +121,7 @@ function login($user_name, $password, $attempts, $captcha_text)
                         exit();
                     }
 
-                    return "Incorrect Password";
+                    return "Incorrect Password.";
                 }
             }
         }

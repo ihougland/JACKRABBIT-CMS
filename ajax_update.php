@@ -71,7 +71,7 @@ elseif($_POST['type'] == 'pageDelete')
                 unlink("../files_uploaded/".$page['filename']);
             }
         }
-        //check for all images to delete
+        //check for all images & documents to delete
         //delete the page record
         SRPCore()->query("DELETE FROM pages WHERE page_id = ".intval($id));
         //check for all page addons
@@ -110,12 +110,47 @@ elseif($_POST['type'] == 'setting')
     //id is key
     $id = $_POST['id'];
     $value = db_input($_POST['value']);
-    $cfg_res = $db->query("SELECT * FROM configuration WHERE `key` = '".$id."'");
+    $cfg_res = SRPCore()->query("SELECT * FROM configuration WHERE `key` = '".$id."'");
     $cfg = $cfg_res->fetch();
     
     //now update that particular config item
     $sql = "UPDATE configuration SET value='$value' WHERE `key` = '".$id."'";
-    $db->query($sql);
+    SRPCore()->query($sql);
+}
+elseif($_POST['type'] == 'seoData')
+{
+    $page_id = $_POST["page_id"];
+    $fieldname = $_POST['fieldname'];
+    $value = db_input($_POST['value']);
+
+    //update SEO data
+    if(!empty($page_id) && !empty($fieldname))
+    {
+        $sql = "UPDATE `pages` SET `".$fieldname."` = '".$value."' WHERE page_id=".intval($page_id);
+        SRPCore()->query($sql);
+    }
+}
+elseif($_POST['type']=='fileDelete')
+{
+    if(!empty($_POST['filename']))
+    { 
+        //separate filename from full src
+        $filename = array_pop(explode('/', $_POST['filename']));
+        if(file_exists("../files_uploaded/".$filename))
+        {
+            unlink("../files_uploaded/".$filename);
+        }
+        if(file_exists("../files_uploaded/thumbs/".$filename))
+        {
+            unlink("../files_uploaded/thumbs/".$filename);
+        }
+        $data_array = array('error_msg' => '');
+    }
+    else
+    {
+        $data_array = array('error_msg' => 'No file selected.');
+    }
+    echo json_encode($data_array);
 }
 if($_POST['list'])
 {

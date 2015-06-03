@@ -64,7 +64,7 @@
 				<li><a href="#">Insert</a>
 					<ul>
 						<li><a href="#" onclick="insertImage();">Image</a></li>
-						<li><a href="#">Link to Document</a></li>
+						<li><a href="#" onclick="insertDocument();">Link to Document</a></li>
 						<li><a href="#" onclick="createnewLink();">Link to Webpage</a></li>
 						<li class="editor-drop"><a href="#" title="Insert Table" id="tableInsert">Table</a>
 							<ul>
@@ -101,12 +101,6 @@
 							</ul>
 						</li>
 						<li><a href="#" onclick="createEmbed();">Embedded Video</a></li>
-						<li class="editor-drop"><a href="#">Form Token</a>
-							<ul>
-								<li><a href="#" class="token">[Token1]</a></li>
-								<li><a href="#" class="token">[Token2]</a></li>
-							</ul>
-						</li>
 					</ul>
 				</li>
 			<?php
