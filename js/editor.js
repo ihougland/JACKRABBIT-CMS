@@ -39,6 +39,7 @@ $(document).ready(function() {
             closeDropdowns();
 			$('#save-warning').remove();
 			$('#edited-date').html(data.last_updated);
+			$('#page-title').html(data.page_title);
         }, 
         //How you want the data formated when it is returned from the server.
         "json"

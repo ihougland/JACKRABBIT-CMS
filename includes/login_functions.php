@@ -94,6 +94,10 @@ function login($user_name, $password, $attempts, $captcha_text)
                         $_SESSION['username'] = $username;
                         $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
 
+                        //remove failed attempts for this user
+                        $now = time();
+                        SRPCore()->query("DELETE FROM login_attempts WHERE user_id=".$admin_id);
+
                         // Login successful. 
                         return true;
                     }
@@ -107,7 +111,7 @@ function login($user_name, $password, $attempts, $captcha_text)
                             exit();
                         }
 
-                        return "Letters entered do not match the picture.".$captcha_text;
+                        return "Letters entered do not match the picture.";
                     }
                 }
                 else

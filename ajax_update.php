@@ -17,7 +17,7 @@ if($_POST['type'] == 'pageUpdate')
     $sql = "UPDATE pages SET `title`='$title', `text`='$text', meta_description='$meta_description', meta_title='$meta_title', external_url='$external_url', last_updated='$last_updated' WHERE page_id = ".intval($id);
     SRPCore()->query($sql);
     //set last updated date for display
-    $data_array = array("last_updated"=>date('m/d/Y g:i A', strtotime($last_updated)));
+    $data_array = array("last_updated"=>date('m/d/Y g:i A', strtotime($last_updated)), "page_title"=>$title);
     echo json_encode($data_array);
 }
 elseif($_POST['type'] == 'pageAdd')

@@ -240,7 +240,7 @@ if(isset($_GET['page_id']))
 								--><a href="#"  id="htmlMode">HTML</a><!--
 								--><a href="http://www.woot.co.uk/" class="in-iframe">LIVE</a>
 							</div>
-							<h1><?php echo db_output($row['title']); ?></h1>
+							<h1 id="page-title"><?php echo db_output($row['title']); ?></h1>
 						</div>
 
 						<div class="addon-selector">
@@ -305,12 +305,13 @@ if(isset($_GET['page_id']))
 	}
 	elseif($row['type']==2)
 	{
+		//external link
 ?>
 	<div class="main">
 		<div class="main-scroll">
 			<div class="editor">
 				<div class="editor-title">
-					<h1><?php echo db_output($row['title']); ?></h1>
+					<h1 id="page-title"><?php echo db_output($row['title']); ?></h1>
 				</div>
 				<div class="page-type-select">
 					<form method="post">
@@ -331,6 +332,7 @@ if(isset($_GET['page_id']))
 	}
 	elseif($row['type']==3)
 	{
+		//document
 		if(!empty($_SESSION['upload_error']))
 		{
 ?>
@@ -345,7 +347,7 @@ if(isset($_GET['page_id']))
 		<div class="main-scroll">
 			<div class="editor">
 				<div class="editor-title">
-					<h1><?php echo db_output($row['title']); ?></h1>
+					<h1 id="page-title"><?php echo db_output($row['title']); ?></h1>
 				</div>
 				<div class="page-type-select">
 					<form method="post" id="pageUploadForm" enctype="multipart/form-data">
@@ -373,12 +375,13 @@ if(isset($_GET['page_id']))
 	}
 	elseif($row['type']==4)
 	{
+		//navigation only
 ?>
 	<div class="main">
 		<div class="main-scroll">
 			<div class="editor">
 				<div class="editor-title">
-					<h1><?php echo db_output($row['title']); ?></h1>
+					<h1 id="page-title"><?php echo db_output($row['title']); ?></h1>
 				</div>
 				<div class="page-type-select">
 					<form method="post">

@@ -47,7 +47,7 @@
 			<div class="account"><i class="fa fa-user"></i> <?php echo $_SESSION['username']; ?> | <a href="includes/logout.php"><i class="fa fa-sign-out"></i> Log Out</a></div>
 			<ul>
 			<?php
-			if($nav_page=="pages.php")
+			if($nav_page=="pages.php" && !empty($_GET['page_id']))
 			{
 			?>
 				<li><a href="#">File</a>
@@ -100,7 +100,7 @@
 								</li>
 							</ul>
 						</li>
-						<li><a href="#" onclick="createEmbed();">Embedded Video</a></li>
+						<li><a href="#" onclick="createEmbed();">Embed Code</a></li>
 					</ul>
 				</li>
 			<?php
