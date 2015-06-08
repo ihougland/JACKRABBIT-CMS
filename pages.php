@@ -56,6 +56,7 @@ if(isset($_POST['upload']))
 	exit;
 }
 include('includes/header.php');
+include('includes/addon_functions.php');
 $db = SRPCore();
 
 if(isset($_GET['page_id'])) 
@@ -249,11 +250,25 @@ if(isset($_GET['page_id']))
 							Choose from the items below to place Add-Ons on this page. They will appear above or below the regular page text depending on which you choose.<br>
 							<div class="addon-list">
 <?php
-		$addon_res = SRPCore()->query("SELECT * FROM addons WHERE inactive = 0 AND type = 0 ORDER BY sort_order");
+		$page_addons_list = '';
+		$page_addons_array = get_page_addons($_GET['page_id']);
+		if(!empty($page_addons_array))
+		{
+			//implode
+			$page_addons_list = implode(",", $page_addons_array);
+		}
+		$sql = "SELECT * FROM addons WHERE inactive = 0 AND type = 0";
+		
+		if(!empty($page_addons_list))
+		{
+			$sql .= " AND addon_id NOT IN(".$page_addons_list.")";
+		}
+		$sql .= " ORDER BY sort_order";
+		$addon_res = SRPCore()->query($sql);
 		while($addon = $addon_res->fetch())
 		{
 ?>
-							<a href="<?php echo $addon['url']; ?>" class="in-iframe">
+							<a href="<?php echo $addon['url']; ?>?page_id=<?php echo $_GET['page_id']; ?>" class="addon-link" id="<?php echo $addon['addon_id']; ?>">
 								<img src="images/<?php echo $addon['icon']; ?>" alt="<?php echo $addon['title']; ?>">
 								<?php echo $addon['title']; ?>
 							</a>
@@ -265,8 +280,8 @@ if(isset($_GET['page_id']))
 						</div><!-- end .addon-selector-->
 <?php
 		//check for addons
-		$pg_addon_res = SRPCore()->query("SELECT pa.*, a.title as addon_title FROM pages_addons pa LEFT JOIN addons a ON pa.addon_id = a.addon_id WHERE pa.page_id = ".intval($_GET['page_id'])." ORDER BY pa.sort_order");
-		if($pg_addon_res->num_rows()!=0)
+		$pg_addon_res = SRPCore()->query("SELECT pa.*, a.title as addon_title, a.url as addon_url FROM pages_addons pa LEFT JOIN addons a ON pa.addon_id = a.addon_id WHERE pa.page_id = ".intval($_GET['page_id'])." ORDER BY pa.sort_order");
+		if($pg_addon_res->num_rows()>1)
 		{
 ?>
 						<div>
@@ -276,12 +291,12 @@ if(isset($_GET['page_id']))
 			while($pg_addon = $pg_addon_res->fetch())
 			{
 ?>
-							<li class="addon">
+							<li class="addon" id="addonSort_<?php echo $pg_addon['addon_id']; ?>">
 								<div>
 								<i class="fa fa-bars addon-drag"></i>
-								<?php if(!empty($addon_id)){ ?><a href="#">DELETE</a>
-								<a href="#">MANAGE</a><?php } ?>
-								<?php echo (!empty($addon_id))?$pg_addon['addon_title']:"Page Text"; ?>
+								<?php if(!empty($pg_addon['addon_id'])){ ?><a href="#" rel="<?php echo $pg_addon['addon_id']; ?>" class="addon-delete">DELETE</a>
+								<a href="<?php echo $pg_addon['addon_url']; ?>?page_id=<?php echo $_GET['page_id']; ?>" class="in-iframe">MANAGE</a><?php } ?>
+								<?php echo (!empty($pg_addon['addon_id']))?$pg_addon['addon_title']:"Page Text"; ?>
 								</div>
 							</li>
 <?php

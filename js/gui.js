@@ -108,17 +108,29 @@ $(document).ready(function() {
 	            });
 			}
 		});
-		$('.addon-sort').nestedSortable({
-			handle: '.addon-drag',
-			listType: 'ul',
-			items: 'li',
-			opacity: .3,
-			placeholder: 'placeholder',
-			toleranceElement: '> div'
-		});
 	}
 	pagesSortable();
 
+	$('.addon-sort').sortable({
+        update: function(event, ui) {
+            var orderNew = $('.addon-sort').sortable("toArray");
+		    var page_id = $("#page_id").val();
+		    $.ajax({
+	            type: 'post',
+	            dataType: "json",
+	            url: 'ajax_update.php',
+	            data: { type: 'sortAddons', 'addonSort[]':orderNew, page_id: page_id }
+            }).done(function(data) {
+              if(data.error_msg!='')
+              {
+	          	message(data.error_msg,"error");
+	          }
+	        });
+        },
+        connectWith: ".addon-sort",
+        appendTo: 'body',
+    }).disableSelection();
+	
 	// Add A Page
 	$('#addpage').click(function(event){
 		$('<li class="page-add"><div><a href="#"><i class="fa fa-times page-add-cancel"></i><i class="fa fa-check page-add-confirm"></i><input type="text" placeholder="Add Page Name..." /></a></div></li>').appendTo('.pages>ul');

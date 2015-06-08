@@ -57,9 +57,18 @@ $(document).ready(function() {
 		if (r == true) 
 		{
 			var page_id = $('#page_id').val();
+			//get list of all images & documents
+			var files_array = new Array();
+			$(".editor-text img").each(function() {
+				files_array.push($(this).attr("src"));
+			});
+			$(".editor-text .doc-link").each(function() {
+				files_array.push($(this).attr("href"));
+			});
+			
 			$.post(  
 	        "ajax_update.php", //The update file
-	        { type: 'pageDelete', id: page_id },  // create an object will all values
+	        { type: 'pageDelete', id: page_id, files_array: files_array },  // create an object will all values
 	        //function that is called when server returns a value.
 	        function(data){
 	            if(data.disallow=="yes")
@@ -338,7 +347,7 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 		      else
 		      {
 		      	//put together document link
-		      	uploaded_tag = '<a href="'+returndata.new_file+'" target="_blank" title="'+returndata.file_description+'">'+returndata.file_description+'</a>';
+		      	uploaded_tag = '<a href="'+returndata.new_file+'" target="_blank" title="'+returndata.file_description+'" class="doc-link">'+returndata.file_description+'</a>';
 		      	
 		      	//console.log(uploaded_tag);
 		 		$('#cursor-placeholder').replaceWith(uploaded_tag);
@@ -346,10 +355,72 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 				$('.modal-small-wrap').fadeOut(function(){
 					$('.modal-small-wrap').remove();
 				});
+
+				//save page
+				savePage();
 		      }
 		  });
 		});
 	}
+
+	$(document).on('click','.addon-link', function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		var page_id = $("#page_id").val();
+		var next_url = $(this).attr("href");
+		var addon_id = $(this).attr("id");
+		//alert(page_id+' '+addon_id+' '+next_url);
+		
+		// post(file, data, callback, type); (only "file" is required)
+        $.post(  
+        "ajax_update.php", //The update file
+        { type: 'addAddon', page_id: page_id, addon_id: addon_id },  // create an object will all values
+        //function that is called when server returns a value.
+        function(data){
+            $('body').append('<div class="modal"><a href="#" class="modal-close"><i class="fa fa-chevron-left"></i> DONE</a></div>');
+			$('.main-wrap').addClass('blurout');
+			$('.modal').show().css('opacity');
+			$('.modal').css('opacity','1');
+			setTimeout(function(){ 
+				$('.modal').append('<div class="modal-content"><iframe id="jr-iframe" src="'+next_url+'"></iframe></div>');
+				$('#jr-iframe').load(function() {
+					$('.modal-content').css({
+						'transform':'scale(1)',
+						'opacity':'1'
+					});
+					setTimeout(function(){ 
+						$('.modal-close').fadeIn();
+					}, 550);
+				});
+			}, 550);
+        }, 
+        //How you want the data formated when it is returned from the server.
+        "json"
+        );
+	});
+
+	$(document).on('click','.addon-delete', function(e){
+		e.preventDefault();
+		var r = confirm("Are you sure you want to delete this Add-on? All related images and documents will also be deleted.");
+		if (r == true) 
+		{
+			var page_id = $("#page_id").val();
+			var addon_id = $(this).attr("rel");
+			//alert(page_id+' '+addon_id+' '+next_url);
+			
+			// post(file, data, callback, type); (only "file" is required)
+	        $.post(  
+	        "ajax_update.php", //The update file
+	        { type: 'deleteAddon', page_id: page_id, addon_id: addon_id },  // create an object will all values
+	        //function that is called when server returns a value.
+	        function(data){
+	            window.location.href= "pages.php?page_id="+page_id;
+	        }, 
+	        //How you want the data formated when it is returned from the server.
+	        "json"
+	        );
+	    }
+	});
 
 /*
 db      d888888b d8b   db db   dD .d8888. 
@@ -550,6 +621,8 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 				$('.modal-small-wrap').fadeOut(function(){
 					$('.modal-small-wrap').remove();
 				});
+				//save page
+				savePage();
 		      }
 		  });
 		});

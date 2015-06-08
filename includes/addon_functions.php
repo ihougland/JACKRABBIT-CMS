@@ -39,23 +39,28 @@ function add_addon($page_id, $addon_id)
     {
         if(has_addon($page_id))
         {
-            //get sort_order
-            //get sort_order
-            $sql = "SELECT MAX(sort_order) FROM pages_addons WHERE page_id=".intval($page_id);
-            $result = SRPCore()->query($sql);
-            if($result->num_rows() != 0) 
+            //see if this page already has this addon
+            $addon_res = SRPCore()->query("SELECT * FROM pages_addons WHERE page_id = ".intval($page_id)." AND addon_id = ".intval($addon_id));
+            if($addon_res->num_rows()==0)
             {
-                $cur_sort = $result->fetch_item();
-                $sort_order = $cur_sort + 1;
+                //not already on the page, so let's add it
+                //get sort_order
+                $sql = "SELECT MAX(sort_order) FROM pages_addons WHERE page_id=".intval($page_id);
+                $result = SRPCore()->query($sql);
+                if($result->num_rows() != 0) 
+                {
+                    $cur_sort = $result->fetch_item();
+                    $sort_order = $cur_sort + 1;
+                }
+                else
+                {
+                    $sort_order = 1;
+                } 
+                //add addon
+                $sql = "INSERT INTO pages_addons (page_id, addon_id, sort_order)
+                    VALUES ('$page_id', '$addon_id', '$sort_order')";
+                SRPCore()->query($sql);
             }
-            else
-            {
-                $sort_order = 1;
-            } 
-            //add addon
-            $sql = "INSERT INTO pages_addons (page_id, addon_id, sort_order)
-                VALUES ('$page_id', '$addon_id', '$sort_order')";
-            SRPCore()->query($sql);
         }
         else
         {
@@ -77,6 +82,20 @@ function delete_addon($page_id, $addon_id)
     {
         $sql = "DELETE FROM pages_addons WHERE page_id = ".intval($page_id)." AND addon_id=".intval($addon_id);
         SRPCore()->query($sql);
+
+        //get rid of all files & other table data
+        $sql = "SELECT * FROM addons WHERE addon_id = ".intval($addon_id);
+        $addon_res = SRPCore()->query($sql);
+        $addon = $addon_res->fetch();
+        $sql = "SELECT * FROM `".$addon['db_table']."` WHERE page_id = ".intval($page_id);
+        $pg_addon_res = SRPCore()->query($sql);
+        while($pg_addon = $pg_addon_res->fetch())
+        {
+            //call delete function for this addon
+            $function = "delete_".$pg_addon['db_table'];
+            $function($pg_addon['id_field']);
+        }
+
     }
 }
 
@@ -85,7 +104,7 @@ function get_page_addons($page_id)
     //returns an array of all page's addons
     if(!empty($page_id))
     {
-        if(has_addons($page_id))
+        if(has_addon($page_id))
         {
             $addons_array = array();
             $sql = "SELECT * FROM pages_addons WHERE page_id = ".intval($page_id)." ORDER BY sort_order";
@@ -115,12 +134,13 @@ function get_page_addons($page_id)
  Y888P  YP   YP Y88888P Y88888P Y88888P 88   YD Y888888P Y88888P `8888Y' 
 */
 
-function add_gallery($posted_array)
+function add_galleries($posted_array)
 {
     if(is_array($posted_array))
     {
         $title = db_input($posted_array['title']);
         $page_id = intval($posted_array['page_id']);
+
         //get sort_order
         $sql = "SELECT MAX(sort_order) FROM galleries WHERE page_id=".$page_id;
         $result = SRPCore()->query($sql);
@@ -141,7 +161,7 @@ function add_gallery($posted_array)
     }
 }
 
-function edit_gallery($posted_array)
+function edit_galleries($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -156,7 +176,7 @@ function edit_gallery($posted_array)
     }
 }
 
-function delete_gallery($gallery_id)
+function delete_galleries($gallery_id)
 {
     if(!empty($gallery_id))
     {
@@ -282,7 +302,7 @@ Y8    8P    88    88   88 88ooooo 88    88 `8bo.
    YP    Y888888P Y8888D' Y88888P  `Y88P'  `8888Y' 
 */
 
-function add_video($posted_array)
+function add_videos($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -308,7 +328,7 @@ function add_video($posted_array)
     }
 }
 
-function edit_video($posted_array)
+function edit_videos($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -323,7 +343,7 @@ function edit_video($posted_array)
     }
 }
 
-function delete_video($video_id)
+function delete_videos($video_id)
 {
     if(!empty($video_id))
     {
@@ -494,7 +514,7 @@ d88888b  .d88b.  d8888b. .88b  d88. .d8888.
 YP       `Y88P'  88   YD YP  YP  YP `8888Y' 
 */
 
-function add_form($posted_array)
+function add_forms($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -512,7 +532,7 @@ function add_form($posted_array)
     }
 }
 
-function edit_form($posted_array)
+function edit_forms($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -531,7 +551,7 @@ function edit_form($posted_array)
     }
 }
 
-function delete_form($form_id)
+function delete_forms($form_id)
 {
     if(!empty($form_id))
     {
@@ -549,7 +569,7 @@ function delete_form($form_id)
     }
 }
 
-function add_field($posted_array)
+function add_fields($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -578,7 +598,7 @@ function add_field($posted_array)
     }
 }
 
-function edit_field($posted_array)
+function edit_fields($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -594,7 +614,7 @@ function edit_field($posted_array)
         
 }
 
-function delete_field($field_id)
+function delete_fields($field_id)
 {
     if(!empty($field_id))
     {
@@ -605,7 +625,7 @@ function delete_field($field_id)
     }
 }
 
-function add_field_option($posted_array)
+function add_field_options($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -634,7 +654,7 @@ function add_field_option($posted_array)
     }
 }
 
-function edit_field_option($posted_array)
+function edit_field_options($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -648,7 +668,7 @@ function edit_field_option($posted_array)
     }
 }
 
-function delete_field_option($field_option_id)
+function delete_field_options($field_option_id)
 {
     if(!empty($field_option_id))
     {
@@ -666,7 +686,7 @@ db       .d88b.   d888b   .d88b.  .d8888.
 Y88888P  `Y88P'   Y888P   `Y88P'  `8888Y'
 */
 
-function add_logo($posted_array)
+function add_logos($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -694,7 +714,7 @@ function add_logo($posted_array)
     }
 }
 
-function edit_logo($posted_array)
+function edit_logos($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -719,7 +739,7 @@ function edit_logo($posted_array)
     }
 }
 
-function delete_logo($logo_id)
+function delete_logos($logo_id)
 {
     if(!empty($logo_id))
     {
@@ -906,7 +926,7 @@ d8888b.  .d88b.   .o88b. .d8888.   db      d888888b .d8888. d888888b
 Y8888D'  `Y88P'   `Y88P' `8888Y'   Y88888P Y888888P `8888Y'    YP    
 */
 
-function add_document_list($posted_array)
+function add_document_lists($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -932,7 +952,7 @@ function add_document_list($posted_array)
     }
 }
 
-function edit_document_list($posted_array)
+function edit_document_lists($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -947,11 +967,11 @@ function edit_document_list($posted_array)
     }
 }
 
-function delete_document_list($list_id)
+function delete_document_lists($list_id)
 {
     if(!empty($list_id))
     {
-        //delete images from gallery
+        //delete docs from list
         $sql = "SELECT filename FROM documents WHERE list_id=".intval($list_id);
         $result = SRPCore()->query($sql);
         while($filename = $result->fetch_item()) 
@@ -971,7 +991,7 @@ function delete_document_list($list_id)
     }
 }
 
-function add_document($posted_array)
+function add_documents($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -998,7 +1018,7 @@ function add_document($posted_array)
     }
 }
 
-function edit_document($posted_array)
+function edit_documents($posted_array)
 {
     if(is_array($posted_array))
     {
@@ -1022,7 +1042,7 @@ function edit_document($posted_array)
     }
 }
 
-function delete_document($document_id)
+function delete_documents($document_id)
 {
     if(!empty($document_id))
     {

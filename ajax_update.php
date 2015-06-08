@@ -1,5 +1,6 @@
 <?php
 require_once('includes/application_top.php');
+include("includes/addon_functions.php");
 //updates various things via AJAX
 $db = SRPCore();
 
@@ -49,6 +50,7 @@ elseif($_POST['type'] == 'pageType')
 elseif($_POST['type'] == 'pageDelete')
 {
     $id = $_POST['id'];
+    $files_array = $_POST['files_array'];
 
     //check to see if page can be deleted
     $page_res = SRPCore()->query("SELECT * FROM pages WHERE page_id = ".intval($id));
@@ -72,17 +74,34 @@ elseif($_POST['type'] == 'pageDelete')
             }
         }
         //check for all images & documents to delete
+        if(is_array($files_array))
+        {
+            if(count($files_array)>0)
+            {
+                //loop through & delete files
+                foreach($files_array as $file)
+                {
+                    $filename = array_pop(explode('/', $file));
+                    if(file_exists("../files_uploaded/".$filename))
+                    {
+                        unlink("../files_uploaded/".$filename);
+                    }
+                    if(file_exists("../files_uploaded/thumbs/".$filename))
+                    {
+                        unlink("../files_uploaded/thumbs/".$filename);
+                    }
+                }
+            }
+        }
         //delete the page record
         SRPCore()->query("DELETE FROM pages WHERE page_id = ".intval($id));
         //check for all page addons
         $addons_res = SRPCore()->query("SELECT * FROM pages_addons WHERE page_id = ".intval($id));
         while($addons = $addons_res->fetch())
         {
-            //check table for addon & see if we have any images or documents to delete
-
+            //check table for addon & delete
+            delete_addon($id, $addons['addon_id']);
         }
-        //delete the addons for this page
-        SRPCore()->query("DELETE FROM pages_addons WHERE page_id = ".intval($id));
         //check for sub pages; make parent id the deleted page's parent id
         $subpages_res = SRPCore()->query("SELECT page_id, sort_order FROM pages WHERE parent_id = ".intval($id)." ORDER BY sort_order");
         if($subpages_res->num_rows()!=0)
@@ -152,17 +171,44 @@ elseif($_POST['type']=='fileDelete')
     }
     echo json_encode($data_array);
 }
+elseif($_POST['type']=='addAddon')
+{
+    $page_id = $_POST['page_id'];
+    $addon_id = $_POST['addon_id'];
+    add_addon($page_id, $addon_id);
+}
+elseif($_POST['type']=='deleteAddon')
+{
+    $page_id = $_POST['page_id'];
+    $addon_id = $_POST['addon_id'];
+    delete_addon($page_id, $addon_id);
+}
 if($_POST['list'])
 {
     order($_POST['list']);
-}/*
-//update settings
-
-else if($_POST['type'] == 'library')
+}
+if($_POST['type']=='sortAddons')
 {
-    $id = $_POST['id'];
-    $title = db_input($_POST['value']);
-    $sql = "UPDATE library SET `title`='$title' WHERE file_id = ".intval($id);
-    $db->query($sql);
-}*/
+    $sort = $_POST['addonSort'];
+    $page_id = $_POST['page_id'];
+    $addon_id = '';
+    $sort_order = 1;
+    if(is_array($sort))
+    {
+        foreach($sort as $item)
+        {
+            $array = explode("_", $item);
+            $addon_id = array_pop($array);
+            $sql = "UPDATE pages_addons SET sort_order='".$sort_order."' WHERE page_id='".intval($page_id)."' AND addon_id=".$addon_id;
+            SRPCore()->query($sql); 
+            // increment the sort order for this level
+            $sort_order++;
+        }
+        echo json_encode(array('error_msg'=>""));
+    }
+    else
+    {
+        echo json_encode(array('error_msg'=>"oops! not an array!"));
+    }
+}
 ?>
