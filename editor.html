@@ -200,6 +200,7 @@
 						</div>
 
 						<div class="panel-group editor-toolbar">
+						<label>Image Alignment</label>
 							<ul>
 								<li><a href="#" title="Wrap & Align Left" class="fl"><i class="icon-float-left"></i></a></li>
 								<li><a href="#" title="Wrap & Align Right" class="fr"><i class="icon-float-right"></i></a></li>
@@ -216,6 +217,7 @@
 						
 
 						<div class="panel-group editor-toolbar">
+							<label>Table Editing</label>
 							<ul>
 								<li><a href="#" title="Add Row Above" class="add-row-above"><i class="icon-add-row-before"></i></a></li>
 								<li><a href="#" title="Add Row Below" class="add-row-below"><i class="icon-add-row-after"></i></a></li>
@@ -227,9 +229,17 @@
 								<li><a href="#" title="Delete Row" class="delete-row"><i class="icon-delete-row"></i></a></li>
 								<li><a href="#" title="Delete Column" class="delete-column"><i class="icon-delete-column"></i></a></li>                        		
 								<li><a href="#" title="Add Table Heading" class="add-header"><i class="icon-add-heading"></i></a></li>
-								<li><a href="#" title="Delete Table Heading" class="delete-header"><i class="icon-remove-heading"></i></a></li>
-								
+								<li><a href="#" title="Delete Table Heading" class="delete-header"><i class="icon-remove-heading"></i></a></li>								
 							</ul>
+							<label>Style Type</label><br>
+							<div class="radio-wrap">
+								<input type="radio" id="invisible-table-mode" name="table-mode"/>
+								<label id="invisible-table-mode-label" for="invisible-table-mode"><span></span> Invisible Mode</label>
+							</div>
+							<div class="radio-wrap">
+								<input type="radio" id="normal-table-mode" name="table-mode"/>
+								<label id="normal-table-mode-label" for="normal-table-mode"><span></span> Normal Mode</label>
+							</div>
 						</div>
 
 						<div class="panel-group editor-toolbar">
@@ -237,6 +247,7 @@
 						</div>
 
 						<div class="panel-group editor-toolbar">
+							<label>Embed Editing</label>
 							<ul>
 								<li><a href="#" title="Delete Embed" class="delete-embed"><i class="fa fa-trash"></i></a></li>								
 							</ul>
@@ -403,7 +414,7 @@
 							
 							<h2>Header Level 2</h2>
 
-							<img src="images/img2.jpg" class="img-center" alt="Second Alt"/>
+							<img src="images/img2.jpg" class="float-center" alt="Second Alt"/>
 
 							<h2>Header Level 2</h2>
 

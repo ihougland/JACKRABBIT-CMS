@@ -210,7 +210,7 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 
 	// Wrap Selection
 	wrapElement = function (elem){
-		var element = elem,
+		var element = elem
 			sel = window.getSelection(),
 			isAlready = isSelectionInsideElement(elem);
 		$('.editor-text').attr('rel',''+sel+'');
@@ -884,15 +884,30 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 			'pointerEvents':'auto',
 			'opacity':'1'
 		});
+		if($(this).parents('table').hasClass('hidden-table')){
+			$('#invisible-table-mode').attr('checked','check');
+		} else {
+			$('#normal-table-mode').attr('checked','check');
+		}
 		event.stopPropagation();
 	});
 
+	// Invisible Style Mode
+	$('#invisible-table-mode-label').on('click', function() {
+		$('#selectedCell').parents('table').addClass('hidden-table');
+	});
+	$('#normal-table-mode-label').on('click', function() {
+		$('#selectedCell').parents('table').removeClass('hidden-table');
+	});
+
+	// Remove Selection when clicking anywhere else
 	$(document).on('click', function (event) {
 		$('#selectedCell').removeAttr('id');
 		$('.panel:nth-child(2)').find('.panel-group:nth-child(3), .panel-group:nth-child(4), .panel-group:nth-child(5)').css({
 			'pointerEvents':'none',
 			'opacity':'.2'
 		});
+		
 		$('#link-location').val('');
 		$('.link-selected').removeClass('link-selected');
 		doneWithImage();
