@@ -376,6 +376,13 @@ $(document).ready(function() {
 	        "json"
         );
     });
+
+    //delete button alert
+    $(".delete").click(function()
+    {
+    	var r = confirm("Are you sure you want to delete this item?");
+    	return r;
+    });
 });
 
 // Page Messages 

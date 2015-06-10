@@ -7,7 +7,7 @@ $page_id = $_GET['page_id'];
 if(isset($_GET['action']))
 {
     $id = intval($_GET['id']);
-
+    $page_id = $_GET['page_id'];
     if($_GET['action'] == 'delete')
     {
         delete_galleries($id);
@@ -36,7 +36,6 @@ if(isset($_GET['action']))
 			<div class="page">
                 <form method="post" action="galleries.php?action=submit" enctype="multipart/form-data">
                 <h1><?php if($_GET['action'] == 'add') echo 'Add'; else echo 'Edit'; ?> Gallery</h1>
-                
                     
                     <input type="text" id="title" name="title" class="form-field-text" value="<?php echo $row['title']; ?>" />
                     <label class="form-field-name">Title</label>
@@ -45,8 +44,8 @@ if(isset($_GET['action']))
                     <!--hidden and aux stuffs -->
                     <input type="hidden" name="gallery_id" value="<?php echo $id; ?>" />
                     <input type="hidden" name="page_id" value="<?php echo $page_id; ?>" />
-                    <input type="submit" name="<?php echo $_GET['action']; ?>" class="button" value="Save"/>
-                
+                    <input type="submit" name="<?php echo $_GET['action']; ?>" class="form-field-submit" value="Save"/>
+                    <a href="galleries.php?page_id=<?php echo $page_id; ?>" class="small-modal-cancel">Cancel</a>
                 </form>
             </div>
 		</div><!-- end .main-scroll-->
@@ -71,13 +70,16 @@ if(isset($_GET['action']))
         }
         else
             edit_galleries($post_array);
+
+        header("Location: galleries.php?page_id=".$page_id);
+        exit;
     }
     else
     {
         SRPCore()->log_error($_GET['action'].' is not a legit action.');
+        header("Location: galleries.php?page_id=".$page_id);
+        exit;
     }
-    header("Location: galleries.php?page_id=".$page_id);
-    exit;
 }
 include('includes/header_alt.php');
 ?>
@@ -109,7 +111,7 @@ include('includes/header_alt.php');
 						<td><?php echo db_output($row['title']); ?></td>
 						<td><?php echo $num_images; ?></td>
 						<td><?php echo date('m/d/Y g:i a', strtotime($row['last_updated'])); ?></td>
-						<td><a href="gallery_images.php?gallery_id=<?php echo $row['gallery_id']; ?>" class="button"><i class="fa fa-picture-o"></i> Images</a> <a href="galleries.php?action=edit&id=<?php echo $row['gallery_id']; ?>" class="button"><i class="fa fa-pencil"></i> Edit</a> <a href="#" class="button"><i class="fa fa-remove"></i> Delete</a></td>
+						<td><a href="gallery_images.php?gallery_id=<?php echo $row['gallery_id']; ?>&page_id=<?php echo $_GET['page_id']; ?>" class="button"><i class="fa fa-picture-o"></i> Images</a> <a href="galleries.php?action=edit&id=<?php echo $row['gallery_id']; ?>" class="button"><i class="fa fa-pencil"></i> Edit</a> <a href="galleries.php?action=delete&id=<?php echo $row['gallery_id']; ?>&page_id=<?php echo $row['page_id']; ?>" class="button delete"><i class="fa fa-remove"></i> Delete</a></td>
 					</tr>
 <?php
 		}

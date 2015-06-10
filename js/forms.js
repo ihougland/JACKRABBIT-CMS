@@ -88,3 +88,25 @@ function regformhash(form, uid, email, password, conf) {
     form.submit();
     return true;
 }
+function adminformhash(form, password, re_password) {
+    // Create a new element input, this will be our hashed password field. 
+    var p = document.createElement("input");
+    var p2 = document.createElement("input");
+
+    // Add the new element to our form. 
+    form.appendChild(p);
+    p.name = "p";
+    p.type = "hidden";
+    p.value = hex_sha512(password.value);
+    form.appendChild(p2);
+    p2.name = "p2";
+    p2.type = "hidden";
+    p2.value = hex_sha512(re_password.value);
+
+    // Make sure the plaintext password doesn't get sent. 
+    password.value = "";
+    re_password.value = "";
+
+    // Finally submit the form. 
+    form.submit();
+}

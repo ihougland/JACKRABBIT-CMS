@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 	<script type="text/javascript" src="js/jquery.mjs.nestedSortable.js"></script>
 	<script type="text/javascript" src="js/gui.js"></script>
+	<script type="text/javascript" src="js/fileuploader.js"></script>
 	<script>
 
 	</script>

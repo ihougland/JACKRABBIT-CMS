@@ -474,7 +474,7 @@ function cfg_draw_textarea($value, $key) {
 // Output site live/hidden checkbox
 function cfg_draw_onoff($value, $key) {
     $field = '<div>
-            <input type="radio" id="'.$key.'" name="'.$key.'" class="switch" '.(($value=='true')?'checked':'').'/>
+            <input type="radio" id="'.$key.'" name="'.$key.'" '.(($value=='true')?'checked':'').' value="true"/> On <input type="radio" id="'.$key.'" name="'.$key.'" '.(($value=='false')?'checked':'').' value="false"/> Off
           </div>';
     return $field;
 }
