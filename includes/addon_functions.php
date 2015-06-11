@@ -293,6 +293,16 @@ function get_num_gallery_images($gallery_id)
     return $num_gallery_images;
 }
 
+function get_gallery_title($gallery_id)
+{
+    $title = "";
+    if(!empty($gallery_id))
+    {
+        $title = SRPCore()->query("SELECT title FROM galleries WHERE gallery_id = ".intval($gallery_id))->fetch_item();
+    }
+    return $title;
+}
+
 /*
 db    db d888888b d8888b. d88888b  .d88b.  .d8888. 
 88    88   `88'   88  `8D 88'     .8P  Y8. 88'  YP 
@@ -306,6 +316,7 @@ function add_videos($posted_array)
 {
     if(is_array($posted_array))
     {
+        $title = db_input($posted_array['title']);
         $embed_code = db_input($posted_array['embed_code']);
         $page_id = intval($posted_array['page_id']);
         //get sort_order
@@ -322,8 +333,8 @@ function add_videos($posted_array)
         }  
         
         //insert the row
-        $sql = "INSERT INTO videos (page_id, embed_code, sort_order, last_updated)
-                VALUES ('$page_id', '$embed_code', '$sort_order', now())";
+        $sql = "INSERT INTO videos (page_id, title, embed_code, sort_order, last_updated)
+                VALUES ('$page_id', '$title', '$embed_code', '$sort_order', now())";
         SRPCore()->query($sql);
     }
 }
@@ -333,11 +344,12 @@ function edit_videos($posted_array)
     if(is_array($posted_array))
     {
         $video_id = $posted_array['video_id'];
+        $title = db_input($posted_array['title']);
         $embed_code = db_input($posted_array['embed_code']);
         if(!empty($video_id))
         {
             //update the row
-            $sql = "UPDATE videos SET `embed_code`='$embed_code' WHERE video_id = ".intval($video_id);
+            $sql = "UPDATE videos SET `embed_code`='$embed_code', `title`='$title', last_updated=now() WHERE video_id = ".intval($video_id);
             SRPCore()->query($sql);
         }
     }
@@ -878,29 +890,29 @@ function edit_calendar($posted_array)
         $end_date = db_input($posted_array['end_date']);
         $end_time = db_input($posted_array['end_time']);
 
-        $sql = "UPDATE calendar SET title='$title', `text`='$text', `start_date`='$start_date', `end_date`='$end_date', `last_updated`=now() WHERE event_id=$event_id";
+        $sql = "UPDATE calendar SET title='$title', `text`='$text', `start_date`='$start_date', `end_date`='$end_date', `last_updated`=now() WHERE calendar_id=$calendar_id";
         SRPCore()->query($sql);
         if(is_null($start_time))
         {
-            $sql = "UPDATE calendar SET start_time=NULL, `last_updated`=now() WHERE event_id=$event_id";
+            $sql = "UPDATE calendar SET start_time=NULL, `last_updated`=now() WHERE calendar_id=$calendar_id";
             //execute the update
             SRPCore()->query($sql);
         }
         else
         {
-            $sql = "UPDATE calendar SET start_time='$start_time', `last_updated`=now() WHERE event_id=$event_id";
+            $sql = "UPDATE calendar SET start_time='$start_time', `last_updated`=now() WHERE calendar_id=$calendar_id";
             //execute the update
             SRPCore()->query($sql);
         }
         if(is_null($end_time))
         {
-            $sql = "UPDATE calendar SET end_time=NULL, `last_updated`=now() WHERE event_id=$event_id";
+            $sql = "UPDATE calendar SET end_time=NULL, `last_updated`=now() WHERE calendar_id=$calendar_id";
             //execute the update
             SRPCore()->query($sql);
         }
         else
         {
-            $sql = "UPDATE calendar SET end_time='$end_time', `last_updated`=now() WHERE event_id=$event_id";
+            $sql = "UPDATE calendar SET end_time='$end_time', `last_updated`=now() WHERE calendar_id=$calendar_id";
             //execute the update
             SRPCore()->query($sql);
         }

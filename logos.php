@@ -10,8 +10,8 @@ if(isset($_GET['action']))
     $page_id = $_GET['page_id'];
     if($_GET['action'] == 'delete')
     {
-        delete_staff($id);
-        header("Location: staff.php?page_id=".$page_id);
+        delete_logos($id);
+        header("Location: logos.php?page_id=".$page_id);
     	exit;
     }
     //generate a form if its add or edit
@@ -22,20 +22,20 @@ if(isset($_GET['action']))
         if($_GET['action'] == 'edit')
         {
             $row = SRPCore()
-                ->query("SELECT * FROM staff WHERE staff_id = $id")
+                ->query("SELECT * FROM logos WHERE logo_id = $id")
                 ->fetch();
             $page_id = $row['page_id'];
         }
 ?>
 <div class="menu-bar">
-	<h1>Staff</h1>
+	<h1>Logos</h1>
 </div>
 <div class="table">
     <div class="main main-no-pad">
 		<div class="main-scroll">
 			<div class="page">
-                <form method="post" action="staff.php?action=submit" enctype="multipart/form-data">
-                <h1><?php if($_GET['action'] == 'add') echo 'Add'; else echo 'Edit'; ?> Staff</h1>
+                <form method="post" action="logos.php?action=submit" enctype="multipart/form-data">
+                <h1><?php if($_GET['action'] == 'add') echo 'Add'; else echo 'Edit'; ?> Logo</h1>
                     <?php
                     if(!empty($row['filename']))
                     {
@@ -48,23 +48,14 @@ if(isset($_GET['action']))
                     <label class="form-field-name">Image</label>
                     <input type="text" id="name" name="name" class="form-field-text" value="<?php echo db_output($row['name']); ?>" />
                     <label class="form-field-name">Name</label>
-                    <input type="text" id="title" name="title" class="form-field-text" value="<?php echo db_output($row['title']); ?>" />
-                    <label class="form-field-name">Title</label>
-                    <input type="text" id="email" name="email" class="form-field-text" value="<?php echo db_output($row['email']); ?>" />
-                    <label class="form-field-name">Email</label>
-                    <input type="text" id="phone" name="phone" class="form-field-text" value="<?php echo db_output($row['phone']); ?>" />
-                    <label class="form-field-name">Phone</label>
-                    <input type="text" id="cell_phone" name="cell_phone" class="form-field-text" value="<?php echo db_output($row['cell_phone']); ?>" />
-                    <label class="form-field-name">Cell Phone</label>
-                    <textarea id="bio" name="bio" class="form-field-textarea"><?php echo db_output($row['bio']); ?></textarea>
-                    <label class="form-field-name">Bio</label>
-                    
+                    <input type="text" id="url" name="url" class="form-field-text" value="<?php echo db_output($row['url']); ?>" />
+                    <label class="form-field-name">URL</label>
 					<br>
                     <!--hidden and aux stuffs -->
-                    <input type="hidden" name="staff_id" value="<?php echo $id; ?>" />
+                    <input type="hidden" name="logo_id" value="<?php echo $id; ?>" />
                     <input type="hidden" name="page_id" value="<?php echo $page_id; ?>" />
                     <input type="submit" name="<?php echo $_GET['action']; ?>" class="form-field-submit" value="Save"/>
-                    <a href="staff.php?page_id=<?php echo $page_id; ?>" class="small-modal-cancel">Cancel</a>
+                    <a href="logos.php?page_id=<?php echo $page_id; ?>" class="small-modal-cancel">Cancel</a>
                 </form>
             </div>
 		</div><!-- end .main-scroll-->
@@ -79,19 +70,15 @@ if(isset($_GET['action']))
         include('includes/classes/smart_resize.php');
         //get the values from the form
         
-        $staff_id = $_POST['staff_id'];
+        $logo_id = $_POST['logo_id'];
         $page_id = $_POST['page_id'];
         $name = $_POST['name'];
-        $title = $_POST['title'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $cell_phone = $_POST['cell_phone'];
-        $bio = $_POST['bio'];
+        $url = $_POST['url'];
 
         //set max, crop, thumb w & h
         $upload_max = SRPCore()->cfg("UPLOAD_MAX");
-        $thumb_w = SRPCore()->cfg("STAFF_WIDTH");
-        $thumb_h = SRPCore()->cfg("STAFF_HEIGHT");
+        $thumb_w = SRPCore()->cfg("LOGO_WIDTH");
+        $thumb_h = SRPCore()->cfg("LOGO_HEIGHT");
         //file uploader
         $file_uploader = new uploader('../files_uploaded/');
         $file_uploader->addAllowedFileType(array('.jpeg','.jpg','.png'));
@@ -119,9 +106,9 @@ if(isset($_GET['action']))
                         smart_resize_image($image_src, $thumb_src, $thumb_w, $thumb_h, true, 'file', false, false);
                 
                         //set post array
-                        $post_array = array("page_id"=>$page_id,"name"=>$name,"title"=>$title,"email"=>$email,"phone"=>$phone,"cell_phone"=>$cell_phone,"bio"=>$bio,"filename"=>$filename);
+                        $post_array = array("page_id"=>$page_id,"name"=>$name,"url"=>$url,"filename"=>$filename);
                         //method to insert into db
-                        add_staff($post_array);
+                        add_logos($post_array);
 
                         //drop user off at cropper if picture is not correct size
                         if($thumb_w>0 && $thumb_h>0)
@@ -129,20 +116,20 @@ if(isset($_GET['action']))
                             if($image_size[0]==$thumb_w && $image_size[1]==$thumb_h)
                             {
                                 //no need to crop, take them back
-                                header("Location: staff.php?page_id=".$page_id);
+                                header("Location: logos.php?page_id=".$page_id);
                                 exit();
                             }
                             else
                             {
                                 //crop!
-                                header("Location: crop_image.php?in_img=../files_uploaded/$filename&out_img=../files_uploaded/thumbs/$filename&w=$thumb_w&h=$thumb_h&landing=".urlencode('staff.php?page_id='.$page_id));
+                                header("Location: crop_image.php?in_img=../files_uploaded/$filename&out_img=../files_uploaded/thumbs/$filename&w=$thumb_w&h=$thumb_h&landing=".urlencode('logos.php?page_id='.$page_id));
                                 exit;
                             }
                         }
                         else
                         {
                             //no need to crop, take them back
-                            header("Location: staff.php?page_id=".$page_id);
+                            header("Location: logos.php?page_id=".$page_id);
                             exit();
                         }
                     }
@@ -162,7 +149,7 @@ if(isset($_GET['action']))
                         {
                             $_SESSION['upload_error'] = "Image uploaded is too small. Please choose an image that is at least ".$thumb_h." px tall.";
                         }
-                        header('Location: staff.php?action=add&page_id='.$page_id);
+                        header('Location: logos.php?action=add&page_id='.$page_id);
                         //quit before output
                         exit;
                     }
@@ -170,10 +157,10 @@ if(isset($_GET['action']))
                 else
                 {
                     //set post array
-                    $post_array = array("page_id"=>$page_id,"name"=>$name,"title"=>$title,"email"=>$email,"phone"=>$phone,"cell_phone"=>$cell_phone,"bio"=>$bio);
+                    $post_array = array("page_id"=>$page_id,"name"=>$name,"url"=>$url);
                     //method to update db
-                    add_staff($post_array);
-                    header('Location: staff.php?page_id='.$page_id);
+                    add_logos($post_array);
+                    header('Location: logos.php?page_id='.$page_id);
                     exit;
                 }
                 
@@ -181,7 +168,7 @@ if(isset($_GET['action']))
             catch (Exception $e) 
             {
                 $_SESSION['upload_error'] = $e->getMessage();
-                header('Location: staff.php?action=add&page_id='.$page_id);
+                header('Location: logos.php?action=add&page_id='.$page_id);
                 exit;
             }
         }
@@ -206,7 +193,7 @@ if(isset($_GET['action']))
                         smart_resize_image($image_src, $thumb_src, $thumb_w, $thumb_h, true, 'file', false, false);
 
                         //delete old image
-                        $old_filename = SRPCore()->query("SELECT filename FROM staff WHERE staff_id = ".intval($staff_id))->fetch_item();
+                        $old_filename = SRPCore()->query("SELECT filename FROM logos WHERE logo_id = ".intval($logo_id))->fetch_item();
                         if(!empty($old_filename))
                         {
                             if(file_exists('../files_uploaded/thumbs/'.$old_filename)) unlink('../files_uploaded/thumbs/'.$old_filename);
@@ -214,9 +201,9 @@ if(isset($_GET['action']))
                         }
                 
                         //set post array
-                        $post_array = array("staff_id"=>$staff_id,"page_id"=>$page_id,"name"=>$name,"title"=>$title,"email"=>$email,"phone"=>$phone,"cell_phone"=>$cell_phone,"bio"=>$bio,"filename"=>$filename);
+                        $post_array = array("logo_id"=>$logo_id,"page_id"=>$page_id,"name"=>$name,"url"=>$url,"filename"=>$filename);
                         //method to update db
-                        edit_staff($post_array);
+                        edit_logos($post_array);
 
                         //drop user off at cropper if picture is not correct size
                         if($thumb_w>0 && $thumb_h>0)
@@ -224,20 +211,20 @@ if(isset($_GET['action']))
                             if($image_size[0]==$thumb_w && $image_size[1]==$thumb_h)
                             {
                                 //no need to crop, take them back
-                                header("Location: staff.php?page_id=".$page_id);
+                                header("Location: logos.php?page_id=".$page_id);
                                 exit();
                             }
                             else
                             {
                                 //crop!
-                                header("Location: crop_image.php?in_img=../files_uploaded/$filename&out_img=../files_uploaded/thumbs/$filename&w=$thumb_w&h=$thumb_h&landing=".urlencode('staff.php?page_id='.$page_id));
+                                header("Location: crop_image.php?in_img=../files_uploaded/$filename&out_img=../files_uploaded/thumbs/$filename&w=$thumb_w&h=$thumb_h&landing=".urlencode('logos.php?page_id='.$page_id));
                                 exit;
                             }
                         }
                         else
                         {
                             //no need to crop, take them back
-                            header("Location: staff.php?page_id=".$page_id);
+                            header("Location: logos.php?page_id=".$page_id);
                             exit();
                         }
                     }
@@ -257,7 +244,7 @@ if(isset($_GET['action']))
                         {
                             $_SESSION['upload_error'] = "Image uploaded is too small. Please choose an image that is at least ".$thumb_h." px tall.";
                         }
-                        header('Location: staff.php?action=edit&page_id='.$page_id);
+                        header('Location: logos.php?action=edit&page_id='.$page_id);
                         //quit before output
                         exit;
                     }
@@ -265,10 +252,10 @@ if(isset($_GET['action']))
                 else
                 {
                     //set post array
-                    $post_array = array("staff_id"=>$staff_id,"page_id"=>$page_id,"name"=>$name,"title"=>$title,"email"=>$email,"phone"=>$phone,"cell_phone"=>$cell_phone,"bio"=>$bio);
+                    $post_array = array("logo_id"=>$logo_id,"page_id"=>$page_id,"name"=>$name,"url"=>$url);
                     //method to update db
-                    edit_staff($post_array);
-                    header('Location: staff.php?page_id='.$page_id);
+                    edit_logos($post_array);
+                    header('Location: logos.php?page_id='.$page_id);
                     exit;
                 }
                 
@@ -276,7 +263,7 @@ if(isset($_GET['action']))
             catch (Exception $e) 
             {
                 $_SESSION['upload_error'] = $e->getMessage();
-                header('Location: staff.php?action=edit&page_id='.$_POST['page_id']);
+                header('Location: logos.php?action=edit&page_id='.$_POST['page_id']);
                 exit;
             }
         }
@@ -284,32 +271,31 @@ if(isset($_GET['action']))
     else
     {
         SRPCore()->log_error($_GET['action'].' is not a legit action.');
-        header("Location: staff.php?page_id=".$page_id);
+        header("Location: logos.php?page_id=".$page_id);
         exit;
     }
 }
 include('includes/header_alt.php');
 ?>
 <div class="menu-bar">
-	<h1>Staff</h1>
+	<h1>Logos</h1>
 </div>
 <div class="table">
 
 	<div class="main main-no-pad">
 		<div class="main-scroll">
 			<div class="page">
-				<a href="staff.php?action=add&page_id=<?php echo $page_id; ?>" class="button "><i class="fa fa-plus"></i> Add Staff</a>
+				<a href="logos.php?action=add&page_id=<?php echo $page_id; ?>" class="button "><i class="fa fa-plus"></i> Add Logo</a>
 				<table width="100%">
 					<tr>
-                        <th>Image</th>
+                        <th>Logo</th>
 						<th>Name</th>
-						<th>Title</th>
 						<th>Updated</th>
 						<th>Manage</th>
 					</tr>
 					
 <?php
-		$res = SRPCore()->query("SELECT * FROM staff WHERE page_id = '".db_input($_GET['page_id'])."' ORDER BY sort_order ASC");
+		$res = SRPCore()->query("SELECT * FROM logos WHERE page_id = '".db_input($_GET['page_id'])."' ORDER BY sort_order ASC");
 		while($row = $res->fetch())
 		{
 			
@@ -317,9 +303,8 @@ include('includes/header_alt.php');
 					<tr class="sortable">
                         <td><?php echo (!empty($row['filename']))?'<img src="../files_uploaded/thumbs/'.$row['filename'].'" alt="'.db_output($row['name']).'" />':'N/A'; ?></td>
 						<td><?php echo db_output($row['name']); ?></td>
-						<td><?php echo db_output($row['title']); ?></td>
 						<td><?php echo date('m/d/Y g:i a', strtotime($row['last_updated'])); ?></td>
-						<td><a href="staff.php?action=edit&id=<?php echo $row['staff_id']; ?>" class="button"><i class="fa fa-pencil"></i> Edit</a> <a href="staff.php?action=delete&id=<?php echo $row['staff_id']; ?>&page_id=<?php echo $row['page_id']; ?>" class="button delete"><i class="fa fa-remove"></i> Delete</a></td>
+						<td><a href="logos.php?action=edit&id=<?php echo $row['logo_id']; ?>" class="button"><i class="fa fa-pencil"></i> Edit</a> <a href="logos.php?action=delete&id=<?php echo $row['logo_id']; ?>&page_id=<?php echo $row['page_id']; ?>" class="button delete"><i class="fa fa-remove"></i> Delete</a></td>
 					</tr>
 <?php
 		}

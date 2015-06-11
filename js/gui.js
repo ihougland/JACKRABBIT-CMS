@@ -402,3 +402,7 @@ function message(message, type) {
 		});
 	});
 }
+
+$(function() {
+	    $( ".datepicker" ).datepicker();
+	});

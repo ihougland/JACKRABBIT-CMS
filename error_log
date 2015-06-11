@@ -1,2 +1,15 @@
-[10-Jun-2015 11:26:53 America/New_York] PHP Fatal error:  Class 'uploader' not found in /home/scaredrp/public_html/jr3/admin/gallery_images.php on line 161
-[10-Jun-2015 11:27:41 America/New_York] PHP Fatal error:  Class 'uploader' not found in /home/scaredrp/public_html/jr3/admin/gallery_images.php on line 161
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[10-Jun-2015 14:07:54 America/New_York] PHP Warning:  Illegal offset type in /home/scaredrp/public_html/jr3/admin/admin_install.php on line 17
+[11-Jun-2015 13:56:16 America/New_York] PHP Fatal error:  Class 'uploader' not found in /home/scaredrp/public_html/jr3/admin/staff.php on line 94

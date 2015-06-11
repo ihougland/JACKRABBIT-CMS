@@ -124,7 +124,7 @@ if(isset($_GET['action']))
                 	?>
                     <input type="file" id="image" name="image" class="form-field-text" />
                     <label class="form-field-name">Image</label>
-                    <input type="text" id="caption" name="caption" class="form-field-text" value="<?php echo $row['caption']; ?>" />
+                    <input type="text" id="caption" name="caption" class="form-field-text" value="<?php echo db_output($row['caption']); ?>" />
                     <label class="form-field-name">Caption</label>
 
 					<br>
@@ -316,14 +316,14 @@ if(isset($_GET['action']))
 include('includes/header_alt.php');
 ?>
 <div class="menu-bar">
-	<h1>Galleries</h1>
+	<h1><?php echo db_output(get_gallery_title($gallery_id)); ?></h1>
 </div>
 <div class="table">
 
 	<div class="main main-no-pad">
 		<div class="main-scroll">
 			<div class="page">
-				<a href="galleries.php?page_id=<?php echo $_GET['page_id']; ?>" class="button"><i class="fa fa-arrow-left"></i> Go Back</a> <a href="gallery_images.php?action=add&gallery_id=<?php echo $gallery_id; ?>&page_id=<?php echo $_GET['page_id']; ?>" class="button "><i class="fa fa-plus"></i> Add</a>
+				<a href="galleries.php?page_id=<?php echo $_GET['page_id']; ?>" class="button"><i class="fa fa-arrow-left"></i> Go Back</a> <a href="gallery_images.php?action=add&gallery_id=<?php echo $gallery_id; ?>&page_id=<?php echo $_GET['page_id']; ?>" class="button "><i class="fa fa-plus"></i> Add Image</a>
 				<table width="100%">
 					<tr>
 						<th>Image</th>
