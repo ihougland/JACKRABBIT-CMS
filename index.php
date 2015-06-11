@@ -84,7 +84,7 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     ?> 
                     
                     <form action="includes/process_login.php" method="post" name="login_form">
-                    <div class="login">
+                    <div class="dark-modal">
                         <h1>Sign In</h1>
                         
                         <input type="text" name="user_name" placeholder="username" required/>
@@ -99,8 +99,9 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     <?php
                         }
                     ?>
-                        <label for="remember"><input type="checkbox" id="remember"> Remember Me?</label>
+                        <input type="checkbox" id="remember"> <label for="remember">Remember Me?</label>
                         <input type="button" value="Sign In" onclick="formhash(this.form, this.form.password);">
+                        <br><br>
                         <a href="https://scaredrabbit.com/pages/srp-account-login-help" target="_blank">Forgot Login?</a>
                     </div>
                     </form>

@@ -383,6 +383,11 @@ $(document).ready(function() {
     	var r = confirm("Are you sure you want to delete this item?");
     	return r;
     });
+
+    $(document.body).on('click', '.message', function (event) {
+		$('.message').remove();
+	});
+
 });
 
 // Page Messages 
@@ -391,10 +396,9 @@ function message(message, type) {
 		messageType = type
 	$('body').append('<div class="message message-'+messageType+'">'+messageContent+'</div>');
 
-	$('.message').slideDown();
-	setTimeout(function(){ 
-		$('.message').slideUp( function(){
-			$('.message').remove();
+	$('.message').slideDown( function(){
+		$(this).delay(2000).slideUp( function(){
+			$(this).remove();
 		});
-	}, 2500);
+	});
 }

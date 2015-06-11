@@ -192,6 +192,8 @@ if(isset($_GET['page_id']))
 
 						<div class="panel-group editor-toolbar">
 							<label id="link-label"><span></span> <i class="fa fa-link"></i> Link Location</label> <br><input type="text" id="link-location"><br>
+							<a href="#" class="button" onclick="removeLink();"><i class="fa fa-trash"></i> Remove Link</a>
+							<a href="#" class="button" onclick="viewLink();"><i class="fa fa-mail-forward"></i> Visit Link</a>
 						</div>
 
 						<div class="panel-group editor-toolbar">
@@ -346,22 +348,20 @@ if(isset($_GET['page_id']))
 ?>
 	<div class="main">
 		<div class="main-scroll">
-			<div class="editor">
-				<div class="editor-title">
-					<h1 id="page-title"><?php echo db_output($row['title']); ?></h1>
-				</div>
-				<div class="page-type-select">
+			<div class="dark-modal">
+				<h1><?php echo db_output($row['title']); ?></h1>
+					<b>External Link</b> - This page will link to a website other than your own.<br><br>
+
 					<form method="post">
 					
 					<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
-					<label class="form-field-name">Link Title</label>
+					<label class="form-field-name">PAGE NAME</label>
 
 					<input type="Text" class="form-field-text" value="<?php echo db_output($row['external_url']); ?>" name="external_url" id="externalURL">
-					<label class="form-field-name">URL</label>
-
+					<label class="form-field-name"><span class="warn"><i class="fa fa-question-circle" rel="This should look something like http://www.example.com"></i> </span> EXTERNAL URL</label>
+					<input type="button" value="SAVE">
 					<input type="hidden" id="page_id" value="<?php echo $_GET['page_id']; ?>">
 					</form>
-				</div>
 			</div>
 		</div><!-- end .main-scroll-->
 	</div><!-- end .main -->
@@ -382,29 +382,28 @@ if(isset($_GET['page_id']))
 ?>
 	<div class="main">
 		<div class="main-scroll">
-			<div class="editor">
-				<div class="editor-title">
+			<div class="dark-modal">
 					<h1 id="page-title"><?php echo db_output($row['title']); ?></h1>
-				</div>
-				<div class="page-type-select">
+					<b>Page Type: </b>Document Link<br>This page links directly to a document.<br><br>
 					<form method="post" id="pageUploadForm" enctype="multipart/form-data">
 					
 					<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
-					<label class="form-field-name">Link Title</label>
+					<label class="form-field-name">PAGE NAME</label>
 					<input type="file" class="form-field-text" name="file" id="filename">
-					<label class="form-field-name">File</label>
+					
 					<?php
 					if(!empty($row['filename']))
 					{
 					?>
-					<a href="../files_uploaded/<?php echo $row['filename']; ?>" target="_blank">View Current File</a>
+					<label class="form-field-name">File</label>
+					<a href="../files_uploaded/<?php echo $row['filename']; ?>" target="_blank">View Current File</a><br><br>
 					<?php
 					}
 					?>
 					<input type="hidden" name="page_id" id="page_id" value="<?php echo $_GET['page_id']; ?>">
 					<input type="hidden" name="upload" value="1" />
+					<input type="button" value="SAVE">
 					</form>
-				</div>
 			</div>
 		</div><!-- end .main-scroll-->
 	</div><!-- end .main -->
@@ -416,19 +415,18 @@ if(isset($_GET['page_id']))
 ?>
 	<div class="main">
 		<div class="main-scroll">
-			<div class="editor">
-				<div class="editor-title">
-					<h1 id="page-title"><?php echo db_output($row['title']); ?></h1>
-				</div>
-				<div class="page-type-select">
-					<form method="post">
-					
-					<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
-					<label class="form-field-name">Link Title</label>
+			<div class="dark-modal">
+				<h1 id="page-title"><?php echo db_output($row['title']); ?></h1>
+				<b>Page Type:</b> Navigation Only<br>
+				This page will appear in the navigation, but will not go anywhere when clicked. Typically this is used as a top-level item for a dropdown menu. <br><br>
+				<form method="post">
+				
+				<input type="Text" class="form-field-text" value="<?php echo db_output($row['title']); ?>" name="title" id="pageTitle">
+				<label class="form-field-name">PAGE NAME</label>
 
-					<input type="hidden" name="page_id" id="page_id" value="<?php echo $_GET['page_id']; ?>">
-					</form>
-				</div>
+				<input type="hidden" name="page_id" id="page_id" value="<?php echo $_GET['page_id']; ?>">
+				<input type="button" value="SAVE">
+				</form>
 			</div>
 		</div><!-- end .main-scroll-->
 	</div><!-- end .main -->
@@ -440,19 +438,19 @@ if(isset($_GET['page_id']))
 	?>
 	<div class="main">
 		<div class="main-scroll">
-			<div class="editor">
-				<div class="editor-title">
-					<h1><?php echo db_output($row['title']); ?></h1>
-				</div>
-				<div class="page-type-select">
-					<p>Select Page Type</p>
-					<label class="form-field-name"><input type="radio" value="1" class="form-field-radio" name="page_type"/> Text Page</label>
-					<label class="form-field-name"><input type="radio" value="2" class="form-field-radio" name="page_type"/> External Link</label>
-					<label class="form-field-name"><input type="radio" value="3" class="form-field-radio" name="page_type"/> Document</label>
-					<label class="form-field-name"><input type="radio" value="4" class="form-field-radio" name="page_type"/> Navigation Only</label>
+			<div class="dark-modal">
+				<h1>New Page: <?php echo db_output($row['title']); ?></h1>
+					<b>Select Page Type</b><br><br>
+					<input type="radio" value="1" name="page_type" id="type-normal"/> <label for="type-normal">Normal Page <span class="warn"><i class="fa fa-question-circle" rel="A regular page where you can add your own content."></i> </span></label><br><br>
+
+					<input type="radio" value="2" name="page_type" id="type-external"/> <label for="type-external">External Link <span class="warn"><i class="fa fa-question-circle" rel="Links to a website other than your own."></i> </span></label><br><br>
+
+					<input type="radio" value="3" name="page_type" id="type-document"/> <label for="type-document">Document <span class="warn"><i class="fa fa-question-circle" rel="Links DIRECTLY to a document."></i> </span></label><br><br>
+
+					<input type="radio" value="4" name="page_type" id="type-navigation"/> <label for="type-navigation">Navigation Only <span class="warn"><i class="fa fa-question-circle" rel="Shows up in your website's navigation, but has no page. Typically used for dropdown menu headers."></i> </span></label><br><br>
+
 					<input type="hidden" id="page_id" value="<?php echo $_GET['page_id']; ?>">
-					<a href="#" class="button" id="savePageType">Save Type</a>
-				</div>
+					<input type="button" id="savePageType" value="SAVE">
 			</div>
 		</div><!-- end .main-scroll-->
 	</div><!-- end .main -->

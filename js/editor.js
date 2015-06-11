@@ -24,31 +24,31 @@ $(document).ready(function() {
 
 	savePage = function (){
 		//get the text, id, title, etc
-        var pageText = $('#pageText').html();
-        var page_id = $('#page_id').val();
-        var pageTitle = $('#pageTitle').val();
-        var metaTitle = $('#metaTitle').val();
-        var metaDescription = $('#metaDescription').val();
-        var externalURL = $('#externalURL').val();
+		var pageText = $('#pageText').html();
+		var page_id = $('#page_id').val();
+		var pageTitle = $('#pageTitle').val();
+		var metaTitle = $('#metaTitle').val();
+		var metaDescription = $('#metaDescription').val();
+		var externalURL = $('#externalURL').val();
 		// post(file, data, callback, type); (only "file" is required)
-        $.post(  
-        "ajax_update.php", //The update file
-        { type: 'pageUpdate', id: page_id, title: pageTitle, meta_title: metaTitle, meta_description: metaDescription, text: pageText, external_url: externalURL },  // create an object will all values
-        //function that is called when server returns a value.
-        function(data){
-            closeDropdowns();
+		$.post(  
+		"ajax_update.php", //The update file
+		{ type: 'pageUpdate', id: page_id, title: pageTitle, meta_title: metaTitle, meta_description: metaDescription, text: pageText, external_url: externalURL },  // create an object will all values
+		//function that is called when server returns a value.
+		function(data){
+			closeDropdowns();
 			$('#save-warning').remove();
 			$('#edited-date').html(data.last_updated);
 			$('#page-title').html(data.page_title);
-        }, 
-        //How you want the data formated when it is returned from the server.
-        "json"
-        );
+		}, 
+		//How you want the data formated when it is returned from the server.
+		"json"
+		);
 	}
 	savePageUpload = function (){
 		//get the text, id, title, etc
 		$('#pageUploadForm').submit();
-        return false;
+		return false;
 	}
 
 	// Delete Page
@@ -67,89 +67,91 @@ $(document).ready(function() {
 			});
 			
 			$.post(  
-	        "ajax_update.php", //The update file
-	        { type: 'pageDelete', id: page_id, files_array: files_array },  // create an object will all values
-	        //function that is called when server returns a value.
-	        function(data){
-	            if(data.disallow=="yes")
-	            {
-	            	message("This page cannot be deleted.","error");
-	            }
-	            else
-	            {
-	            	//redirect to main pages.php
-	            	window.location.href= "pages.php";
-	            }
-	        }, 
-	        //How you want the data formated when it is returned from the server.
-	        "json"
-	        );
+			"ajax_update.php", //The update file
+			{ type: 'pageDelete', id: page_id, files_array: files_array },  // create an object will all values
+			//function that is called when server returns a value.
+			function(data){
+				if(data.disallow=="yes")
+				{
+					message("This page cannot be deleted.","error");
+				}
+				else
+				{
+					//redirect to main pages.php
+					window.location.href= "pages.php";
+				}
+			}, 
+			//How you want the data formated when it is returned from the server.
+			"json"
+			);
 		}
 		closeDropdowns();
 	}
 
 	$('.seo-input').change(function()
-    {
-        //get
-        var page_id = $("#page_id").val();
-        var fieldname = $(this).attr('name');
-        var value = $(this).val();
+	{
+		//get
+		var page_id = $("#page_id").val();
+		var fieldname = $(this).attr('name');
+		var value = $(this).val();
 
-        $.post(  
-	        "ajax_update.php", //The update file
-	        { type: 'seoData', page_id: page_id, fieldname: fieldname, value: value },  // create an object will all values
-	        //function that is called when server returns a value.
-	        function(data){
-	            //message('Changes Saved!', 'success');
-	        }, 
-	        //How you want the data formated when it is returned from the server.
-	        "json"
-        );
-    });
+		$.post(  
+			"ajax_update.php", //The update file
+			{ type: 'seoData', page_id: page_id, fieldname: fieldname, value: value },  // create an object will all values
+			//function that is called when server returns a value.
+			function(data){
+				//message('Changes Saved!', 'success');
+			}, 
+			//How you want the data formated when it is returned from the server.
+			"json"
+		);
+	});
 
 	// Paste At Caret Function	
 	function pasteHtmlAtCaret(html, selector) {
-    var sel, range, parent, node = null;
+	var sel, range, parent, node = null;
 
-    if (document.selection) {
-        node = document.selection.createRange().parentElement();
-    } else {
-        var selection = window.getSelection();
-        if (selection.rangeCount > 0) {
-            node = selection.getRangeAt(0).startContainer;
-            if (node !== $(node).closest(selector).get(0)) {
-                node = node.parentNode;
-            }
-        }
-    }
-    
-    
+	if (document.selection) {
+		node = document.selection.createRange().parentElement();
+	} else {
+		var selection = window.getSelection();
+		if (selection.rangeCount > 0) {
+			node = selection.getRangeAt(0).startContainer;
+			if (node !== $(node).closest(selector).get(0)) {
+				node = node.parentNode;
+			}
+		}
+	}
+	
+	
 
-    if (node && $(node).closest(selector).length > 0 && window.getSelection) {
-        sel = window.getSelection();
-        if (sel.getRangeAt && sel.rangeCount) {
-            range = sel.getRangeAt(0);
-            range.deleteContents();
-            var el = document.createElement("div");
-            el.innerHTML = html;
-            var frag = document.createDocumentFragment(),
-                node, lastNode;
-            while ((node = el.firstChild)) {
-                lastNode = frag.appendChild(node);
-            }
-            range.insertNode(frag);
+	if (node && $(node).closest(selector).length > 0 && window.getSelection) {
+		sel = window.getSelection();
+		if (sel.getRangeAt && sel.rangeCount) {
+			range = sel.getRangeAt(0);
+			range.deleteContents();
+			var el = document.createElement("div");
+			el.innerHTML = html;
+			var frag = document.createDocumentFragment(),
+				node, lastNode;
+			while ((node = el.firstChild)) {
+				lastNode = frag.appendChild(node);
+			}
+			range.insertNode(frag);
 
-            if (lastNode) {
-                range = range.cloneRange();
-                range.setStartAfter(lastNode);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-            }
-        }
-    } else if (document.selection && document.selection.type != "Control") {
-        document.selection.createRange().pasteHTML(html);
-    }
+			if (lastNode) {
+				range = range.cloneRange();
+				range.setStartAfter(lastNode);
+				range.collapse(true);
+				sel.removeAllRanges();
+				sel.addRange(range);
+			}
+		}
+	} else if (document.selection && document.selection.type != "Control") {
+		document.selection.createRange().pasteHTML(html);
+	} else {
+		message('Please click where you want to insert, and try again.','warn');
+	}
 }
 
 	// Is within element? function
@@ -234,16 +236,16 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 	// Fix Chrome Adding Spans
 	checkForSpan = function (elem){
   this.$editor.on("DOMNodeInserted", $.proxy(function(e) {
-    if (e.target.tagName == "SPAN" ) {
-      var helper = $("<b>helper</b>");
+	if (e.target.tagName == "SPAN" ) {
+	  var helper = $("<b>helper</b>");
 
-      $(e.target).before(helper);
+	  $(e.target).before(helper);
 
-      helper.after($(e.target).contents());
-      helper.remove();
+	  helper.after($(e.target).contents());
+	  helper.remove();
 
-      $(e.target).remove();
-    }
+	  $(e.target).remove();
+	}
 
   }, this));
 }
@@ -309,10 +311,23 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 		closeDropdowns();
 	});
 
-	//Insert Image
-	insertDocument = function ()
-	{
+	//Insert Document
+	insertDocument = function (){
 		closeDropdowns();
+		var sel, range, parent, node = null;
+
+		if (document.selection) {
+			node = document.selection.createRange().parentElement();
+		} else {
+			var selection = window.getSelection();
+			if (selection.rangeCount > 0) {
+				node = selection.getRangeAt(0).startContainer;
+				if (node !== $(node).closest('.editor-text').get(0)) {
+					node = node.parentNode;
+				}
+			}
+		}
+		if (node && $(node).closest('.editor-text').length > 0 && window.getSelection) {
 		var uploaded_tag = '';
 		var formData = '';
 		//open modal
@@ -320,8 +335,12 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 		pasteHtmlAtCaret('<span id="cursor-placeholder"></span>','.editor-text');
 		$('.modal-small-wrap').css('opacity');
 		$('.modal-small-wrap').css('opacity','1');
+		$('.modal-small').css('top');
+		$('.modal-small').css('top','0');
 
 		$("form#insertForm").submit(function(event){
+			$('.modal-small .form-field-submit').hide();
+			$('.modal-small').append('<h1><i class="fa fa-cog fa-spin"></i> Nice! Uploading Now...</h1>');
 		  //disable the default form submission
 		  event.preventDefault();
 		 
@@ -329,38 +348,41 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 		  formData = new FormData($( this )[0]);
 
 		  var request = $.ajax({
-		    url: 'upload.php',
-		    type: 'POST',
-		    data: formData,
-		    contentType: false,
-		    processData: false,
-		    dataType: 'json',
-		    
+			url: 'upload.php',
+			type: 'POST',
+			data: formData,
+			contentType: false,
+			processData: false,
+			dataType: 'json',
+			
 		  });
 		  request.done(function(returndata){
-		  	  //insert file into page
-		      if(returndata.error_msg!='')
-		      {
-		      	//show error message
-		      	message(returndata.error_msg, "error");
-		      }
-		      else
-		      {
-		      	//put together document link
-		      	uploaded_tag = '<a href="'+returndata.new_file+'" target="_blank" title="'+returndata.file_description+'" class="doc-link">'+returndata.file_description+'</a>';
-		      	
-		      	//console.log(uploaded_tag);
-		 		$('#cursor-placeholder').replaceWith(uploaded_tag);
-		      	
+			  //insert file into page
+			  if(returndata.error_msg!='')
+			  {
+				//show error message
+				message(returndata.error_msg, "error");
+			  }
+			  else
+			  {
+				//put together document link
+				uploaded_tag = '<a href="'+returndata.new_file+'" target="_blank" title="'+returndata.file_description+'" class="doc-link">'+returndata.file_description+'</a>';
+				
+				//console.log(uploaded_tag);
+				$('#cursor-placeholder').replaceWith(uploaded_tag);
+				
 				$('.modal-small-wrap').fadeOut(function(){
 					$('.modal-small-wrap').remove();
 				});
 
 				//save page
 				savePage();
-		      }
+			  }
 		  });
 		});
+	} else {
+			message('Please click where you want to insert, and try again.','warn');
+		}
 	}
 
 	$(document).on('click','.addon-link', function(e){
@@ -372,12 +394,12 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 		//alert(page_id+' '+addon_id+' '+next_url);
 		
 		// post(file, data, callback, type); (only "file" is required)
-        $.post(  
-        "ajax_update.php", //The update file
-        { type: 'addAddon', page_id: page_id, addon_id: addon_id },  // create an object will all values
-        //function that is called when server returns a value.
-        function(data){
-            $('body').append('<div class="modal"><a href="#" class="modal-close"><i class="fa fa-chevron-left"></i> DONE</a></div>');
+		$.post(  
+		"ajax_update.php", //The update file
+		{ type: 'addAddon', page_id: page_id, addon_id: addon_id },  // create an object will all values
+		//function that is called when server returns a value.
+		function(data){
+			$('body').append('<div class="modal"><a href="#" class="modal-close"><i class="fa fa-chevron-left"></i> DONE</a></div>');
 			$('.main-wrap').addClass('blurout');
 			$('.modal').show().css('opacity');
 			$('.modal').css('opacity','1');
@@ -393,10 +415,10 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 					}, 550);
 				});
 			}, 550);
-        }, 
-        //How you want the data formated when it is returned from the server.
-        "json"
-        );
+		}, 
+		//How you want the data formated when it is returned from the server.
+		"json"
+		);
 	});
 
 	$(document).on('click','.addon-delete', function(e){
@@ -409,17 +431,17 @@ Y888888P VP   V8P `8888Y' Y88888P 88   YD    YP
 			//alert(page_id+' '+addon_id+' '+next_url);
 			
 			// post(file, data, callback, type); (only "file" is required)
-	        $.post(  
-	        "ajax_update.php", //The update file
-	        { type: 'deleteAddon', page_id: page_id, addon_id: addon_id },  // create an object will all values
-	        //function that is called when server returns a value.
-	        function(data){
-	            window.location.href= "pages.php?page_id="+page_id;
-	        }, 
-	        //How you want the data formated when it is returned from the server.
-	        "json"
-	        );
-	    }
+			$.post(  
+			"ajax_update.php", //The update file
+			{ type: 'deleteAddon', page_id: page_id, addon_id: addon_id },  // create an object will all values
+			//function that is called when server returns a value.
+			function(data){
+				window.location.href= "pages.php?page_id="+page_id;
+			}, 
+			//How you want the data formated when it is returned from the server.
+			"json"
+			);
+		}
 	});
 
 /*
@@ -445,8 +467,20 @@ Y88888P Y888888P VP   V8P YP   YD `8888Y'
 			'opacity':'1'
 		});
 
-		var currentLink = $('.link-selected').attr('href');
-		$('#link-location').val(currentLink);
+
+		if ($(this).hasClass('doc-link')){
+			var url = $('.link-selected').attr('href');
+			var filename = url.substring(url.lastIndexOf('/')+1);
+
+			$('#link-location').hide();
+			$('.panel:nth-child(2)').find('.panel-group:nth-child(4) label').html('<i class="fa fa-link"></i>  '+filename+'');
+		} else {
+			var currentLink = $('.link-selected').attr('href');
+			$('#link-location').show().val(currentLink);
+			$('.panel:nth-child(2)').find('.panel-group:nth-child(4) label').html('<span></span><i class="fa fa-link"></i> Link Location');
+		}
+
+		
 	});
 
 	// Set New Link
@@ -454,6 +488,16 @@ Y88888P Y888888P VP   V8P YP   YD `8888Y'
 		newLink = $('#link-location').attr('value');
 		$('.link-selected').attr('href', newLink);
 	});
+
+	removeLink = function (){
+		var linkTxt = $('.link-selected').text();
+		$('.link-selected').replaceWith(linkTxt);
+	}
+
+	viewLink = function (){
+		var linkUrl = $('.link-selected').attr('href');
+		window.open(linkUrl, '_blank'); 
+	}
 
 /*
 d88888b .88b  d88. d8888b. d88888b d8888b. 
@@ -576,60 +620,82 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 	*/
 
 	//Insert Image
-	insertImage = function ()
-	{
+	insertImage = function (){
 		closeDropdowns();
-		var uploaded_tag = '';
-		var formData = '';
-		//open modal
-		$("body").append('<div class="modal-small-wrap"><div class="modal-small"><h1>Upload an Image</h1><form enctype="multipart/form-data" id="insertForm"><input type="file" value="" name="image" class="form-field-text" id="imageToUpload"><label class="form-field-name">Photo</label><input type="text" value="" name="description" class="form-field-text" id="Description"><label class="form-field-name">Photo Description</label><input type="hidden" name="filetype" value="image" /><input type="submit" value="Upload" name="submit" class="form-field-submit"> <a href="#" class="small-modal-cancel">Cancel</a></form></div></div>');
-		pasteHtmlAtCaret('<span id="cursor-placeholder"></span>','.editor-text');
-		$('.modal-small-wrap').css('opacity');
-		$('.modal-small-wrap').css('opacity','1');
+		 var sel, range, parent, node = null;
 
-		$("form#insertForm").submit(function(event){
-		  //disable the default form submission
-		  event.preventDefault();
-		 
-		  //grab all form data  
-		  formData = new FormData($( this )[0]);
+		if (document.selection) {
+			node = document.selection.createRange().parentElement();
+		} else {
+			var selection = window.getSelection();
+			if (selection.rangeCount > 0) {
+				node = selection.getRangeAt(0).startContainer;
+				if (node !== $(node).closest('.editor-text').get(0)) {
+					node = node.parentNode;
+				}
+			}
+		}
+		if (node && $(node).closest('.editor-text').length > 0 && window.getSelection) {
+			var uploaded_tag = '';
+			var formData = '';
+			//open modal
+			$("body").append('<div class="modal-small-wrap"><div class="modal-small"><h1>Upload an Image</h1><form enctype="multipart/form-data" id="insertForm"><input type="file" value="" name="image" class="form-field-text" id="imageToUpload"><label class="form-field-name">Photo</label><input type="text" value="" name="description" class="form-field-text" id="Description"><label class="form-field-name">Photo Description</label><input type="hidden" name="filetype" value="image" /><input type="submit" value="Upload" name="submit" class="form-field-submit"> <a href="#" class="small-modal-cancel">Cancel</a></form></div></div>');
+			pasteHtmlAtCaret('<span id="cursor-placeholder"></span>','.editor-text');
 
-		  var request = $.ajax({
-		    url: 'upload.php',
-		    type: 'POST',
-		    data: formData,
-		    contentType: false,
-		    processData: false,
-		    dataType: 'json',
-		    
-		  });
-		  request.done(function(returndata){
-		  	  //insert image or file into page
-		      if(returndata.error_msg!='')
-		      {
-		      	//show error message
-		      	message(returndata.error_msg, "error");
-		      }
-		      else
-		      {
-		      	//put together image
-		      	uploaded_tag = '<img src="'+returndata.new_file+'" class="float-normal" alt="'+returndata.file_description+'" />';
-		      	
-		      	//console.log(uploaded_tag);
-		 		$('#cursor-placeholder').replaceWith(uploaded_tag);
-		      	
-				$('.modal-small-wrap').fadeOut(function(){
-					$('.modal-small-wrap').remove();
-				});
-				//save page
-				savePage();
-		      }
-		  });
-		});
+			$('.modal-small-wrap').css('opacity');
+			$('.modal-small-wrap').css('opacity','1');
+			$('.modal-small').css('top');
+			$('.modal-small').css('top','0');
+
+			$("form#insertForm").submit(function(event){
+				$('.modal-small .form-field-submit').fadeOut();
+				$('.modal-small').append('<h1><i class="fa fa-cog fa-spin"></i> Nice! Uploading Now...</h1>');
+			  //disable the default form submission
+			  event.preventDefault();
+			 
+			  //grab all form data  
+			  formData = new FormData($( this )[0]);
+
+			  var request = $.ajax({
+				url: 'upload.php',
+				type: 'POST',
+				data: formData,
+				contentType: false,
+				processData: false,
+				dataType: 'json',
+				
+			  });
+			  request.done(function(returndata){
+				  //insert image or file into page
+				  if(returndata.error_msg!='')
+				  {
+					//show error message
+					message(returndata.error_msg, "error");
+				  }
+				  else
+				  {
+					//put together image
+					uploaded_tag = '<img src="'+returndata.new_file+'" class="float-normal" alt="'+returndata.file_description+'" />';
+					
+					//console.log(uploaded_tag);
+					$('#cursor-placeholder').replaceWith(uploaded_tag);
+					
+					$('.modal-small-wrap').fadeOut(function(){
+						$('.modal-small-wrap').remove();
+					});
+					//save page
+					savePage();
+				  }
+			  });
+			});
+		} else {
+			message('Please click where you want to insert, and try again.','warn');
+		}
 	}
 
 	$(document).on('click', '.small-modal-cancel', function(event) {
 		$('.modal-small-wrap').css('opacity','0');
+		$('.modal-small').css('top','-100%');
 		setTimeout(function(){
 			$('.modal-small-wrap, #cursor-placeholder').remove();
 		}, 500);
@@ -736,7 +802,7 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 			$('.selectedImg').attr('width', newWidth);
 		// fails chartest
 		} else {
-			alert('Please enter only numbers such as 300, or percents such as 50%');
+			message('Please enter only numbers such as 300, or percents such as 50%','error');
 		}
 
 		// Is it a px value that's larger than the original?
@@ -805,19 +871,19 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 				$('.selectedImg').remove();
 				//delete file
 				// post(file, data, callback, type); (only "file" is required)
-		        $.post(  
-			        "ajax_update.php", //The update file
-			        { type: 'fileDelete', filename: filename },  // create an object will all values
-			        //function that is called when server returns a value.
-			        function(data){
-			            if(data.error_msg!='')
-			            {
-			            	message(data.error_msg, "error");
-			            }
-			        }, 
-			        //How you want the data formated when it is returned from the server.
-			        "json"
-		        );
+				$.post(  
+					"ajax_update.php", //The update file
+					{ type: 'fileDelete', filename: filename },  // create an object will all values
+					//function that is called when server returns a value.
+					function(data){
+						if(data.error_msg!='')
+						{
+							message(data.error_msg, "error");
+						}
+					}, 
+					//How you want the data formated when it is returned from the server.
+					"json"
+				);
 				savePage();
 				doneWithImage();
 			}, 300);
@@ -899,21 +965,6 @@ Y888888P YP  YP  YP YP   YP  Y888P  Y88888P `8888Y'
 	$('#normal-table-mode-label').on('click', function() {
 		$('#selectedCell').parents('table').removeClass('hidden-table');
 	});
-
-	// Remove Selection when clicking anywhere else
-	$(document).on('click', function (event) {
-		$('#selectedCell').removeAttr('id');
-		$('.panel:nth-child(2)').find('.panel-group:nth-child(3), .panel-group:nth-child(4), .panel-group:nth-child(5)').css({
-			'pointerEvents':'none',
-			'opacity':'.2'
-		});
-		
-		$('#link-location').val('');
-		$('.link-selected').removeClass('link-selected');
-		doneWithImage();
-		doneWithEmbed();
-	});
-
 
 
 	// Add Header
@@ -1147,6 +1198,21 @@ d88888b d8888b. d888888b d888888b d888888b d8b   db  d888b
 88.     88  .8D   .88.      88      .88.   88  V888 88. ~8~ 
 Y88888P Y8888D' Y888888P    YP    Y888888P VP   V8P  Y888P  
 */
+
+	// Reset crap when clicking anywhere else
+	$(document).on('click', function (event) {
+		$('#selectedCell').removeAttr('id');
+		$('.panel:nth-child(2)').find('.panel-group:nth-child(3), .panel-group:nth-child(4), .panel-group:nth-child(5)').css({
+			'pointerEvents':'none',
+			'opacity':'.2'
+		});
+		
+		$('#link-location').val('');
+		$('.link-selected').removeClass('link-selected');
+		doneWithImage();
+		doneWithEmbed();
+	});
+
 
 	// Fix Copy & Paste formatting
 	$('[contenteditable]').on('paste', function(e) {
