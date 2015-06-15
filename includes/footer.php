@@ -27,7 +27,7 @@
 						<li class="pages"><a href="#"><i class="fa fa-chevron-down"></i> Pages</a>
 							<ul class="draggable-parent">
 						<?php
-						//get top level pages that are sortable
+						//get top level pages that are sortable (LEVEL 1)
 						$parent_res = SRPCore()->query("SELECT page_id, title FROM pages WHERE parent_id = 0 AND sort_order>0 ORDER BY sort_order");
 						while($parent = $parent_res->fetch())
 						{
@@ -37,7 +37,7 @@
 									<div><a href="pages.php?page_id=<?php echo $parent['page_id']; ?>" <?php if($_GET['page_id']==$parent['page_id']){ ?>id="current-page"<?php } ?>><i class="fa fa-reorder sort-drag"></i><i class="fa fa-file"></i> <?php echo db_output($parent['title']); ?></a>
 									</div>
 						<?php
-							//get sub pages
+							//get sub pages (LEVEL 2)
 							$child_res = SRPCore()->query("SELECT page_id, title FROM pages WHERE parent_id = ".$parent['page_id']." AND sort_order>0 ORDER BY sort_order");
 							if($child_res->num_rows()!=0)
 							{
@@ -50,7 +50,7 @@
 										<li class="draggable" id="list_<?php echo $child['page_id']; ?>">
 											<div><a href="pages.php?page_id=<?php echo $child['page_id']; ?>" <?php if($_GET['page_id']==$child['page_id']){ ?>id="current-page"<?php } ?>><i class="fa fa-reorder sort-drag"></i><i class="fa fa-file"></i> <?php echo db_output($child['title']); ?></a></div>
 						<?php
-									//get sub pages
+									//get sub pages (LEVEL 3)
 									$grandchild_res = SRPCore()->query("SELECT page_id, title FROM pages WHERE parent_id = ".$child['page_id']." AND sort_order>0 ORDER BY sort_order");
 									if($grandchild_res->num_rows()!=0)
 									{
@@ -62,6 +62,28 @@
 								?>
 												<li class="draggable" id="list_<?php echo $grandchild['page_id']; ?>">
 													<div><a href="pages.php?page_id=<?php echo $grandchild['page_id']; ?>" <?php if($_GET['page_id']==$grandchild['page_id']){ ?>id="current-page"<?php } ?>><i class="fa fa-reorder sort-drag"></i><i class="fa fa-file"></i> <?php echo db_output($grandchild['title']); ?></a></div>
+								?>
+								<?php
+											//get sub pages (LEVEL 4)
+											$greatgrandchild_res = SRPCore()->query("SELECT page_id, title FROM pages WHERE parent_id = ".$grandchild['page_id']." AND sort_order>0 ORDER BY sort_order");
+											if($greatgrandchild_res->num_rows()!=0)
+											{
+								?>
+												<ul class="dd-list">
+								<?php
+												while($greatgrandchild = $greatgrandchild_res->fetch())
+												{
+								?>
+													<li class="draggable" id="list_<?php echo $greatgrandchild['page_id']; ?>">
+														<div><a href="pages.php?page_id=<?php echo $greatgrandchild['page_id']; ?>" <?php if($_GET['page_id']==$greatgrandchild['page_id']){ ?>id="current-page"<?php } ?>><i class="fa fa-reorder sort-drag"></i><i class="fa fa-file"></i> <?php echo db_output($greatgrandchild['title']); ?></a></div>
+													</li>
+								<?php
+												}
+								?>
+												</ul>
+								<?php
+											}
+								?>
 												</li>
 								<?php
 										}
@@ -90,6 +112,7 @@
 						if(SRPCore()->cfg("ADD_PAGES")=='true')
 						{
 						?>
+						<li>
 							<div class="sidebar-option">
 								<hr><a href="#" id="addpage"><i class="fa fa-plus"></i> Add Page</a>
 							</div>

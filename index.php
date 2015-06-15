@@ -78,12 +78,16 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                 <div class="main-scroll">
                     <?php
                     if (isset($_GET['error']) && !empty($_SESSION['login_error'])) {
-                        echo '<div class="errors">'.$_SESSION['login_error'].'</div>';
+                    ?>
+                    <script>
+                    message('<?php echo $_SESSION["login_error"]; ?>','error');
+                    </script>
+                    <?php
                         $_SESSION['login_error'] = '';
                     }
                     ?> 
                     
-                    <form action="includes/process_login.php" method="post" name="login_form">
+                    <form action="includes/process_login.php" method="post" name="login_form" id="login_form">
                     <div class="dark-modal">
                         <h1>Sign In</h1>
                         
@@ -101,6 +105,14 @@ http://stackoverflow.com/questions/25135963/node-webkit-mysql-connection-error-e
                     ?>
                         <input type="checkbox" id="remember"> <label for="remember">Remember Me?</label>
                         <input type="button" value="Sign In" onclick="formhash(this.form, this.form.password);">
+                        <script>
+                        $(document).keydown(function(e){
+                            if (e.keyCode == 13 || e.which == 13) 
+                            { 
+                                formhash(document.getElementById('login_form'), document.getElementById('password'));
+                            }
+                        });
+                        </script>
                         <br><br>
                         <a href="https://scaredrabbit.com/pages/srp-account-login-help" target="_blank">Forgot Login?</a>
                     </div>

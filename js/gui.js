@@ -94,7 +94,7 @@ $(document).ready(function() {
 			items: 'li',
 			opacity: .3,
 			tabSize: 2,
-			maxLevels: 3,
+			maxLevels: 4,
 			placeholder: 'placeholder',
 			toleranceElement: '> div',
 			update : function () {
@@ -374,6 +374,41 @@ $(document).ready(function() {
 	        }, 
 	        //How you want the data formated when it is returned from the server.
 	        "json"
+        );
+    });
+
+    $('.caption').change(function(){
+        //get
+        id = $(this).attr('name');
+        value = $(this).val();
+        //alert('KEY: '+id+' VAL: '+value);
+        // post(file, data, callback, type); (only "file" is required)
+        $.post(  
+            "ajax_update.php", //The update file
+            {type: 'galleryCaption', id: id, value: value },  // create an object will all values
+            //function that is called when server returns a value.
+            function(data){
+                ;
+            }, 
+            //How you want the data formated when it is returned from the server.
+            "json"
+        );
+    });
+    $('.document-title').change(function(){
+        //get
+        id = $(this).attr('name');
+        value = $(this).val();
+        //alert('KEY: '+id+' VAL: '+value);
+        // post(file, data, callback, type); (only "file" is required)
+        $.post(  
+            "ajax_update.php", //The update file
+            {type: 'documentTitle', id: id, value: value },  // create an object will all values
+            //function that is called when server returns a value.
+            function(data){
+                ;
+            }, 
+            //How you want the data formated when it is returned from the server.
+            "json"
         );
     });
 

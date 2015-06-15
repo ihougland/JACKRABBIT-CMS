@@ -153,6 +153,7 @@ if(isset($_GET['action']))
         //get the values from the form
         $image_id = $_POST['image_id'];
         $gallery_id = $_POST['gallery_id'];
+        $page_id = $_POST['page_id'];
         $caption = $_POST['caption'];
 
         //set max, crop, thumb w & h
@@ -339,7 +340,7 @@ include('includes/header_alt.php');
 ?>
 					<tr class="sortable">
 						<td><img src="../files_uploaded/thumbs/<?php echo $row['filename']; ?>" alt="<?php echo db_output($row['caption']); ?>" /></td>
-						<td><input type="text" name="<?php echo $row['image_id']; ?>" value="<?php echo db_output($row['caption']); ?>" class="form-field-text" /></td>
+						<td><input type="text" name="<?php echo $row['image_id']; ?>" value="<?php echo db_output($row['caption']); ?>" class="form-field-text caption" /></td>
 						<td><?php echo date('m/d/Y g:i a', strtotime($row['last_updated'])); ?></td>
 						<td><a href="gallery_images.php?action=edit&id=<?php echo $row['image_id']; ?>&page_id=<?php echo $_GET['page_id']; ?>" class="button"><i class="fa fa-pencil"></i> Edit</a> <a href="gallery_images.php?action=delete&id=<?php echo $row['image_id']; ?>&gallery_id=<?php echo $_GET['gallery_id']; ?>&page_id=<?php echo $_GET['page_id']; ?>" class="button delete"><i class="fa fa-remove"></i> Delete</a></td>
 					</tr>

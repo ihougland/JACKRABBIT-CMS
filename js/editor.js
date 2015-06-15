@@ -93,14 +93,18 @@ $(document).ready(function() {
 		//get
 		var page_id = $("#page_id").val();
 		var fieldname = $(this).attr('name');
-		var value = $(this).val();
+		var seovalue = $(this).val();
 
 		$.post(  
 			"ajax_update.php", //The update file
-			{ type: 'seoData', page_id: page_id, fieldname: fieldname, value: value },  // create an object will all values
+			{ type: 'seoData', page_id: page_id, fieldname: fieldname, value: seovalue },  // create an object will all values
 			//function that is called when server returns a value.
 			function(data){
 				//message('Changes Saved!', 'success');
+				if(fieldname=="title")
+				{
+					$('#page-title').html(seovalue);
+				}
 			}, 
 			//How you want the data formated when it is returned from the server.
 			"json"
@@ -489,9 +493,38 @@ Y88888P Y888888P VP   V8P YP   YD `8888Y'
 		$('.link-selected').attr('href', newLink);
 	});
 
-	removeLink = function (){
+	removeLink = function (event){
 		var linkTxt = $('.link-selected').text();
-		$('.link-selected').replaceWith(linkTxt);
+		if($('.link-selected').hasClass('doc-link'))
+		{
+			var r = confirm("Are you sure you want to remove the document link?");
+			if (r == true) {
+				var filename = $('.link-selected').attr('href');
+				$('.link-selected').replaceWith(linkTxt);
+				setTimeout(function(){
+					//delete file
+					// post(file, data, callback, type); (only "file" is required)
+					$.post(  
+						"ajax_update.php", //The update file
+						{ type: 'fileDelete', filename: filename },  // create an object will all values
+						//function that is called when server returns a value.
+						function(data){
+							if(data.error_msg!='')
+							{
+								message(data.error_msg, "error");
+							}
+						}, 
+						//How you want the data formated when it is returned from the server.
+						"json"
+					);
+					savePage();
+				}, 300);
+			}
+		}
+		else
+		{
+			$('.link-selected').replaceWith(linkTxt);
+		}
 	}
 
 	viewLink = function (){
@@ -571,7 +604,7 @@ Y88888P YP  YP  YP Y8888P' Y88888P Y8888D'
 			}
 		// fails chartest
 		} else {
-			alert('Please enter only numbers such as 300, or percents such as 50%');
+			message('Please enter only numbers such as 300, or percents such as 50%', 'warning');
 		}
 	});
 

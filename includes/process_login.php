@@ -47,6 +47,7 @@ if (isset($_POST['user_name'], $_POST['p']))
     }
 } else {
     // The correct POST variables were not sent to this page. 
-    header('Location: ../error.php?err=Could not process login');
+    $_SESSION['login_error'] = "Could not process login.";
+    header('Location: ../index.php?error=1');
     exit();
 }

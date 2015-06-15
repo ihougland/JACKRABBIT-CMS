@@ -1037,7 +1037,7 @@ function edit_documents($posted_array)
         $document_id = $posted_array['document_id'];
         $title = db_input($posted_array['title']);
         $filename = $posted_array['filename'];
-        if(!empty($image_id))
+        if(!empty($document_id))
         {
             if(!empty($filename))
             {
@@ -1072,6 +1072,38 @@ function delete_documents($document_id)
         //delete the image entries
         SRPCore()->query("DELETE FROM documents WHERE document_id = ".intval($document_id));
     }
+}
+
+function get_num_document_lists($page_id)
+{
+    $num_document_lists = 0;
+    if(!empty($page_id))
+    {
+        $document_lists_res = SRPCore()->query("SELECT l.list_id, COUNT(d.document_id) as doc_count FROM document_lists l LEFT JOIN documents d ON l.list_id=d.list_id WHERE l.page_id = '".intval($page_id)."' GROUP BY l.list_id HAVING doc_count>0");
+        $num_document_lists = $document_lists_res->num_rows();
+    }
+    return $num_document_lists;
+}
+
+function get_num_documents($list_id)
+{
+    $num_documents = 0;
+    if(!empty($list_id))
+    {
+        $documents_res = SRPCore()->query("SELECT document_id FROM documents WHERE list_id = ".intval($list_id));
+        $num_documents = $documents_res->num_rows();
+    }
+    return $num_documents;
+}
+
+function get_list_title($list_id)
+{
+    $title = "";
+    if(!empty($list_id))
+    {
+        $title = SRPCore()->query("SELECT title FROM document_lists WHERE list_id = ".intval($list_id))->fetch_item();
+    }
+    return $title;
 }
 
 ?>

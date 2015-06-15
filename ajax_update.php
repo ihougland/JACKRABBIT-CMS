@@ -183,11 +183,7 @@ elseif($_POST['type']=='deleteAddon')
     $addon_id = $_POST['addon_id'];
     delete_addon($page_id, $addon_id);
 }
-if($_POST['list'])
-{
-    order($_POST['list']);
-}
-if($_POST['type']=='sortAddons')
+elseif($_POST['type']=='sortAddons')
 {
     $sort = $_POST['addonSort'];
     $page_id = $_POST['page_id'];
@@ -210,5 +206,33 @@ if($_POST['type']=='sortAddons')
     {
         echo json_encode(array('error_msg'=>"oops! not an array!"));
     }
+}
+elseif($_POST['type'] == 'galleryCaption')
+{
+    $image_id = $_POST["id"];
+    $caption = db_input($_POST['value']);
+
+    //update Gallery image caption data
+    if(!empty($image_id))
+    {
+        $sql = "UPDATE `gallery_images` SET `caption` = '".$caption."' WHERE image_id=".intval($image_id);
+        SRPCore()->query($sql);
+    }
+}
+elseif($_POST['type'] == 'documentTitle')
+{
+    $document_id = $_POST["id"];
+    $title = db_input($_POST['value']);
+
+    //update Gallery image caption data
+    if(!empty($document_id))
+    {
+        $sql = "UPDATE `documents` SET `title` = '".$title."' WHERE document_id=".intval($document_id);
+        SRPCore()->query($sql);
+    }
+}
+if($_POST['list'])
+{
+    order($_POST['list']);
 }
 ?>

@@ -52,8 +52,9 @@ class uploader
 		$error = $_FILES[$fieldName]['error'];
 		if ($error == UPLOAD_ERR_OK) 
 		{
-			$random = md5(uniqid(mt_rand()));
-			$this->fileName = $random.$this->getFileExtension($_FILES[$fieldName]['name']);
+			//$random = md5(uniqid(mt_rand()));
+			//$this->fileName = $random.$this->getFileExtension($_FILES[$fieldName]['name']);
+			$this->fileName = $this->makeFileName($_FILES[$fieldName]['name']);
 			$this->fileType = $_FILES[$fieldName]['type'];
 			$this->fileSize = $_FILES[$fieldName]['size'];
 			$tmp_name = $_FILES[$fieldName]['tmp_name'];
@@ -128,6 +129,25 @@ class uploader
 	{
 	 	$name = explode(".",$name);
 		return $name[0];
+	}
+	function makeFileName($org_filename)
+	{
+		$new_filename = $org_filename;
+		$counter = 1;
+		
+		while(file_exists($this->fileDestination.$new_filename))
+		{
+			$file_parts = explode('.',$org_filename);
+			$new_filename = $file_parts[0].'_'.$counter;
+			for($x=1; $x<count($file_parts); $x++)
+			{
+				$new_filename .= '.'.$file_parts[$x];
+			}
+			
+			$counter++;
+		}
+		
+		return $new_filename;
 	}
 	
 }

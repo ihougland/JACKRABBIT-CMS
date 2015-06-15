@@ -181,7 +181,8 @@ class qqFileUploader {
         }
         
         $pathinfo = pathinfo($this->file->getName());
-        $filename = $random = md5(uniqid(mt_rand()));//$pathinfo['filename'];
+        $filename = $pathinfo['filename'];
+
         //$filename = md5(uniqid());
         $ext = $pathinfo['extension'];
 
@@ -192,9 +193,14 @@ class qqFileUploader {
         
         if(!$replaceOldFile){
             /// don't overwrite previous files that were uploaded
-            while (file_exists($uploadDirectory . $filename . '.' . strtolower($ext))) {
-                $filename .= rand(10, 99);
+            $counter = 1;
+            $new_filename = $filename;
+            while (file_exists($uploadDirectory . $new_filename . '.' . strtolower($ext)))
+            {
+                $new_filename = $filename.'_'.$counter;
+                $counter++;
             }
+            $filename = $new_filename;
         }
         
         if ($this->file->save($uploadDirectory, $filename, strtolower($ext), $type)){
@@ -218,7 +224,14 @@ $id = $_GET['id'];
 $file_path = "../files_uploaded/";
 
 // list of valid extensions, ex. array("jpeg", "xml", "bmp")
-$allowedExtensions = array("jpeg", "jpg", '.gif', '.png', '.doc', '.docx', '.pdf', '.xls', '.xlsx', '.txt', '.rtf', '.zip');
+if($type=="documents")
+{
+    $allowedExtensions = array("jpeg", "jpg", 'gif', 'png', 'doc', 'docx', 'pdf', 'xls', 'xlsx', 'txt', 'rtf', 'zip');
+}
+else
+{
+    $allowedExtensions = array("jpeg", "jpg", 'gif', 'png');
+}
 // max file size in bytes
 $sizeLimit = 5 * 1024 * 1024;
 
