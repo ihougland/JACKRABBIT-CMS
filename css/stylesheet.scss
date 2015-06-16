@@ -846,6 +846,7 @@ db   8D   .88.   88  .8D 88.
 	vertical-align: top;
 	width: 250px;
 	transition: width .25s ease-out;
+	position: relative;
 	.placeholder {
 		height: 17px;
 		border: 2px dashed $primary;
@@ -872,18 +873,36 @@ db   8D   .88.   88  .8D 88.
 .panel-toggler:hover {
 	background: $dark-gray;
 }
-
+#addpage {
+	font-size: 11px;
+	color: #B7BBC3;
+	i {
+		font-size:12px;
+		color: #B7BBC3;
+		transform:.2s;
+	}
+}
+#addpage:hover {
+	color: $primary;
+	background:none;
+	i {
+		color: $primary;
+	}
+}
 .sidebar-right-scroll {
-	height: 100%;
-	overflow: hidden;
+	height:calc(100% - 30px);
+	overflow: auto;
 	position: relative;
 	width: 250px;
 	transition: width .2s ease-out;
+	ul:before {
+		content:'add stuff';
+	}
 	>ul {
-		padding: 15px;
+		padding: 10px;
 	}
 	>ul>li>a>i {
-		padding: 0 5px;
+		padding: 0 2px;
 		transition: all .2s ease-out;
 	}
 	>ul>li>a:link,
@@ -897,9 +916,10 @@ db   8D   .88.   88  .8D 88.
 		font-weight: bold;
 	}
 	>ul>li ul {
-		padding-left: 22px;
+		padding-left: 20px;
 		i {
 			width: 15px;
+			font-size:14px;
 			color: #B7BBC3;
 		}
 		a:link,
@@ -948,7 +968,6 @@ db   8D   .88.   88  .8D 88.
 		background: none;
 		outline: none;
 		border: none;
-		border-bottom: 1px solid $primary;
 		display: inline-block;
 		width: 160px;
 		color: $primary;
@@ -997,6 +1016,7 @@ db   8D   .88.   88  .8D 88.
 
 .page-add-confirm {
 	color: $primary!important;
+	padding-right:4px;
 }
 
 .flipped {

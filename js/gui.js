@@ -131,24 +131,43 @@ $(document).ready(function() {
         appendTo: 'body',
     }).disableSelection();
 	
+	$('.pages ul').prepend('<a href="#" id="addpage"><i class="fa fa-plus"></i> ADD PAGE</a>');
+
 	// Add A Page
-	$('#addpage').click(function(event){
-		$('<li class="page-add"><div><a href="#"><i class="fa fa-times page-add-cancel"></i><i class="fa fa-check page-add-confirm"></i><input type="text" placeholder="Add Page Name..." /></a></div></li>').appendTo('.pages>ul');
-		$('.page-add').slideDown(300, 'easeOutExpo');
+	$(document.body).on('click', '#addpage', function (event) {
+		$('.page-add').replaceWith('<a href="#" id="addpage"><i class="fa fa-plus"></i> ADD PAGE</a>');
+
+		$(this).slideUp(300, 'easeOutExpo', function(){
+			$(this).replaceWith('<li class="page-add"><div><a href="#"><i class="fa fa-check page-add-confirm"></i><i class="fa fa-times page-add-cancel"></i><input id="page-add-input" type="text" placeholder="Type Page Name..." /></a></div></li>');
+			$('.page-add').slideDown(300, 'easeOutExpo');
+			$('#page-add-input').focus();
+		});
 		event.preventDefault();
 	});
 
 	// Cancel Adding A Page
 	$(document.body).on('click', '.page-add-cancel', function (event) {
 		$(this).parent().slideUp(300, 'easeOutExpo', function(){
-			$(this).remove();
+			$(this).replaceWith('<a href="#" id="addpage"><i class="fa fa-plus"></i> ADD PAGE</a>');
 		});
 		event.preventDefault();
 	});
 
+
 	// Confirm Page Add
+	$(document.body).on('keypress', '#page-add-input', function (e) {
+		if (e.keyCode == 13) {
+			confirmPage();
+		}
+	});
+
 	$(document.body).on('click', '.page-add-confirm', function (event) {
-		var pageName = $(this).parent().find('input').val();
+		confirmPage();
+		event.preventDefault();
+	});
+
+	function confirmPage(){
+		var pageName = $('#page-add-input').val();
 		// post(file, data, callback, type); (only "file" is required)
         $.post(  
         "ajax_update.php", //The update file
@@ -160,13 +179,7 @@ $(document).ready(function() {
         //How you want the data formated when it is returned from the server.
         "json"
         );
-        /*
-		$(this).parent().empty().append("<i class='fa fa-reorder sort-drag'></i><i class='fa fa-file'></i> "+pageName+"");
-		$('.page-add').removeClass().addClass('draggable');
-		$('.draggable-parent').nestedSortable('refresh');
-		*/
-		event.preventDefault();
-	});
+	}
 
 	//Save Page Type Selection
 	$(document.body).on('click', '#savePageType', function (event) {
